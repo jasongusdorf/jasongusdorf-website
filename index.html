@@ -53,7 +53,7 @@
     }
     .hero-inner { position: relative; max-width: 900px; display: flex; align-items: center; gap: 4rem; text-align: left; }
     .hero-photo { flex-shrink: 0; }
-    .hero-photo img { width: 200px; height: 200px; border-radius: 50%; object-fit: cover; object-position: center top; border: 4px solid rgba(232,184,109,0.5); box-shadow: 0 0 40px rgba(0,0,0,0.3); }
+    .hero-photo img { width: 200px; height: 200px; border-radius: 50%; object-fit: cover; object-position: center 15%; border: 4px solid rgba(232,184,109,0.5); box-shadow: 0 0 40px rgba(0,0,0,0.3); }
     .hero-text { flex: 1; }
     @media (max-width: 700px) { .hero-inner { flex-direction: column; text-align: center; gap: 2rem; } }
     .hero-tag { display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); border: 1px solid rgba(232,184,109,0.4); padding: 0.35rem 1rem; border-radius: 2rem; margin-bottom: 1.8rem; }
@@ -123,6 +123,8 @@
     .pub-journal { font-size: 0.78rem; color: var(--gold); font-weight: 500; font-style: italic; margin-bottom: 0.5rem; }
     .pub-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.65; }
     .pub-role { display: inline-block; font-size: 0.72rem; font-weight: 600; color: var(--mid); background: rgba(44,74,124,0.08); padding: 0.15rem 0.5rem; border-radius: 0.25rem; margin-bottom: 0.4rem; }
+    .pub-link { display: inline-flex; align-items: center; gap: 0.3rem; margin-top: 0.6rem; font-size: 0.78rem; font-weight: 500; color: var(--gold); text-decoration: none; border: 1px solid rgba(201,146,42,0.3); padding: 0.2rem 0.65rem; border-radius: 2rem; transition: all 0.2s; }
+    .pub-link:hover { background: rgba(201,146,42,0.1); border-color: var(--gold); }
 
     .research-split { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2.5rem; }
     .research-subsection h4 { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
@@ -242,6 +244,7 @@
         <span class="hero-pill">Harvard / BIDMC</span>
         <span class="hero-pill">Georgetown Medicine '23</span>
         <span class="hero-pill">Magna Cum Laude</span>
+        <span class="hero-pill">Georgetown SFS '16</span>
         <span class="hero-pill">English · Spanish · Hebrew</span>
       </div>
       <div class="hero-cta">
@@ -365,6 +368,7 @@
           <h3>Comparing survival with vitamin K antagonists, low-molecular-weight heparin and direct oral anticoagulants in patients with cancer</h3>
           <div class="pub-journal">Research & Practice in Thrombosis & Haemostasis</div>
           <p class="pub-desc">Systematic review of 14 studies (70,025 patients). Observational data suggested lower mortality with VKAs, particularly in solid malignancies with &gt;6-month follow-up; randomized trials showed no mortality difference.</p>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/41560781" target="_blank" class="pub-link">↗ PubMed</a>
         </div>
       </div>
 
@@ -375,6 +379,7 @@
           <h3>Inpatient outcomes for patients with peripheral artery disease hospitalised for acute myocardial infarction</h3>
           <div class="pub-journal">Journal of the American Heart Association</div>
           <p class="pub-desc">NCDR Chest Pain-MI Registry (493,740 AMI hospitalizations): PAD patients had significantly higher in-hospital mortality, major bleeding, cardiac arrest, cardiogenic shock, and stroke regardless of age, sex, race, or AMI type.</p>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/40497502" target="_blank" class="pub-link">↗ PubMed</a>
         </div>
       </div>
 
@@ -385,6 +390,7 @@
           <h3>Renal artery stent procedural trends and disparities in a national cohort</h3>
           <div class="pub-journal">American Journal of Cardiology</div>
           <p class="pub-desc">2016–2020 Medicare data (19,130 patients): stenting rates declined 41%. Black patients faced higher risks of hypertensive crisis and dialysis initiation; dual Medicare–Medicaid enrollment was associated with increased mortality.</p>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/41475453" target="_blank" class="pub-link">↗ PubMed</a>
         </div>
       </div>
 
@@ -394,6 +400,7 @@
           <h3>Exploring RAG-driven multimodal LLMs for explainable ECG interpretation</h3>
           <div class="pub-journal">NeurIPS 2025 — BrainBodyFM Workshop · Poster Presentation, San Diego, CA</div>
           <p class="pub-desc">Benchmarked GPT-4, Claude 3.5 Sonnet, Llama 3.2, and GPT-3.5 for arrhythmia classification using multimodal ECG data with Retrieval-Augmented Generation. GPT-4 achieved AUC = 0.940 with equitable performance across demographics. First multi-LLM ECG benchmarking with integrated structured RAG and multimodal input.</p>
+          <a href="https://openreview.net/forum?id=bCG7sMA5Bt" target="_blank" class="pub-link">↗ OpenReview</a>
         </div>
       </div>
 
@@ -403,6 +410,7 @@
           <h3>NEJM Case Records — Dr. CaBot AI contributor</h3>
           <div class="pub-journal">New England Journal of Medicine — Case 28-2025</div>
           <p class="pub-desc">Contributor to the design and creation of the Dr. CaBot AI system used in the NEJM Clinical Pathological Conference case analysis. Collaborated with the Manrai &amp; Rodman Research Group to curate and analyze historical CPC cases and advance computational modeling of clinical diagnostic reasoning.</p>
+          <a href="https://www.nejm.org/doi/abs/10.1056/NEJMcpc2412539" target="_blank" class="pub-link">↗ NEJM</a>
         </div>
       </div>
 
@@ -412,6 +420,7 @@
           <h3>Advancing Medical AI Using a Century of Cases: CPC-Bench</h3>
           <div class="pub-journal">arXiv preprint</div>
           <p class="pub-desc">Benchmark derived from 7,102 clinicopathological conference cases and 1,021 image challenges. "Dr. CaBot" outperformed physicians in text-based diagnostic reasoning but underperformed in image interpretation and literature retrieval.</p>
+          <a href="https://arxiv.org/abs/2509.12194" target="_blank" class="pub-link">↗ arXiv</a>
         </div>
       </div>
 
@@ -422,6 +431,7 @@
           <h3>Spontaneous Tumor Lysis Syndrome Secondary to Metastatic Pancreatic Adenocarcinoma</h3>
           <div class="pub-journal">ACG Case Reports Journal</div>
           <p class="pub-desc">Case report of an 86-year-old woman who developed spontaneous TLS in the context of metastatic pancreatic adenocarcinoma—a rare complication outside hematologic malignancies. doi: 10.14309/crj.0000000000001305</p>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/38560013" target="_blank" class="pub-link">↗ PubMed</a>
         </div>
       </div>
 
@@ -431,6 +441,7 @@
           <h3>Guidance for Physicians on the Yom Kippur Fast</h3>
           <div class="pub-journal">Georgetown Medical Review · doi: 10.52504/001c.83342</div>
           <p class="pub-desc">Reviews Talmudic sources and the medical literature to help physicians counsel Jewish patients about religious fasting, including contraindications such as metabolic and eating disorders. Also served as peer reviewer for this journal.</p>
+          <a href="https://gmr.scholasticahq.com/article/83342-guidance-for-physicians-on-the-yom-kippur-fast" target="_blank" class="pub-link">↗ Georgetown Medical Review</a>
         </div>
       </div>
 
