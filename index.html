@@ -51,7 +51,11 @@
       background: radial-gradient(circle at 20% 80%, rgba(201,146,42,0.15) 0%, transparent 50%),
                   radial-gradient(circle at 80% 20%, rgba(58,107,158,0.3) 0%, transparent 50%);
     }
-    .hero-inner { position: relative; max-width: 700px; }
+    .hero-inner { position: relative; max-width: 900px; display: flex; align-items: center; gap: 4rem; text-align: left; }
+    .hero-photo { flex-shrink: 0; }
+    .hero-photo img { width: 200px; height: 200px; border-radius: 50%; object-fit: cover; object-position: center top; border: 4px solid rgba(232,184,109,0.5); box-shadow: 0 0 40px rgba(0,0,0,0.3); }
+    .hero-text { flex: 1; }
+    @media (max-width: 700px) { .hero-inner { flex-direction: column; text-align: center; gap: 2rem; } }
     .hero-tag { display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); border: 1px solid rgba(232,184,109,0.4); padding: 0.35rem 1rem; border-radius: 2rem; margin-bottom: 1.8rem; }
     #hero h1 { font-family: 'Lora', serif; font-size: clamp(2.4rem, 5vw, 3.8rem); color: #fff; font-weight: 600; line-height: 1.15; margin-bottom: 1.2rem; }
     #hero h1 em { color: var(--amber); font-style: normal; }
@@ -226,19 +230,24 @@
 <!-- HERO -->
 <section id="hero">
   <div class="hero-inner">
-    <div class="hero-tag">Physician · Researcher · Musician</div>
-    <h1>Jason Gusdorf, <em>MD</em></h1>
-    <p>Internal medicine physician at Beth Israel Deaconess Medical Center and Fenway Health, researcher in cardiovascular outcomes and AI diagnostics, and folk musician.</p>
-    <div class="hero-pills">
-      <span class="hero-pill">Boston, MA</span>
-      <span class="hero-pill">Harvard / BIDMC</span>
-      <span class="hero-pill">Georgetown Medicine '23</span>
-      <span class="hero-pill">Magna Cum Laude</span>
-      <span class="hero-pill">English · Spanish · Hebrew</span>
+    <div class="hero-photo">
+      <img src="headshot.png" alt="Jason Gusdorf, MD" />
     </div>
-    <div class="hero-cta">
-      <a href="#medicine" class="btn btn-primary">Clinical Work</a>
-      <a href="#research" class="btn btn-outline">Publications</a>
+    <div class="hero-text">
+      <div class="hero-tag">Physician · Researcher · Musician</div>
+      <h1>Jason Gusdorf, <em>MD</em></h1>
+      <p>Internal medicine physician at Beth Israel Deaconess Medical Center and Fenway Health, researcher in cardiovascular outcomes and AI diagnostics, and folk musician.</p>
+      <div class="hero-pills">
+        <span class="hero-pill">Boston, MA</span>
+        <span class="hero-pill">Harvard / BIDMC</span>
+        <span class="hero-pill">Georgetown Medicine '23</span>
+        <span class="hero-pill">Magna Cum Laude</span>
+        <span class="hero-pill">English · Spanish · Hebrew</span>
+      </div>
+      <div class="hero-cta">
+        <a href="#medicine" class="btn btn-primary">Clinical Work</a>
+        <a href="#research" class="btn btn-outline">Publications</a>
+      </div>
     </div>
   </div>
 </section>
