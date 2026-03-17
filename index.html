@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jason Gusdorf, MD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #1a2744;
+      --mid:    #2c4a7c;
+      --gold:   #c9922a;
+      --amber:  #e8b86d;
+      --cream:  #faf8f4;
+      --warm:   #f4ede0;
+      --text:   #2a2a2a;
+      --muted:  #6b7280;
+      --border: #e5ddd0;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--cream); line-height: 1.6; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(26, 39, 68, 0.97);
+      backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem; height: 60px;
+    }
+    nav .brand { font-family: 'Lora', serif; color: var(--amber); font-size: 1.1rem; letter-spacing: 0.02em; text-decoration: none; }
+    nav ul { list-style: none; display: flex; gap: 1.8rem; }
+    nav ul a { color: rgba(255,255,255,0.78); text-decoration: none; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+    nav ul a:hover { color: var(--amber); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      background: linear-gradient(155deg, var(--navy) 0%, var(--mid) 60%, #3a6b9e 100%);
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 6rem 2rem 4rem;
+      position: relative; overflow: hidden;
+    }
+    #hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at 20% 80%, rgba(201,146,42,0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(58,107,158,0.3) 0%, transparent 50%);
+    }
+    .hero-inner { position: relative; max-width: 700px; }
+    .hero-tag { display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); border: 1px solid rgba(232,184,109,0.4); padding: 0.35rem 1rem; border-radius: 2rem; margin-bottom: 1.8rem; }
+    #hero h1 { font-family: 'Lora', serif; font-size: clamp(2.4rem, 5vw, 3.8rem); color: #fff; font-weight: 600; line-height: 1.15; margin-bottom: 1.2rem; }
+    #hero h1 em { color: var(--amber); font-style: normal; }
+    #hero p { font-size: 1.05rem; color: rgba(255,255,255,0.72); max-width: 540px; margin: 0 auto 2.5rem; line-height: 1.75; }
+    .hero-pills { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; margin-bottom: 2.5rem; }
+    .hero-pill { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.85); padding: 0.3rem 0.9rem; border-radius: 2rem; font-size: 0.8rem; }
+    .hero-cta { display: inline-flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .btn { padding: 0.7rem 1.7rem; border-radius: 0.4rem; font-size: 0.85rem; font-weight: 600; text-decoration: none; letter-spacing: 0.03em; transition: all 0.2s; cursor: pointer; }
+    .btn-primary { background: var(--gold); color: #fff; }
+    .btn-primary:hover { background: var(--amber); transform: translateY(-1px); }
+    .btn-outline { border: 1.5px solid rgba(255,255,255,0.5); color: rgba(255,255,255,0.85); background: transparent; }
+    .btn-outline:hover { border-color: var(--amber); color: var(--amber); }
+
+    /* ── SHARED ── */
+    section { padding: 5.5rem 2rem; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    .section-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
+    .section-title { font-family: 'Lora', serif; font-size: clamp(1.7rem, 3vw, 2.4rem); color: var(--navy); font-weight: 600; line-height: 1.2; margin-bottom: 1rem; }
+    .section-sub { font-size: 1rem; color: var(--muted); max-width: 600px; line-height: 1.75; margin-bottom: 3rem; }
+    .divider { width: 48px; height: 3px; background: var(--gold); border-radius: 2px; margin-bottom: 1.5rem; }
+
+    /* ── ABOUT ── */
+    #about { background: var(--cream); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .about-text p { color: var(--muted); font-size: 0.97rem; line-height: 1.8; margin-bottom: 1.2rem; }
+    .about-text p:last-child { margin-bottom: 0; }
+    .highlight-word { color: var(--navy); font-weight: 500; }
+    .about-facts { display: flex; flex-direction: column; gap: 1.2rem; }
+    .fact-card { background: #fff; border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 0.5rem; padding: 1rem 1.2rem; }
+    .fact-card h4 { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem; }
+    .fact-card p { font-size: 0.88rem; color: var(--text); line-height: 1.5; }
+    .honor-badge { display: inline-block; background: rgba(201,146,42,0.12); color: var(--gold); font-size: 0.75rem; font-weight: 600; padding: 0.15rem 0.55rem; border-radius: 0.25rem; margin-top: 0.35rem; margin-right: 0.3rem; }
+
+    /* ── MEDICINE ── */
+    #medicine { background: var(--warm); }
+    .medicine-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+    .medicine-card { background: #fff; border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.8rem; transition: box-shadow 0.2s; }
+    .medicine-card:hover { box-shadow: 0 4px 24px rgba(26,39,68,0.08); }
+    .medicine-icon { width: 44px; height: 44px; background: linear-gradient(135deg, var(--navy), var(--mid)); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 1.2rem; }
+    .medicine-card h3 { font-family: 'Lora', serif; font-size: 1.05rem; color: var(--navy); margin-bottom: 0.5rem; }
+    .medicine-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.65; }
+    .languages { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.8rem; }
+    .lang-tag { background: rgba(26,39,68,0.07); color: var(--navy); font-size: 0.78rem; font-weight: 500; padding: 0.2rem 0.65rem; border-radius: 0.3rem; }
+
+    /* ── RESEARCH ── */
+    #research { background: var(--cream); }
+    .catalyst-banner {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--mid) 100%);
+      border: 1px solid rgba(201,146,42,0.3);
+      border-radius: 0.75rem;
+      padding: 1.8rem 2rem;
+      margin-bottom: 2rem;
+      display: flex; gap: 1.5rem; align-items: center;
+    }
+    .catalyst-icon { font-size: 2rem; flex-shrink: 0; }
+    .catalyst-banner h3 { font-family: 'Lora', serif; font-size: 1.1rem; color: var(--amber); margin-bottom: 0.35rem; }
+    .catalyst-banner p { font-size: 0.85rem; color: rgba(255,255,255,0.7); line-height: 1.65; }
+    .catalyst-tag { display: inline-block; background: rgba(201,146,42,0.2); color: var(--amber); font-size: 0.72rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 0.25rem; margin-top: 0.5rem; letter-spacing: 0.05em; text-transform: uppercase; }
+
+    .pub-list { display: flex; flex-direction: column; gap: 1.2rem; }
+    .pub-card { background: #fff; border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.5rem 1.8rem; display: grid; grid-template-columns: auto 1fr; gap: 1.2rem; align-items: start; transition: box-shadow 0.2s; }
+    .pub-card:hover { box-shadow: 0 4px 20px rgba(26,39,68,0.07); }
+    .pub-year { font-size: 0.78rem; font-weight: 700; color: var(--gold); letter-spacing: 0.05em; white-space: nowrap; padding-top: 0.15rem; }
+    .pub-content h3 { font-family: 'Lora', serif; font-size: 0.97rem; color: var(--navy); margin-bottom: 0.3rem; line-height: 1.45; }
+    .pub-journal { font-size: 0.78rem; color: var(--gold); font-weight: 500; font-style: italic; margin-bottom: 0.5rem; }
+    .pub-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.65; }
+    .pub-role { display: inline-block; font-size: 0.72rem; font-weight: 600; color: var(--mid); background: rgba(44,74,124,0.08); padding: 0.15rem 0.5rem; border-radius: 0.25rem; margin-bottom: 0.4rem; }
+
+    .research-split { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2.5rem; }
+    .research-subsection h4 { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .area-tag { background: rgba(26,39,68,0.06); color: var(--navy); border: 1px solid rgba(26,39,68,0.1); font-size: 0.8rem; padding: 0.3rem 0.8rem; border-radius: 2rem; font-weight: 500; }
+    .peer-review-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .peer-review-list li { font-size: 0.83rem; color: var(--muted); display: flex; align-items: center; gap: 0.5rem; }
+    .peer-review-list li::before { content: ''; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
+
+    /* ── TEACHING ── */
+    #teaching { background: var(--warm); }
+    .teaching-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .teaching-col h3 { font-family: 'Lora', serif; font-size: 1rem; color: var(--navy); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+    .teaching-item { padding: 0.9rem 0; border-bottom: 1px solid var(--border); }
+    .teaching-item:last-child { border-bottom: none; }
+    .teaching-item-top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: 0.2rem; }
+    .teaching-item h4 { font-size: 0.88rem; font-weight: 600; color: var(--text); line-height: 1.4; }
+    .teaching-year { font-size: 0.75rem; font-weight: 600; color: var(--gold); white-space: nowrap; }
+    .teaching-item p { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+    .teaching-item .venue { font-size: 0.75rem; font-style: italic; color: var(--muted); margin-top: 0.15rem; }
+
+    /* ── MUSIC PHOTO ── */
+    .music-photo-banner { width: 100%; height: 520px; overflow: hidden; }
+    .music-photo-banner img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; }
+
+    /* ── MUSIC ── */
+    #music { background: linear-gradient(160deg, var(--navy) 0%, #243860 100%); }
+    #music .section-title { color: #fff; }
+    #music .section-sub { color: rgba(255,255,255,0.65); }
+    #music .section-label { color: var(--amber); }
+    #music .divider { background: var(--amber); }
+    .albums-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+    .album-card { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 0.75rem; padding: 2rem; transition: background 0.2s; }
+    .album-card:hover { background: rgba(255,255,255,0.11); }
+    .album-year { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.5rem; }
+    .album-card h3 { font-family: 'Lora', serif; font-size: 1.25rem; color: #fff; margin-bottom: 0.7rem; }
+    .album-card p { font-size: 0.84rem; color: rgba(255,255,255,0.6); line-height: 1.7; }
+    .album-tracks { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .track-tag { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 0.25rem; }
+
+    .music-links { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .music-platform-link { display: inline-flex; align-items: center; gap: 0.6rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.85); text-decoration: none; padding: 0.7rem 1.4rem; border-radius: 2rem; font-size: 0.85rem; font-weight: 500; transition: all 0.2s; }
+    .music-platform-link:hover { background: rgba(255,255,255,0.18); border-color: var(--amber); color: var(--amber); }
+
+    .music-press { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+    .press-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.6rem; padding: 1.2rem 1.4rem; }
+    .press-card .press-date { font-size: 0.72rem; color: var(--amber); font-weight: 600; margin-bottom: 0.3rem; letter-spacing: 0.05em; }
+    .press-card h4 { font-size: 0.88rem; color: #fff; margin-bottom: 0.3rem; line-height: 1.4; }
+    .press-card p { font-size: 0.78rem; color: rgba(255,255,255,0.55); line-height: 1.5; }
+
+    .music-quote { background: rgba(255,255,255,0.05); border-left: 3px solid var(--amber); padding: 1.5rem 2rem; border-radius: 0 0.5rem 0.5rem 0; }
+    .music-quote blockquote { font-family: 'Lora', serif; font-style: italic; font-size: 1.05rem; color: rgba(255,255,255,0.82); line-height: 1.7; }
+    .music-quote cite { display: block; margin-top: 0.6rem; font-size: 0.78rem; color: var(--amber); font-style: normal; }
+
+    /* ── FAITH ── */
+    #faith { background: var(--cream); }
+    .faith-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .faith-text p { font-size: 0.95rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.2rem; }
+    .faith-milestones { display: flex; flex-direction: column; gap: 1rem; }
+    .milestone { display: flex; gap: 1rem; align-items: flex-start; }
+    .milestone-dot { width: 10px; height: 10px; background: var(--gold); border-radius: 50%; flex-shrink: 0; margin-top: 0.45rem; }
+    .milestone-content h4 { font-size: 0.88rem; font-weight: 600; color: var(--navy); margin-bottom: 0.2rem; }
+    .milestone-content p { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--navy); text-align: center; }
+    #contact .section-title { color: #fff; }
+    #contact .section-sub { color: rgba(255,255,255,0.6); margin: 0 auto 2.5rem; }
+    #contact .section-label { color: var(--amber); }
+    #contact .divider { margin: 0 auto 1.5rem; background: var(--amber); }
+    .contact-links { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+    .contact-link { display: flex; align-items: center; gap: 0.6rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.82); text-decoration: none; padding: 0.75rem 1.4rem; border-radius: 0.5rem; font-size: 0.85rem; font-weight: 500; transition: all 0.2s; }
+    .contact-link:hover { background: rgba(201,146,42,0.2); border-color: var(--amber); color: var(--amber); }
+    .contact-link .icon { font-size: 1rem; }
+
+    /* ── FOOTER ── */
+    footer { background: #0f1a30; text-align: center; padding: 1.8rem 2rem; color: rgba(255,255,255,0.35); font-size: 0.78rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      nav ul { gap: 1rem; }
+      .about-grid, .faith-grid, .teaching-grid, .research-split, .music-press { grid-template-columns: 1fr; gap: 2rem; }
+      .pub-card { grid-template-columns: 1fr; gap: 0.4rem; }
+      .catalyst-banner { flex-direction: column; }
+    }
+    @media (max-width: 480px) { nav ul { display: none; } }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="brand">Jason Gusdorf, MD</a>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#medicine">Medicine</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#teaching">Teaching</a></li>
+    <li><a href="#music">Music</a></li>
+    <li><a href="#faith">Faith</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">Physician · Researcher · Musician</div>
+    <h1>Jason Gusdorf, <em>MD</em></h1>
+    <p>Internal medicine physician at Beth Israel Deaconess Medical Center and Fenway Health, researcher in cardiovascular outcomes and AI diagnostics, and folk musician.</p>
+    <div class="hero-pills">
+      <span class="hero-pill">Boston, MA</span>
+      <span class="hero-pill">Harvard / BIDMC</span>
+      <span class="hero-pill">Georgetown Medicine '23</span>
+      <span class="hero-pill">Magna Cum Laude</span>
+      <span class="hero-pill">English · Spanish · Hebrew</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#medicine" class="btn btn-primary">Clinical Work</a>
+      <a href="#research" class="btn btn-outline">Publications</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <div class="section-label">About</div>
+        <h2 class="section-title">Healing, Scholarship & Artistry</h2>
+        <div class="divider"></div>
+        <p>I grew up in <span class="highlight-word">St. Louis, Missouri</span>, shaped by years at OSRUI summer camp and a love of water polo at John Burroughs School. At <span class="highlight-word">Georgetown University's School of Foreign Service</span> I studied Science, Technology & International Affairs, graduating Magna Cum Laude with Honors in my major. I discovered that music, community, and medicine are deeply intertwined—leading Kabbalat Shabbat services and growing our Jewish community from 20 to 65–80 attendees each week.</p>
+        <p>After college I spent transformative time at the <span class="highlight-word">Pardes Institute of Jewish Studies</span> in Jerusalem on a funded academic fellowship before entering Georgetown University School of Medicine. I earned my MD in 2023 and matched into internal medicine at <span class="highlight-word">Beth Israel Deaconess Medical Center</span>, a Harvard teaching hospital.</p>
+        <p>I currently see patients as a primary-care physician at <span class="highlight-word">Fenway Health</span> in Boston while pursuing research in cardiovascular outcomes, health equity, and AI-assisted diagnostics. I am also a co-founder of <span class="highlight-word">CATALYST</span>, an AI startup developing LLM-based ECG interpretation tools. Outside the hospital, I write and perform folk music and remain active in Jewish communal life.</p>
+      </div>
+      <div class="about-facts">
+        <div class="fact-card">
+          <h4>Education</h4>
+          <p>BSc, Science, Technology &amp; International Affairs<br>Georgetown University School of Foreign Service, 2016<br>
+          <span class="honor-badge">Magna Cum Laude</span><span class="honor-badge">Honors in Major</span></p>
+          <p style="margin-top:0.5rem">MD, Georgetown University School of Medicine, 2023</p>
+        </div>
+        <div class="fact-card">
+          <h4>Residency Training</h4>
+          <p>Internal Medicine, BIDMC / Harvard — 2023–2026<br>Clinical Fellow in Medicine</p>
+        </div>
+        <div class="fact-card">
+          <h4>Clinical Appointments</h4>
+          <p>Fenway Health — Primary Care Physician, Boston, MA<br>VA Hospital — West Roxbury, MA</p>
+        </div>
+        <div class="fact-card">
+          <h4>Honors & Fellowships</h4>
+          <p>Magna Cum Laude · Honors in Major (Georgetown, 2016)<br>Pardes Academic Fellowship, Jerusalem (2018, funded)</p>
+        </div>
+        <div class="fact-card">
+          <h4>Languages</h4>
+          <p>English · Spanish · Hebrew</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEDICINE -->
+<section id="medicine">
+  <div class="container">
+    <div class="section-label">Clinical Work</div>
+    <h2 class="section-title">Compassionate Primary Care</h2>
+    <div class="divider"></div>
+    <p class="section-sub">As a primary-care physician and internal-medicine resident, I provide comprehensive adult care informed by cultural sensitivity and a commitment to health equity.</p>
+    <div class="medicine-grid">
+      <div class="medicine-card">
+        <div class="medicine-icon">🏥</div>
+        <h3>Beth Israel Deaconess Medical Center</h3>
+        <p>Internal medicine residency at a Harvard teaching hospital, training in inpatient and outpatient medicine while pursuing clinical research with the Secemsky and Rodman labs.</p>
+      </div>
+      <div class="medicine-card">
+        <div class="medicine-icon">🩺</div>
+        <h3>Fenway Health</h3>
+        <p>Primary care physician accepting new adult patients. Continuity clinic specializing in general internal medicine, sexually transmitted infections, and HIV antiretroviral therapy.</p>
+        <div class="languages">
+          <span class="lang-tag">English</span>
+          <span class="lang-tag">Spanish</span>
+          <span class="lang-tag">Hebrew</span>
+        </div>
+      </div>
+      <div class="medicine-card">
+        <div class="medicine-icon">🎖️</div>
+        <h3>VA Hospital — West Roxbury</h3>
+        <p>Resident physician in internal medicine at the Veterans Affairs Hospital, providing care for veterans with complex medical conditions.</p>
+      </div>
+      <div class="medicine-card">
+        <div class="medicine-icon">💙</div>
+        <h3>Integrative & Holistic Approach</h3>
+        <p>My practice integrates spiritual and cultural context into patient care. I hold a certification in Structure-Based Medical Acupuncture and have published guidance on religion and fasting in clinical settings.</p>
+      </div>
+      <div class="medicine-card">
+        <div class="medicine-icon">📋</div>
+        <h3>Quality Improvement</h3>
+        <p>Led a Stoneman QI initiative at BIDMC to improve after-discharge outpatient follow-up, process-mapping discharge appointment requests in the EPIC EMR system.</p>
+      </div>
+      <div class="medicine-card">
+        <div class="medicine-icon">🤝</div>
+        <h3>Music in Medicine</h3>
+        <p>During college I served as a musician-in-residence for cancer patients, playing guitar at the bedside—an experience that shaped my understanding of holistic healing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="container">
+    <div class="section-label">Research</div>
+    <h2 class="section-title">Publications & Scholarship</h2>
+    <div class="divider"></div>
+    <p class="section-sub">My research spans cardiovascular outcomes, health disparities, AI diagnostics, and anticoagulation therapy, with publications in JAHA, AJC, NEJM, and NeurIPS.</p>
+
+    <!-- CATALYST highlight -->
+    <div class="catalyst-banner">
+      <div class="catalyst-icon">⚡</div>
+      <div>
+        <h3>CATALYST — AI Startup</h3>
+        <p>Co-founder of CATALYST, a venture emerging from a BIDMC / MIT Media Lab collaboration to build RAG-equipped LLM tools for ECG interpretation. GPT-4 achieved AUC = 0.940 in arrhythmia classification in our benchmarking study—the first known multi-LLM ECG benchmarking with multimodal input. Currently pursuing $150,000 in grant funding.</p>
+        <span class="catalyst-tag">Funding Pending · MIT Media Lab · BIDMC</span>
+      </div>
+    </div>
+
+    <div class="pub-list">
+
+      <div class="pub-card">
+        <div class="pub-year">2026</div>
+        <div class="pub-content">
+          <h3>Comparing survival with vitamin K antagonists, low-molecular-weight heparin and direct oral anticoagulants in patients with cancer</h3>
+          <div class="pub-journal">Research & Practice in Thrombosis & Haemostasis</div>
+          <p class="pub-desc">Systematic review of 14 studies (70,025 patients). Observational data suggested lower mortality with VKAs, particularly in solid malignancies with &gt;6-month follow-up; randomized trials showed no mortality difference.</p>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-year">2025</div>
+        <div class="pub-content">
+          <span class="pub-role">First Author</span>
+          <h3>Inpatient outcomes for patients with peripheral artery disease hospitalised for acute myocardial infarction</h3>
+          <div class="pub-journal">Journal of the American Heart Association</div>
+          <p class="pub-desc">NCDR Chest Pain-MI Registry (493,740 AMI hospitalizations): PAD patients had significantly higher in-hospital mortality, major bleeding, cardiac arrest, cardiogenic shock, and stroke regardless of age, sex, race, or AMI type.</p>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-year">2025</div>
+        <div class="pub-content">
+          <span class="pub-role">First Author</span>
+          <h3>Renal artery stent procedural trends and disparities in a national cohort</h3>
+          <div class="pub-journal">American Journal of Cardiology</div>
+          <p class="pub-desc">2016–2020 Medicare data (19,130 patients): stenting rates declined 41%. Black patients faced higher risks of hypertensive crisis and dialysis initiation; dual Medicare–Medicaid enrollment was associated with increased mortality.</p>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-year">2025</div>
+        <div class="pub-content">
+          <h3>Exploring RAG-driven multimodal LLMs for explainable ECG interpretation</h3>
+          <div class="pub-journal">NeurIPS 2025 — BrainBodyFM Workshop · Poster Presentation, San Diego, CA</div>
+          <p class="pub-desc">Benchmarked GPT-4, Claude 3.5 Sonnet, Llama 3.2, and GPT-3.5 for arrhythmia classification using multimodal ECG data with Retrieval-Augmented Generation. GPT-4 achieved AUC = 0.940 with equitable performance across demographics. First multi-LLM ECG benchmarking with integrated structured RAG and multimodal input.</p>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-year">2025</div>
+        <div class="pub-content">
+          <h3>NEJM Case Records — Dr. CaBot AI contributor</h3>
+          <div class="pub-journal">New England Journal of Medicine — Case 28-2025</div>
+          <p class="pub-desc">Contributor to the design and creation of the Dr. CaBot AI system used in the NEJM Clinical Pathological Conference case analysis. Collaborated with the Manrai &amp; Rodman Research Group to curate and analyze historical CPC cases and advance computational modeling of clinical diagnostic reasoning.</p>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-year">2025</div>
+        <div class="pub-content">
+          <h3>Advancing Medical AI Using a Century of Cases: CPC-Bench</h3>
+          <div class="pub-journal">arXiv preprint</div>
+          <p class="pub-desc">Benchmark derived from 7,102 clinicopathological conference cases and 1,021 image challenges. "Dr. CaBot" outperformed physicians in text-based diagnostic reasoning but underperformed in image interpretation and literature retrieval.</p>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-year">2024</div>
+        <div class="pub-content">
+          <span class="pub-role">First Author</span>
+          <h3>Spontaneous Tumor Lysis Syndrome Secondary to Metastatic Pancreatic Adenocarcinoma</h3>
+          <div class="pub-journal">ACG Case Reports Journal</div>
+          <p class="pub-desc">Case report of an 86-year-old woman who developed spontaneous TLS in the context of metastatic pancreatic adenocarcinoma—a rare complication outside hematologic malignancies. doi: 10.14309/crj.0000000000001305</p>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-year">2023</div>
+        <div class="pub-content">
+          <h3>Guidance for Physicians on the Yom Kippur Fast</h3>
+          <div class="pub-journal">Georgetown Medical Review · doi: 10.52504/001c.83342</div>
+          <p class="pub-desc">Reviews Talmudic sources and the medical literature to help physicians counsel Jewish patients about religious fasting, including contraindications such as metabolic and eating disorders. Also served as peer reviewer for this journal.</p>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-year">2022</div>
+        <div class="pub-content">
+          <span class="pub-role">First Author</span>
+          <h3>Risk of Hemorrhage after Receiving tPA and Cardiopulmonary Resuscitation</h3>
+          <div class="pub-journal">Unpublished — Georgetown University / MedStar Washington Hospital Center</div>
+          <p class="pub-desc">Retrospective cohort study comparing rates of hemorrhage in patients who received tPA and CPR versus tPA without CPR. Findings showed no significant association between CPR and surgical procedures needed due to bleeding or pRBC transfusion volume.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="research-split">
+      <div class="research-subsection">
+        <h4>Research Areas</h4>
+        <div class="tag-list">
+          <span class="area-tag">Cardiovascular Outcomes</span>
+          <span class="area-tag">Health Equity &amp; Disparities</span>
+          <span class="area-tag">AI Diagnostics</span>
+          <span class="area-tag">ECG Interpretation</span>
+          <span class="area-tag">Anticoagulation Therapy</span>
+          <span class="area-tag">Peripheral Artery Disease</span>
+          <span class="area-tag">Oncologic Complications</span>
+          <span class="area-tag">Telehealth Innovation</span>
+          <span class="area-tag">Religion &amp; Medicine</span>
+        </div>
+      </div>
+      <div class="research-subsection">
+        <h4>Peer Review Service</h4>
+        <ul class="peer-review-list">
+          <li>Journal of the American Heart Association (2025)</li>
+          <li>BMJ Digital Health &amp; AI (2025)</li>
+          <li>American College of Gastroenterology: Case Reports (2025)</li>
+          <li>Georgetown Medical Review (2023)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEACHING -->
+<section id="teaching">
+  <div class="container">
+    <div class="section-label">Teaching</div>
+    <h2 class="section-title">Education & Mentorship</h2>
+    <div class="divider"></div>
+    <p class="section-sub">From bedside mentorship at Harvard Medical School to leading Harvard-MIT master's research projects, teaching is central to my practice.</p>
+
+    <div class="teaching-grid">
+      <div class="teaching-col">
+        <h3>Student Teaching</h3>
+
+        <div class="teaching-item">
+          <div class="teaching-item-top">
+            <h4>Harvard-MIT LLM Project Lead</h4>
+            <span class="teaching-year">2024–25</span>
+          </div>
+          <p>Proposed and led a benchmarking study of multimodal LLMs for ECG interpretation with five Harvard-MIT Health Sciences & Technology master's students. Project evolved into the CATALYST startup.</p>
+        </div>
+
+        <div class="teaching-item">
+          <div class="teaching-item-top">
+            <h4>HMS Clinical Rotation Mentor</h4>
+            <span class="teaching-year">2023–26</span>
+          </div>
+          <p>One-on-one mentoring of 2nd-year Harvard Medical School students entering clinical clerkships—clinical topics, emotional support, and professional development.</p>
+        </div>
+
+        <div class="teaching-item">
+          <div class="teaching-item-top">
+            <h4>ICU Pulmonary Physiology</h4>
+            <span class="teaching-year">2023</span>
+          </div>
+          <p>5-hour session on ICU pulmonary physiology, asthma, and ARDS for 3rd-year Georgetown medical students.</p>
+          <div class="venue">Georgetown University School of Medicine</div>
+        </div>
+
+        <div class="teaching-item">
+          <div class="teaching-item-top">
+            <h4>Pulmonary &amp; Cardiac Point-of-Care Ultrasound</h4>
+            <span class="teaching-year">2023</span>
+          </div>
+          <p>4-hour POCUS session covering pneumothorax, pulmonary embolism, and myocardial infarction for 1st-year medical students.</p>
+          <div class="venue">Georgetown University School of Medicine</div>
+        </div>
+      </div>
+
+      <div class="teaching-col">
+        <h3>Grand Rounds & Conference Presentations</h3>
+
+        <div class="teaching-item">
+          <div class="teaching-item-top">
+            <h4>AI Chatbot for Mental Health — NEJM AI Journal Club</h4>
+            <span class="teaching-year">2025</span>
+          </div>
+          <div class="venue">BIDMC, with Adam Rodman, MD</div>
+        </div>
+
+        <div class="teaching-item">
+          <div class="teaching-item-top">
+            <h4>Cardiac ICU: Shock &amp; Swan-Ganz Catheters</h4>
+            <span class="teaching-year">2025</span>
+          </div>
+          <div class="venue">Beth Israel Deaconess Medical Center</div>
+        </div>
+
+        <div class="teaching-item">
+          <div class="teaching-item-top">
+            <h4>STEMIs: EKG Interpretation &amp; Ion Channel Mechanisms</h4>
+            <span class="teaching-year">2025</span>
+          </div>
+          <div class="venue">Beth Israel Deaconess Medical Center</div>
+        </div>
+
+        <div class="teaching-item">
+          <div class="teaching-item-top">
+            <h4>PAD &amp; Acute MI Outcomes — AHA Oral Presentation</h4>
+            <span class="teaching-year">2024</span>
+          </div>
+          <div class="venue">American Heart Association, Chicago, IL</div>
+        </div>
+
+        <div class="teaching-item">
+          <div class="teaching-item-top">
+            <h4>Spontaneous Tumor Lysis — Pancreatic Adenocarcinoma</h4>
+            <span class="teaching-year">2024</span>
+          </div>
+          <div class="venue">Beth Israel Deaconess Medical Center</div>
+        </div>
+
+        <div class="teaching-item">
+          <div class="teaching-item-top">
+            <h4>Artificial Sweeteners — NEJM Basic Science Update</h4>
+            <span class="teaching-year">2023</span>
+          </div>
+          <div class="venue">Beth Israel Deaconess Medical Center</div>
+        </div>
+
+        <div class="teaching-item">
+          <div class="teaching-item-top">
+            <h4>EWS-FLI1 Fusion Protein in Ewing Sarcoma</h4>
+            <span class="teaching-year">2020</span>
+          </div>
+          <div class="venue">Mitchell Scholars Symposium, Georgetown University Hospital</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MUSIC PHOTO -->
+<div class="music-photo-banner">
+  <img src="guitar.jpg" alt="Jason Gusdorf playing guitar" />
+</div>
+
+<!-- MUSIC -->
+<section id="music">
+  <div class="container">
+    <div class="section-label">Music</div>
+    <h2 class="section-title">Folk Music & Songwriting</h2>
+    <div class="divider"></div>
+    <p class="section-sub">A singer-songwriter at heart, I write and perform folk music inspired by spirituality, medicine, and the human experience.</p>
+
+    <div class="albums-grid">
+      <div class="album-card">
+        <div class="album-year">2020</div>
+        <h3>Of All the Souls</h3>
+        <p>A 14-track debut album featuring vocals and guitar. Themes of nature, spirituality, and introspection run throughout.</p>
+        <div class="album-tracks">
+          <span class="track-tag">In the Garden</span>
+          <span class="track-tag">The Sea When It's Glass</span>
+          <span class="track-tag">New Moon</span>
+          <span class="track-tag">+11 more</span>
+        </div>
+      </div>
+      <div class="album-card">
+        <div class="album-year">2021</div>
+        <h3>After the Seventh</h3>
+        <p>Inspired by a semester of intensive Jewish text study at the Pardes Institute of Jewish Studies in Jerusalem. Written in the hills of the Old City.</p>
+        <div class="album-tracks">
+          <span class="track-tag">Pardes-inspired</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="music-links">
+      <a href="https://open.spotify.com/artist/6gHVe3VzQJrvkPHnCHRUUw" target="_blank" class="music-platform-link">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+        Listen on Spotify
+      </a>
+      <a href="https://music.apple.com/us/artist/jason-gusdorf/1525005189" target="_blank" class="music-platform-link">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.994 6.124a9.23 9.23 0 00-.24-2.19c-.317-1.31-1.048-2.31-2.18-3.043a6.303 6.303 0 00-1.862-.81c-.676-.17-1.365-.2-2.05-.23-.232-.01-.467-.01-.7-.013H6.717c-.379.004-.76.005-1.138.015-.692.02-1.383.05-2.06.23a6.144 6.144 0 00-1.864.81C.535 1.632-.196 2.634-.01 3.942c.032.23.07.46.115.687.28 1.4.96 2.52 2.02 3.39.22.18.46.34.7.49.7.43 1.47.67 2.27.79.5.08 1.01.1 1.52.1h10.78c.51 0 1.02-.02 1.52-.1.8-.12 1.57-.36 2.27-.79.24-.15.48-.31.7-.49 1.06-.87 1.74-1.99 2.02-3.39.045-.227.083-.457.115-.687zm-6.977 9.367c-.07.28-.19.54-.36.77-.34.47-.82.77-1.38.87-.26.05-.53.05-.79.04-.37-.01-.74-.07-1.08-.2-.49-.18-.91-.48-1.25-.87a4.46 4.46 0 01-.88-1.77c-.13-.52-.15-1.06-.06-1.59.1-.57.32-1.09.67-1.54.36-.46.83-.79 1.38-.96.39-.12.79-.15 1.19-.1.5.06.96.24 1.36.54v-4.27l-5.5 1.25v7.27c-.01.42-.09.83-.24 1.22-.29.74-.82 1.3-1.55 1.62-.37.17-.77.26-1.18.27-.25.01-.5-.01-.74-.07-.49-.12-.92-.38-1.25-.76-.34-.39-.53-.86-.56-1.36-.03-.5.1-.98.37-1.4.27-.43.66-.74 1.12-.91.37-.13.76-.17 1.15-.12.28.04.55.12.8.24v-1.1c-.26-.07-.53-.11-.8-.13-.57-.04-1.13.05-1.66.27-.79.33-1.41.9-1.78 1.65-.22.45-.33.94-.33 1.44 0 .31.04.62.12.92.22.83.71 1.53 1.4 2.01.51.35 1.09.56 1.7.61.29.02.58.01.87-.03.65-.1 1.24-.38 1.72-.82.5-.45.83-1.02.97-1.65.07-.3.1-.6.1-.91v-7.52l7.83-1.78v5.27c-.01.41-.09.81-.23 1.19-.27.72-.78 1.27-1.47 1.59-.35.16-.72.25-1.1.27-.24.01-.48 0-.71-.05-.47-.1-.89-.34-1.22-.69-.34-.36-.54-.81-.57-1.29-.03-.49.1-.96.38-1.36.28-.41.68-.7 1.14-.85.37-.12.76-.14 1.14-.07.26.05.51.14.74.27v-1.1c-.24-.07-.49-.11-.75-.13z"/></svg>
+        Listen on Apple Music
+      </a>
+    </div>
+
+    <div class="music-press">
+      <div class="press-card">
+        <div class="press-date">June 4, 2025</div>
+        <h4>Podcast Guest — "LLM, MD: AI Health Bots Are Coming"</h4>
+        <p>Invited guest on <em>Babbage</em>, The Economist — discussing generative AI in clinical diagnostics and the future of physician-AI collaboration.</p>
+      </div>
+      <div class="press-card">
+        <div class="press-date">November 22, 2022</div>
+        <h4>Live at Blue Strawberry, St. Louis</h4>
+        <p>Folk concert featuring original compositions written in Jerusalem alongside covers of Johnny Cash and Bob Dylan. Covered by <em>St. Louis Public Radio</em> as part of its Community Events series.</p>
+      </div>
+    </div>
+
+    <div class="music-quote">
+      <blockquote>"Judaism is a fundamental part of my identity. Playing guitar at the bedside for cancer patients during college showed me that healing and music are not so different—they both require presence, vulnerability, and the courage to sit with another person in their most human moments."</blockquote>
+      <cite>— Jason Gusdorf, Pardes Institute Blog</cite>
+    </div>
+  </div>
+</section>
+
+<!-- FAITH -->
+<section id="faith">
+  <div class="container">
+    <div class="section-label">Faith & Community</div>
+    <h2 class="section-title">Judaism as a Way of Life</h2>
+    <div class="divider"></div>
+    <div class="faith-grid">
+      <div class="faith-text">
+        <p>Growing up in a Reform Jewish household in St. Louis and attending OSRUI summer camp for seven years, Judaism has always been central to my life—not merely as religion but as an integrated framework for ethics, community, and purpose.</p>
+        <p>At Georgetown I served as the Jewish community's music leader for four years, leading Kabbalat Shabbat services that grew from roughly 20 participants to 65–80 each week. I launched a Torah-study program and helped secure new Torah scrolls and prayer books for the community.</p>
+        <p>Before medical school, I received a funded fellowship to study at the Pardes Institute of Jewish Studies in Jerusalem, returning later for an extended fellowship. That intensive immersion in Jewish text deepened my understanding of the spiritual dimensions of healing—themes that directly inform my clinical practice and academic writing, including a published essay on how Judaism shaped my love of medicine.</p>
+      </div>
+      <div class="faith-milestones">
+        <div class="milestone">
+          <div class="milestone-dot"></div>
+          <div class="milestone-content">
+            <h4>St. Louis — OSRUI</h4>
+            <p>Seven years at the Union for Reform Judaism's summer camp, foundational to Jewish identity.</p>
+          </div>
+        </div>
+        <div class="milestone">
+          <div class="milestone-dot"></div>
+          <div class="milestone-content">
+            <h4>Georgetown — Music Leader</h4>
+            <p>Led Kabbalat Shabbat for four years; grew attendance from 20 to 65–80; launched Torah study.</p>
+          </div>
+        </div>
+        <div class="milestone">
+          <div class="milestone-dot"></div>
+          <div class="milestone-content">
+            <h4>Pardes Institute, Jerusalem — Funded Fellow</h4>
+            <p>Academic fellowship (2018) and extended return fellowship; intensive Jewish text study between degrees.</p>
+          </div>
+        </div>
+        <div class="milestone">
+          <div class="milestone-dot"></div>
+          <div class="milestone-content">
+            <h4>"After the Seventh" Album</h4>
+            <p>Second album directly inspired by Pardes studies—music as spiritual reflection.</p>
+          </div>
+        </div>
+        <div class="milestone">
+          <div class="milestone-dot"></div>
+          <div class="milestone-content">
+            <h4>Writing on Faith &amp; Medicine</h4>
+            <p>Published "How Judaism Influenced My Love of Medicine" (Pardes, 2019); "Viktor Frankl's Statue of Responsibility" (Capital Psychiatry, 2022); clinical guidance on the Yom Kippur fast (Georgetown Medical Review, 2023).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-label">Contact</div>
+    <h2 class="section-title">Get in Touch</h2>
+    <div class="divider"></div>
+    <p class="section-sub">I see patients at Fenway Health and am happy to connect about research collaborations, music, or speaking opportunities.</p>
+    <div class="contact-links">
+      <a href="https://fenwayhealth.org/providers/jason-gusdorf-md/" target="_blank" class="contact-link">
+        <span class="icon">🏥</span> Fenway Health Profile
+      </a>
+      <a href="https://connects.catalyst.harvard.edu/Profiles/display/Person/216583" target="_blank" class="contact-link">
+        <span class="icon">🔬</span> Harvard Catalyst
+      </a>
+      <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Gusdorf+Jason" target="_blank" class="contact-link">
+        <span class="icon">📄</span> PubMed Publications
+      </a>
+      <a href="https://www.doximity.com/pub/jason-gusdorf-md" target="_blank" class="contact-link">
+        <span class="icon">👨‍⚕️</span> Doximity
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 Jason Gusdorf, MD · Boston, MA · Beth Israel Deaconess Medical Center / Fenway Health</p>
+</footer>
+
+</body>
+</html>
