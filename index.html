@@ -175,6 +175,16 @@
     .press-card h4 { font-size: 0.88rem; color: #fff; margin-bottom: 0.3rem; line-height: 1.4; }
     .press-card p { font-size: 0.78rem; color: rgba(255,255,255,0.55); line-height: 1.5; }
 
+    /* ── PHOTO PLAYER WRAP ── */
+    .photo-player-wrap {
+      background: linear-gradient(160deg, var(--navy) 0%, #243860 100%);
+      padding: 1.8rem 2rem;
+    }
+    .photo-player-wrap .audio-player {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
     /* ── AUDIO PLAYER ── */
     .audio-player {
       background: rgba(255,255,255,0.06);
@@ -647,6 +657,52 @@
   <img src="guitar.jpg" alt="Jason Gusdorf playing guitar" />
 </div>
 
+<div class="photo-player-wrap">
+  <audio id="oats-audio" src="of-all-the-souls.m4a" preload="none"></audio>
+  <div class="audio-player">
+    <button class="play-btn" id="play-btn" onclick="togglePlay()">
+      <svg class="icon-play" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+      <svg class="icon-pause" viewBox="0 0 24 24"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
+    </button>
+    <div class="audio-info">
+      <div class="audio-title">Of All the Souls</div>
+      <div class="audio-album">Of All the Souls · 2020</div>
+      <div class="audio-progress-wrap">
+        <div class="progress-bar" id="progress-bar" onclick="seek(event)">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <span class="audio-time" id="audio-time">0:00</span>
+      </div>
+    </div>
+  </div>
+  <script>
+    const audio = document.getElementById('oats-audio');
+    const btn = document.getElementById('play-btn');
+    const fill = document.getElementById('progress-fill');
+    const timeEl = document.getElementById('audio-time');
+    function togglePlay() {
+      if (audio.paused) { audio.play(); btn.classList.add('playing'); }
+      else { audio.pause(); btn.classList.remove('playing'); }
+    }
+    function fmt(s) {
+      const m = Math.floor(s / 60), sec = Math.floor(s % 60);
+      return m + ':' + String(sec).padStart(2, '0');
+    }
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration) {
+        fill.style.width = (audio.currentTime / audio.duration * 100) + '%';
+        timeEl.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+      }
+    });
+    audio.addEventListener('ended', () => btn.classList.remove('playing'));
+    function seek(e) {
+      const bar = document.getElementById('progress-bar');
+      const rect = bar.getBoundingClientRect();
+      audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+    }
+  </script>
+</div>
+
 <!-- MUSIC -->
 <section id="music">
   <div class="container">
@@ -700,52 +756,6 @@
         <p>Folk concert featuring original compositions written in Jerusalem alongside covers of Johnny Cash and Bob Dylan. Covered by <em>St. Louis Public Radio</em> as part of its Community Events series.</p>
       </div>
     </div>
-
-    <audio id="oats-audio" src="of-all-the-souls.m4a" preload="none"></audio>
-    <div class="audio-player">
-      <button class="play-btn" id="play-btn" onclick="togglePlay()">
-        <svg class="icon-play" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-        <svg class="icon-pause" viewBox="0 0 24 24"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
-      </button>
-      <div class="audio-info">
-        <div class="audio-title">Of All the Souls</div>
-        <div class="audio-album">Of All the Souls · 2020</div>
-        <div class="audio-progress-wrap">
-          <div class="progress-bar" id="progress-bar" onclick="seek(event)">
-            <div class="progress-fill" id="progress-fill"></div>
-          </div>
-          <span class="audio-time" id="audio-time">0:00</span>
-        </div>
-      </div>
-    </div>
-
-    <script>
-      const audio = document.getElementById('oats-audio');
-      const btn = document.getElementById('play-btn');
-      const fill = document.getElementById('progress-fill');
-      const timeEl = document.getElementById('audio-time');
-
-      function togglePlay() {
-        if (audio.paused) { audio.play(); btn.classList.add('playing'); }
-        else { audio.pause(); btn.classList.remove('playing'); }
-      }
-      function fmt(s) {
-        const m = Math.floor(s / 60), sec = Math.floor(s % 60);
-        return m + ':' + String(sec).padStart(2, '0');
-      }
-      audio.addEventListener('timeupdate', () => {
-        if (audio.duration) {
-          fill.style.width = (audio.currentTime / audio.duration * 100) + '%';
-          timeEl.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
-        }
-      });
-      audio.addEventListener('ended', () => btn.classList.remove('playing'));
-      function seek(e) {
-        const bar = document.getElementById('progress-bar');
-        const rect = bar.getBoundingClientRect();
-        audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
-      }
-    </script>
 
     <div class="music-quote">
       <blockquote>"Judaism is a fundamental part of my identity. Playing guitar at the bedside for cancer patients during college showed me that healing and music are not so different—they both require presence, vulnerability, and the courage to sit with another person in their most human moments."</blockquote>
