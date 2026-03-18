@@ -1,14 +1,29 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import WorkflowGrid from '../components/WorkflowGrid.astro';
+import Sidebar from '../components/Sidebar.astro';
 ---
 
-<BaseLayout title="LLMs for Doctors — AI Workflows for Clinicians" description="Practical AI workflows, tools, and templates for clinicians. Evidence-based, privacy-aware, specialty-specific.">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <h1 class="font-heading text-4xl font-bold text-clinical-900 dark:text-clinical-50">
-      LLMs for Doctors
-    </h1>
-    <p class="mt-4 text-lg text-clinical-600 dark:text-clinical-400">
-      Practical AI workflows, tools, and templates for clinicians.
-    </p>
+<BaseLayout
+  title="LLMs for Doctors — AI Workflows for Clinicians"
+  description="Practical AI workflows, tools, and templates for clinicians. Evidence-based, privacy-aware, specialty-specific."
+>
+  <Hero />
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="flex flex-col lg:flex-row gap-10">
+      <!-- Main content -->
+      <main class="flex-1 min-w-0">
+        <WorkflowGrid />
+      </main>
+
+      <!-- Sidebar — 300px on desktop, stacks below on mobile -->
+      <div class="w-full lg:w-[300px] shrink-0">
+        <div class="lg:sticky lg:top-20">
+          <Sidebar />
+        </div>
+      </div>
+    </div>
   </div>
 </BaseLayout>
