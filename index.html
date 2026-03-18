@@ -268,30 +268,6 @@
     }
     @media (max-width: 480px) { nav ul { display: none; } }
 
-    /* ── AMBIENT PLAYER ── */
-    .ambient-player {
-      display: inline-flex; align-items: center; gap: 0.6rem;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.18);
-      border-radius: 2rem;
-      padding: 0.4rem 1rem 0.4rem 0.5rem;
-      margin-top: 1.5rem;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .ambient-player:hover { background: rgba(255,255,255,0.14); }
-    .ambient-icon {
-      width: 28px; height: 28px; border-radius: 50%;
-      background: var(--gold);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      transition: background 0.2s;
-    }
-    .ambient-icon svg { width: 12px; height: 12px; fill: #fff; }
-    .ambient-icon.muted svg.icon-sound { display: none; }
-    .ambient-icon:not(.muted) svg.icon-muted { display: none; }
-    .ambient-label { font-size: 0.75rem; color: rgba(255,255,255,0.75); line-height: 1.2; }
-    .ambient-label strong { display: block; color: #fff; font-size: 0.8rem; }
   </style>
 </head>
 <body>
@@ -334,33 +310,6 @@
         <a href="#music" class="btn btn-outline">Music</a>
       </div>
 
-      <div class="ambient-player" onclick="toggleMute()" id="ambient-wrap">
-        <div class="ambient-icon muted" id="ambient-icon">
-          <svg class="icon-muted" viewBox="0 0 24 24"><path d="M16.5 12A4.5 4.5 0 0014 7.97v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51A8.796 8.796 0 0021 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06A8.99 8.99 0 0017.73 18l2 2L21 18.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
-          <svg class="icon-sound" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-        </div>
-        <div class="ambient-label">
-          <strong>In the Garden</strong>
-          tap to unmute
-        </div>
-      </div>
-      <audio id="ambient-audio" src="in-the-garden.m4a" autoplay loop muted preload="auto"></audio>
-      <script>
-        const ambientAudio = document.getElementById('ambient-audio');
-        const ambientIcon = document.getElementById('ambient-icon');
-        const ambientWrap = document.getElementById('ambient-wrap');
-        function toggleMute() {
-          ambientAudio.muted = !ambientAudio.muted;
-          ambientAudio.play();
-          if (ambientAudio.muted) {
-            ambientIcon.classList.add('muted');
-            ambientWrap.querySelector('.ambient-label').innerHTML = '<strong>In the Garden</strong>tap to unmute';
-          } else {
-            ambientIcon.classList.remove('muted');
-            ambientWrap.querySelector('.ambient-label').innerHTML = '<strong>In the Garden</strong>now playing';
-          }
-        }
-      </script>
     </div>
   </div>
 </section>
