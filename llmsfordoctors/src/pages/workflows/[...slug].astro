@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import ContentLayout from '../../layouts/ContentLayout.astro';
 import { getToolsBySlug, getTemplatesForWorkflow, getTrialsBySlug } from '../../utils/collections';
 
@@ -9,7 +9,7 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 
 // Cross-reference related content
 const tools = entry.data.tools?.length ? await getToolsBySlug(entry.data.tools) : [];

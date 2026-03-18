@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import ToolLayout from '../../layouts/ToolLayout.astro';
 import { getWorkflowsForTool } from '../../utils/collections';
 
@@ -9,7 +9,7 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 
 const relatedWorkflows = await getWorkflowsForTool(entry.id);
 const relatedWorkflowItems = relatedWorkflows.map((wf) => ({

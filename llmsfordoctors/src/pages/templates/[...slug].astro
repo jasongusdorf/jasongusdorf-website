@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import ContentLayout from '../../layouts/ContentLayout.astro';
 
 export async function getStaticPaths() {
@@ -8,13 +8,12 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 
 // Build related items — link to parent workflow if set
 const relatedItems: { title: string; href: string; type: 'workflow' | 'guide' | 'tool' | 'template' | 'trial' }[] = [];
 
 if (entry.data.workflow) {
-  const { getCollection } = await import('astro:content');
   const workflows = await getCollection('workflows');
   const parentWorkflow = workflows.find((wf) => wf.id === entry.data.workflow);
   if (parentWorkflow) {
