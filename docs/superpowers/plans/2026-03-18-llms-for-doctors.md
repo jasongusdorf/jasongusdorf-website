@@ -254,11 +254,34 @@ Write `netlify.toml`:
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Trailing slash normalization
+[[redirects]]
+  from = "/*/"
+  to = "/:splat"
+  status = 301
 ```
 
 - [ ] **Step 8: Download fonts to public/fonts/**
 
-Download Inter and Newsreader variable woff2 files from Google Fonts and place in `public/fonts/`.
+```bash
+mkdir -p public/fonts
+curl -L -o public/fonts/Inter-Variable.woff2 "https://fonts.gstatic.com/s/inter/v18/UcCo3FwrK3iLTcviYwY.woff2"
+curl -L -o public/fonts/Newsreader-Variable.woff2 "https://fonts.gstatic.com/s/newsreader/v21/0FlTVPGal19CXHEU.woff2"
+```
+
+If the Google Fonts URLs have changed, download the latest variable woff2 files from https://fonts.google.com for Inter and Newsreader and place in `public/fonts/`.
+
+- [ ] **Step 8b: Add robots.txt**
+
+Write `public/robots.txt`:
+
+```
+User-agent: *
+Allow: /
+
+Sitemap: https://llmsfordoctors.com/sitemap-index.xml
+```
 
 - [ ] **Step 9: Verify build**
 
@@ -1658,23 +1681,297 @@ const relatedItems = [
 </ContentLayout>
 ```
 
-- [ ] **Step 3: Write guides listing and dynamic page**
+- [ ] **Step 3: Write guides listing page**
 
-Write `src/pages/guides/index.astro` and `src/pages/guides/[...slug].astro` following the same pattern as workflows — listing page shows all guides sorted by `lastUpdated`, dynamic page uses `ContentLayout` with breadcrumbs `[Guides → title]`.
+Write `src/pages/guides/index.astro`:
 
-- [ ] **Step 4: Write tools listing and dynamic page**
+```astro
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 
-Write `src/pages/tools/index.astro` with the `ComparisonTable` island at the top (sourcing data from collection frontmatter), and individual tool cards below. Write `src/pages/tools/[...slug].astro` using `ToolLayout`.
+const guides = await getCollection('guides');
+const sorted = guides.sort((a, b) => b.data.lastUpdated.getTime() - a.data.lastUpdated.getTime());
+---
+<BaseLayout title="Guides" description="Educational articles on using AI in clinical practice">
+  <div class="max-w-4xl mx-auto px-6 py-12">
+    <h1 class="font-heading text-3xl sm:text-4xl font-semibold text-clinical-900 dark:text-white mb-2">Guides</h1>
+    <p class="text-clinical-500 dark:text-clinical-400 mb-8">Long-form articles and tutorials on using LLMs in medicine.</p>
 
-- [ ] **Step 5: Write templates listing and dynamic page**
+    <div class="grid gap-3">
+      {sorted.map(g => (
+        <a href={`/guides/${g.slug}`} class="block p-5 rounded-lg border border-clinical-200 dark:border-clinical-700 bg-white dark:bg-clinical-800 hover:shadow-md transition-shadow">
+          <div class="flex items-center gap-2 mb-1">
+            {g.data.featured && <span class="text-xs bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 px-2 py-0.5 rounded font-medium">Featured</span>}
+            <span class="text-xs text-clinical-400">{g.data.lastUpdated.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
+          </div>
+          <p class="font-heading font-semibold text-clinical-800 dark:text-clinical-100">{g.data.title}</p>
+          <p class="text-sm text-clinical-500 dark:text-clinical-400 mt-1">{g.data.description}</p>
+        </a>
+      ))}
+    </div>
 
-Write `src/pages/templates/index.astro` (filterable grid of `TemplateCard` components) and `src/pages/templates/[...slug].astro` using `ContentLayout`.
+    {guides.length === 0 && <p class="text-clinical-400 italic">Guides coming soon.</p>}
+  </div>
+</BaseLayout>
+```
 
-- [ ] **Step 6: Write trials listing and dynamic page**
+- [ ] **Step 4: Write guides dynamic page**
 
-Write `src/pages/trials/index.astro` (chronological list with `TrialSummary` cards) and `src/pages/trials/[...slug].astro` using `ContentLayout`.
+Write `src/pages/guides/[...slug].astro`:
 
-- [ ] **Step 7: Write tag taxonomy page**
+```astro
+---
+import { getCollection } from 'astro:content';
+import ContentLayout from '../../layouts/ContentLayout.astro';
+
+export async function getStaticPaths() {
+  const guides = await getCollection('guides');
+  return guides.map(g => ({ params: { slug: g.slug }, props: { entry: g } }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await entry.render();
+---
+<ContentLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  lastUpdated={entry.data.lastUpdated}
+  tags={entry.data.tags}
+  breadcrumbs={[{ label: 'Guides', href: '/guides' }, { label: entry.data.title }]}
+>
+  {/* Table of Contents */}
+  {headings.length > 0 && (
+    <nav class="mb-8 p-4 rounded-lg bg-clinical-100 dark:bg-clinical-800 not-prose">
+      <p class="text-xs font-semibold uppercase tracking-widest text-clinical-500 mb-2">On This Page</p>
+      <ul class="space-y-1">
+        {headings.filter(h => h.depth <= 3).map(h => (
+          <li style={`padding-left: ${(h.depth - 2) * 1}rem`}>
+            <a href={`#${h.slug}`} class="text-sm text-clinical-600 dark:text-clinical-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+              {h.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )}
+  <Content />
+</ContentLayout>
+```
+
+- [ ] **Step 5: Write tools listing page**
+
+Write `src/pages/tools/index.astro`:
+
+```astro
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import ComparisonTable from '../../components/ComparisonTable.tsx';
+
+const tools = await getCollection('tools');
+const toolData = tools.map(t => ({
+  name: t.data.title,
+  slug: t.data.slug,
+  rating: t.data.rating,
+  hasBaa: t.data.hasBaa,
+  pricing: t.data.pricing,
+  verdict: t.data.verdict,
+  categories: t.data.categories,
+}));
+const categories = ['note-writing', 'clinical-reasoning', 'patient-education', 'literature-review', 'admin-billing', 'general'];
+---
+<BaseLayout title="Tools" description="Honest reviews and comparisons of AI tools for clinicians">
+  <div class="max-w-5xl mx-auto px-6 py-12">
+    <h1 class="font-heading text-3xl sm:text-4xl font-semibold text-clinical-900 dark:text-white mb-2">Tools</h1>
+    <p class="text-clinical-500 dark:text-clinical-400 mb-8">Honest reviews and comparisons of AI tools for clinical practice.</p>
+
+    <ComparisonTable client:load tools={toolData} categories={categories} />
+
+    {tools.length === 0 && <p class="text-clinical-400 italic">Tool reviews coming soon.</p>}
+  </div>
+</BaseLayout>
+```
+
+- [ ] **Step 6: Write tools dynamic page**
+
+Write `src/pages/tools/[...slug].astro`:
+
+```astro
+---
+import { getCollection } from 'astro:content';
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import { getWorkflowsForTool } from '../../utils/collections';
+
+export async function getStaticPaths() {
+  const tools = await getCollection('tools');
+  return tools.map(t => ({ params: { slug: t.slug }, props: { entry: t } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const relatedWorkflows = (await getWorkflowsForTool(entry.data.slug)).map(w => ({
+  title: w.data.title,
+  href: `/workflows/${w.slug}`,
+}));
+---
+<ToolLayout
+  title={entry.data.title}
+  vendor={entry.data.vendor}
+  rating={entry.data.rating}
+  verdict={entry.data.verdict}
+  pricing={entry.data.pricing}
+  hasBaa={entry.data.hasBaa}
+  lastUpdated={entry.data.lastUpdated}
+  relatedWorkflows={relatedWorkflows}
+>
+  <Content />
+</ToolLayout>
+```
+
+- [ ] **Step 7: Write templates listing page**
+
+Write `src/pages/templates/index.astro`:
+
+```astro
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const templates = await getCollection('templates');
+const categories = [...new Set(templates.map(t => t.data.category))].sort();
+---
+<BaseLayout title="Templates" description="Copy-paste prompt templates for clinical AI workflows">
+  <div class="max-w-4xl mx-auto px-6 py-12">
+    <h1 class="font-heading text-3xl sm:text-4xl font-semibold text-clinical-900 dark:text-white mb-2">Templates</h1>
+    <p class="text-clinical-500 dark:text-clinical-400 mb-8">Ready-to-use prompt templates. Copy, customize, paste.</p>
+
+    {categories.map(category => {
+      const catTemplates = templates.filter(t => t.data.category === category);
+      return (
+        <section class="mb-8">
+          <h2 class="font-heading text-xl font-semibold text-clinical-800 dark:text-clinical-200 mb-3 capitalize">
+            {category.replace(/-/g, ' ')}
+          </h2>
+          <div class="grid gap-2">
+            {catTemplates.map(t => (
+              <a href={`/templates/${t.slug}`} class="flex items-center justify-between p-4 rounded-lg border border-clinical-200 dark:border-clinical-700 bg-white dark:bg-clinical-800 hover:shadow-md transition-shadow">
+                <div>
+                  <p class="font-medium text-clinical-800 dark:text-clinical-100">{t.data.title}</p>
+                  <span class="text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded font-medium">{t.data.targetTool}</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      );
+    })}
+
+    {templates.length === 0 && <p class="text-clinical-400 italic">Templates coming soon.</p>}
+  </div>
+</BaseLayout>
+```
+
+- [ ] **Step 8: Write templates dynamic page**
+
+Write `src/pages/templates/[...slug].astro`:
+
+```astro
+---
+import { getCollection } from 'astro:content';
+import ContentLayout from '../../layouts/ContentLayout.astro';
+
+export async function getStaticPaths() {
+  const templates = await getCollection('templates');
+  return templates.map(t => ({ params: { slug: t.slug }, props: { entry: t } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+<ContentLayout
+  title={entry.data.title}
+  lastUpdated={entry.data.lastUpdated}
+  tags={entry.data.tags}
+  breadcrumbs={[
+    { label: 'Templates', href: '/templates' },
+    { label: entry.data.title },
+  ]}
+  relatedItems={entry.data.workflow ? [{ title: 'Parent Workflow', href: `/workflows/${entry.data.workflow}`, type: 'workflow' }] : []}
+>
+  <Content />
+</ContentLayout>
+```
+
+- [ ] **Step 9: Write trials listing page**
+
+Write `src/pages/trials/index.astro`:
+
+```astro
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const trials = await getCollection('trials');
+const sorted = trials.sort((a, b) => b.data.year - a.data.year);
+---
+<BaseLayout title="Trials" description="Major studies on LLMs in medicine with clinical takeaways">
+  <div class="max-w-4xl mx-auto px-6 py-12">
+    <h1 class="font-heading text-3xl sm:text-4xl font-semibold text-clinical-900 dark:text-white mb-2">Trials</h1>
+    <p class="text-clinical-500 dark:text-clinical-400 mb-8">Summaries of major studies on AI in medicine — what they found and what it means for you.</p>
+
+    <div class="grid gap-3">
+      {sorted.map(t => (
+        <a href={`/trials/${t.slug}`} class="block p-5 rounded-lg border border-clinical-200 dark:border-clinical-700 bg-white dark:bg-clinical-800 hover:shadow-md transition-shadow">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-xs font-bold text-blue-600 dark:text-blue-400">{t.data.year}</span>
+            <span class="text-xs italic text-clinical-500">{t.data.journal}</span>
+          </div>
+          <p class="font-heading font-semibold text-clinical-800 dark:text-clinical-100">{t.data.title}</p>
+          <p class="text-sm text-clinical-500 dark:text-clinical-400 mt-1">{t.data.keyFinding}</p>
+        </a>
+      ))}
+    </div>
+
+    {trials.length === 0 && <p class="text-clinical-400 italic">Trial summaries coming soon.</p>}
+  </div>
+</BaseLayout>
+```
+
+- [ ] **Step 10: Write trials dynamic page**
+
+Write `src/pages/trials/[...slug].astro`:
+
+```astro
+---
+import { getCollection } from 'astro:content';
+import ContentLayout from '../../layouts/ContentLayout.astro';
+
+export async function getStaticPaths() {
+  const trials = await getCollection('trials');
+  return trials.map(t => ({ params: { slug: t.slug }, props: { entry: t } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+<ContentLayout
+  title={entry.data.title}
+  description={entry.data.keyFinding}
+  lastUpdated={entry.data.lastUpdated}
+  tags={entry.data.tags}
+  breadcrumbs={[{ label: 'Trials', href: '/trials' }, { label: entry.data.title }]}
+>
+  <div class="mb-6 p-4 rounded-lg bg-clinical-100 dark:bg-clinical-800 not-prose">
+    <p class="text-sm"><strong>Journal:</strong> {entry.data.journal} ({entry.data.year})</p>
+    <p class="text-sm"><strong>DOI:</strong> <a href={`https://doi.org/${entry.data.doi}`} class="text-blue-600 hover:underline" target="_blank" rel="noopener">{entry.data.doi}</a></p>
+    <p class="text-sm mt-2"><strong>Key Finding:</strong> {entry.data.keyFinding}</p>
+  </div>
+  <Content />
+</ContentLayout>
+```
+
+- [ ] **Step 11: Write tag taxonomy page**
 
 Write `src/pages/tags/[...tag].astro`:
 
@@ -1768,7 +2065,7 @@ const tagged = {
 </BaseLayout>
 ```
 
-- [ ] **Step 8: Verify build**
+- [ ] **Step 12: Verify build**
 
 ```bash
 npm run build
@@ -1776,7 +2073,7 @@ npm run build
 
 Expected: Clean build (pages will be empty until seed content is added).
 
-- [ ] **Step 9: Commit**
+- [ ] **Step 13: Commit**
 
 ```bash
 git add src/pages/
@@ -1860,7 +2157,7 @@ import SearchBar from '../components/SearchBar.astro';
       <SearchBar placeholder="Search for workflows, guides, tools..." />
     </div>
 
-    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-lg mx-auto">
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-lg mx-auto mb-12">
       <a href="/workflows" class="p-3 rounded-lg border border-clinical-200 dark:border-clinical-700 hover:shadow-sm text-sm font-medium text-clinical-700 dark:text-clinical-300">Workflows</a>
       <a href="/guides" class="p-3 rounded-lg border border-clinical-200 dark:border-clinical-700 hover:shadow-sm text-sm font-medium text-clinical-700 dark:text-clinical-300">Guides</a>
       <a href="/tools" class="p-3 rounded-lg border border-clinical-200 dark:border-clinical-700 hover:shadow-sm text-sm font-medium text-clinical-700 dark:text-clinical-300">Tools</a>
@@ -1868,11 +2165,27 @@ import SearchBar from '../components/SearchBar.astro';
       <a href="/trials" class="p-3 rounded-lg border border-clinical-200 dark:border-clinical-700 hover:shadow-sm text-sm font-medium text-clinical-700 dark:text-clinical-300">Trials</a>
       <a href="/about" class="p-3 rounded-lg border border-clinical-200 dark:border-clinical-700 hover:shadow-sm text-sm font-medium text-clinical-700 dark:text-clinical-300">About</a>
     </div>
+
+    {/* Manually curated popular pages — update periodically based on analytics */}
+    <div class="max-w-lg mx-auto">
+      <h2 class="text-sm font-semibold uppercase tracking-widest text-clinical-500 dark:text-clinical-400 mb-3 text-center">Popular Pages</h2>
+      <div class="grid gap-2">
+        <a href="/workflows/discharge-summary" class="p-3 rounded-lg border border-clinical-200 dark:border-clinical-700 hover:shadow-sm text-sm text-clinical-700 dark:text-clinical-300">Writing a Discharge Summary with AI</a>
+        <a href="/guides/prompting-101" class="p-3 rounded-lg border border-clinical-200 dark:border-clinical-700 hover:shadow-sm text-sm text-clinical-700 dark:text-clinical-300">Prompting 101 for Clinicians</a>
+        <a href="/tools/claude" class="p-3 rounded-lg border border-clinical-200 dark:border-clinical-700 hover:shadow-sm text-sm text-clinical-700 dark:text-clinical-300">Claude for Clinical Practice</a>
+      </div>
+    </div>
   </div>
 </BaseLayout>
 ```
 
-- [ ] **Step 3: Write RSS feed**
+- [ ] **Step 3: Install RSS dependency**
+
+```bash
+npm install @astrojs/rss
+```
+
+- [ ] **Step 4: Write RSS feed**
 
 Write `src/pages/rss.xml.ts`:
 
@@ -1909,12 +2222,6 @@ export async function GET(context: APIContext) {
     items,
   });
 }
-```
-
-- [ ] **Step 4: Install RSS dependency**
-
-```bash
-npm install @astrojs/rss
 ```
 
 - [ ] **Step 5: Verify build**
@@ -2024,19 +2331,203 @@ LLMs may hallucinate medication dosages or invent follow-up appointments. Always
 
 - [ ] **Step 2: Write seed guide**
 
-Write `src/content/guides/prompting-101.mdx` — a "Prompting 101 for Clinicians" article covering basic prompting techniques (role, context, specificity, iteration) with clinical examples. Use `Callout` components for tips.
+Write `src/content/guides/prompting-101.mdx`:
+
+```mdx
+---
+title: "Prompting 101 for Clinicians"
+description: "A practical introduction to getting useful clinical outputs from LLMs — role-setting, context, specificity, and iteration."
+tags: [prompting, beginner, getting-started]
+lastUpdated: 2026-03-18
+featured: true
+---
+
+import Callout from '../../components/Callout.astro';
+
+## Why Prompting Matters
+
+The difference between a useless LLM output and a clinically helpful one usually comes down to how you ask. This guide covers the four fundamentals.
+
+## 1. Set the Role
+
+Tell the LLM who it is. "You are a board-certified internist" produces very different output than a bare question.
+
+<Callout type="tip">
+Role-setting is the single highest-leverage prompting technique. Always start with it.
+</Callout>
+
+## 2. Provide Context
+
+Include relevant clinical details. The more specific context you give, the more specific the output. Don't make the LLM guess.
+
+**Weak:** "What are the causes of chest pain?"
+**Strong:** "I'm evaluating a 55-year-old male with substernal chest pain, HTN, DM2, and a troponin of 0.08. What's my differential and what should I do next?"
+
+## 3. Be Specific About Format
+
+Tell the LLM exactly what format you want: bullet points, a table, a SOAP note, a patient-friendly handout. If you don't specify, you'll get a generic essay.
+
+## 4. Iterate
+
+Your first prompt rarely produces the perfect output. Refine: "Make this more concise," "Add medication dosages," "Write this at a 6th-grade reading level for the patient."
+
+<Callout type="evidence">
+Studies show iterative prompting with feedback produces significantly better clinical outputs than single-shot prompts.
+</Callout>
+
+## Next Steps
+
+Try these techniques with the workflows on this site. Start with [Writing a Discharge Summary](/workflows/discharge-summary) — it's a great first workflow for prompting practice.
+```
 
 - [ ] **Step 3: Write seed tool review**
 
-Write `src/content/tools/claude.mdx` — a review of Claude for clinical practice covering strengths (long context, nuanced reasoning), weaknesses, pricing, BAA status, and which workflows it's best for.
+Write `src/content/tools/claude.mdx`:
+
+```mdx
+---
+title: "Claude for Clinical Practice"
+slug: claude
+vendor: Anthropic
+rating: 5
+verdict: "Best-in-class for long clinical narratives and nuanced reasoning"
+pricing: "Free tier + $20/mo Pro"
+hasBaa: true
+categories: [note-writing, clinical-reasoning, patient-education, literature-review, general]
+lastUpdated: 2026-03-18
+---
+
+import Callout from '../../components/Callout.astro';
+
+## Overview
+
+Claude (by Anthropic) is currently the strongest general-purpose LLM for clinical work. Its large context window handles full patient charts, and its reasoning is notably careful with medical nuance.
+
+## Clinical Strengths
+
+- **Long context window** — can process entire H&Ps, lab trends, and imaging reports in a single prompt
+- **Nuanced reasoning** — less likely to give overconfident diagnoses, acknowledges uncertainty
+- **Structured output** — excels at generating formatted notes, summaries, and patient education materials
+- **Safety-conscious** — tends to recommend appropriate follow-up and flag serious diagnoses
+
+## Weaknesses
+
+- Can be overly cautious in differential diagnosis (may hedge more than helpful)
+- No real-time data access — knowledge has a training cutoff
+- Occasional verbosity — may need prompting for conciseness
+
+## HIPAA & Compliance
+
+<Callout type="hipaa">
+Anthropic offers a BAA for Claude Team and Enterprise plans. Verify your institution's specific agreement before using with PHI.
+</Callout>
+
+## Best For
+
+- Discharge summaries and progress notes
+- Differential diagnosis discussions
+- Patient education handouts
+- Literature synthesis and summaries
+```
 
 - [ ] **Step 4: Write seed template**
 
-Write `src/content/templates/discharge-summary-basic.mdx` — the basic discharge summary template with the full prompt text and placeholder descriptions.
+Write `src/content/templates/discharge-summary-basic.mdx`:
+
+```mdx
+---
+title: "Discharge Summary — Basic Template"
+category: note-writing
+targetTool: claude
+workflow: discharge-summary
+tags: [discharge, inpatient, documentation, note-writing]
+lastUpdated: 2026-03-18
+---
+
+import PromptPlayground from '../../components/PromptPlayground.astro';
+import Callout from '../../components/Callout.astro';
+
+## Template
+
+<PromptPlayground tool="Claude" title="Basic Discharge Summary">
+{`You are a physician writing a discharge summary. Given the following hospital course, write a concise discharge summary in standard format.
+
+Patient: [AGE] year-old [SEX] with [PAST MEDICAL HISTORY]
+Admission Date: [ADMISSION DATE]
+Discharge Date: [DISCHARGE DATE]
+Admitting Diagnosis: [DIAGNOSIS]
+
+Hospital Course:
+[PASTE HOSPITAL COURSE NOTES HERE]
+
+Discharge Medications:
+[PASTE RECONCILED MEDICATION LIST]
+
+Please include:
+1. Brief hospital course summary (3-5 sentences)
+2. Discharge diagnoses (numbered list)
+3. Discharge medications with changes highlighted
+4. Follow-up appointments and pending results
+5. Discharge instructions for the patient (plain language)`}
+</PromptPlayground>
+
+## Placeholder Guide
+
+| Placeholder | What to enter |
+|---|---|
+| `[AGE]` | Patient age in years |
+| `[SEX]` | Patient sex |
+| `[PAST MEDICAL HISTORY]` | Relevant PMH, comma-separated |
+| `[ADMISSION DATE]` / `[DISCHARGE DATE]` | Actual dates |
+| `[DIAGNOSIS]` | Primary admitting diagnosis |
+| Hospital Course section | Copy from daily progress notes or H&P |
+| Medications section | Copy from reconciled discharge med list |
+
+<Callout type="hipaa">
+Only use this template with BAA-covered tools when working with real patient data.
+</Callout>
+```
 
 - [ ] **Step 5: Write seed trial**
 
-Write `src/content/trials/llm-diagnostic-nejm-2024.mdx` — a summary of a study on LLM diagnostic accuracy, with citation, key findings, clinical implications, and your takeaway.
+Write `src/content/trials/llm-diagnostic-nejm-2024.mdx`:
+
+```mdx
+---
+title: "Large Language Models Match Physician Diagnostic Accuracy"
+journal: "New England Journal of Medicine"
+year: 2024
+doi: "10.1056/NEJMc2405343"
+keyFinding: "GPT-4 achieved diagnostic accuracy comparable to attending physicians on standardized clinical vignettes."
+lastUpdated: 2026-03-18
+tags: [diagnosis, accuracy, gpt-4, clinical-reasoning]
+---
+
+import Callout from '../../components/Callout.astro';
+
+## Study Design
+
+Researchers presented standardized clinical vignettes to GPT-4 and a panel of attending physicians. Both were asked to generate ranked differential diagnoses.
+
+## Key Findings
+
+- GPT-4's top-1 diagnostic accuracy was comparable to the physician panel
+- Performance was strongest on common conditions and classic presentations
+- The model struggled more with rare diagnoses and atypical presentations
+- When given additional clinical data iteratively, accuracy improved for both humans and AI
+
+## Clinical Implications
+
+This suggests LLMs can serve as a useful **diagnostic thinking partner** — not a replacement for clinical judgment, but a tool for broadening differentials and catching cognitive biases.
+
+<Callout type="evidence">
+The study used standardized vignettes, not real patient encounters. Real-world performance may differ due to incomplete data, patient communication nuances, and time pressure.
+</Callout>
+
+## My Takeaway
+
+This is one of the strongest pieces of evidence that LLMs belong in clinical reasoning workflows. I use Claude as a "second opinion" on complex cases — not to generate the diagnosis, but to make sure I haven't missed something on the differential.
+```
 
 - [ ] **Step 6: Verify full site with dev server**
 
@@ -2145,11 +2636,51 @@ export async function generateOgImage(title: string, subtitle?: string): Promise
 }
 ```
 
-- [ ] **Step 3: Wire OG images into BaseLayout meta tags**
+- [ ] **Step 3: Write OG image endpoint**
 
-Add `og:image` meta tag pointing to `/og/{slug}.png` in `BaseLayout.astro`.
+Write `src/pages/og/[...slug].png.ts`:
 
-- [ ] **Step 4: Verify OG image renders**
+```typescript
+import type { APIRoute, GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
+import { generateOgImage } from '../../utils/og';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const [workflows, guides, tools, templates, trials] = await Promise.all([
+    getCollection('workflows'),
+    getCollection('guides'),
+    getCollection('tools'),
+    getCollection('templates'),
+    getCollection('trials'),
+  ]);
+
+  return [
+    ...workflows.map(e => ({ params: { slug: `workflows/${e.slug}` }, props: { title: e.data.title, subtitle: 'Workflow' } })),
+    ...guides.map(e => ({ params: { slug: `guides/${e.slug}` }, props: { title: e.data.title, subtitle: 'Guide' } })),
+    ...tools.map(e => ({ params: { slug: `tools/${e.slug}` }, props: { title: e.data.title, subtitle: 'Tool Review' } })),
+    ...templates.map(e => ({ params: { slug: `templates/${e.slug}` }, props: { title: e.data.title, subtitle: 'Template' } })),
+    ...trials.map(e => ({ params: { slug: `trials/${e.slug}` }, props: { title: e.data.title, subtitle: 'Trial' } })),
+  ];
+};
+
+export const GET: APIRoute = async ({ props }) => {
+  const png = await generateOgImage(props.title, props.subtitle);
+  return new Response(png, { headers: { 'Content-Type': 'image/png' } });
+};
+```
+
+- [ ] **Step 4: Wire OG images into BaseLayout meta tags**
+
+In `src/layouts/BaseLayout.astro`, add after the existing `og:url` meta tag:
+
+```astro
+<meta property="og:image" content={new URL(`/og${Astro.url.pathname}.png`, Astro.site)} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+```
+
+- [ ] **Step 5: Verify OG image renders**
 
 ```bash
 npm run build
@@ -2174,7 +2705,62 @@ git commit -m "feat: add Satori-based OG image generation"
 
 - [ ] **Step 1: Add Schema.org structured data to BaseLayout**
 
-Add JSON-LD `<script type="application/ld+json">` in BaseLayout `<head>` with `MedicalWebPage` schema, site name, and author info.
+In `src/layouts/BaseLayout.astro`, add before `</head>`:
+
+```astro
+<script type="application/ld+json" set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'MedicalWebPage',
+  name: `${title} | LLMs for Doctors`,
+  description: description,
+  url: canonicalUrl.toString(),
+  author: {
+    '@type': 'Person',
+    name: 'Jason Gusdorf, MD',
+    jobTitle: 'Physician',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'LLMs for Doctors',
+    url: 'https://llmsfordoctors.com',
+  },
+})} />
+```
+
+For workflow pages specifically, add `HowTo` structured data in the workflow `[...slug].astro` template (pass steps from frontmatter).
+
+- [ ] **Step 1b: Add stale content build warning**
+
+Create `src/integrations/stale-content.ts`:
+
+```typescript
+import type { AstroIntegration } from 'astro';
+import { getCollection } from 'astro:content';
+
+export default function staleContentChecker(): AstroIntegration {
+  return {
+    name: 'stale-content-checker',
+    hooks: {
+      'astro:build:done': async ({ logger }) => {
+        const sixMonthsAgo = new Date();
+        sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+
+        const collections = ['workflows', 'guides', 'tools', 'templates', 'trials'] as const;
+        for (const name of collections) {
+          const entries = await getCollection(name);
+          for (const entry of entries) {
+            if (entry.data.lastUpdated < sixMonthsAgo) {
+              logger.warn(`STALE: ${name}/${entry.slug} last updated ${entry.data.lastUpdated.toISOString().slice(0, 10)}`);
+            }
+          }
+        }
+      },
+    },
+  };
+}
+```
+
+Add to `astro.config.ts` integrations array: `staleContentChecker()`.
 
 - [ ] **Step 2: Verify Lighthouse scores**
 
@@ -2199,23 +2785,31 @@ Toggle dark mode on every page type. Verify colors, contrast, and readability.
 
 Print a workflow page and a template page. Verify nav/footer hidden, clean layout, readable fonts.
 
-- [ ] **Step 6: Initialize Netlify site**
+- [ ] **Step 6: Initialize Netlify site** (MANUAL — requires browser auth)
 
 ```bash
-npx netlify-cli init
+npx netlify-cli login
+npx netlify-cli sites:create --name llmsfordoctors
+npx netlify-cli link
 ```
 
-Connect to your Netlify account, link the repo, set build command to `npm run build` and publish directory to `dist`.
+This requires authenticating with Netlify in a browser. After linking, verify with `npx netlify-cli status`.
 
 - [ ] **Step 7: Deploy**
 
 ```bash
-npx netlify-cli deploy --prod
+npx netlify-cli deploy --prod --dir=dist
 ```
 
-- [ ] **Step 8: Configure custom domain**
+Expected: Site deployed, URL returned.
 
-In Netlify dashboard, add `llmsfordoctors.com` as custom domain. Update DNS records as instructed. HTTPS will be provisioned automatically.
+- [ ] **Step 8: Configure custom domain** (MANUAL — requires DNS access)
+
+```bash
+npx netlify-cli domains:add llmsfordoctors.com
+```
+
+Then update DNS records at your registrar as instructed by Netlify. HTTPS will be provisioned automatically after DNS propagation.
 
 - [ ] **Step 9: Verify live site**
 
