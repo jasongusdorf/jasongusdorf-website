@@ -61,7 +61,8 @@
     #hero h1 em { color: var(--amber); font-style: normal; }
     #hero p { font-size: 1.05rem; color: rgba(255,255,255,0.72); max-width: 540px; margin: 0 auto 2.5rem; line-height: 1.75; }
     .hero-pills { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; margin-bottom: 2.5rem; }
-    .hero-pill { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.85); padding: 0.3rem 0.9rem; border-radius: 2rem; font-size: 0.8rem; }
+    .hero-pill { background: var(--cream); border: 1px solid var(--border); color: var(--text); padding: 0.3rem 0.9rem; border-radius: 2rem; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 0.35rem; }
+    .pill-logo { width: 16px; height: 16px; flex-shrink: 0; object-fit: contain; }
     .hero-cta { display: inline-flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
     .btn { padding: 0.7rem 1.7rem; border-radius: 0.4rem; font-size: 0.85rem; font-weight: 600; text-decoration: none; letter-spacing: 0.03em; transition: all 0.2s; cursor: pointer; }
     .btn-primary { background: var(--gold); color: #fff; }
@@ -150,7 +151,7 @@
     .teaching-item .venue { font-size: 0.75rem; font-style: italic; color: var(--muted); margin-top: 0.15rem; }
 
     /* ── MUSIC PHOTO ── */
-    .music-photo-banner { width: 100%; height: 520px; overflow: hidden; }
+    .music-photo-banner { width: 100%; height: 520px; overflow: hidden; scroll-margin-top: 60px; }
     .music-photo-banner img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; }
 
     /* ── MUSIC ── */
@@ -248,6 +249,23 @@
     .milestone-content h4 { font-size: 0.88rem; font-weight: 600; color: var(--navy); margin-bottom: 0.2rem; }
     .milestone-content p { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
 
+    /* ── FAMILY TREE ── */
+    .family-tree-toggle { display: inline-flex; align-items: center; gap: 0.5rem; background: none; border: 1px solid var(--gold); color: var(--gold); font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.04em; padding: 0.5rem 1.2rem; border-radius: 2rem; cursor: pointer; margin-top: 1.5rem; transition: all 0.2s; }
+    .family-tree-toggle:hover { background: rgba(201,146,42,0.1); }
+    .family-tree-toggle .arrow { transition: transform 0.3s; font-size: 0.7rem; }
+    .family-tree-toggle.open .arrow { transform: rotate(180deg); }
+    .family-tree-wrap { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; }
+    .family-tree-wrap.open { max-height: 2000px; }
+    .family-tree { margin-top: 1.5rem; display: flex; flex-direction: column; align-items: center; gap: 0; padding-bottom: 1.5rem; }
+    .tree-person { text-align: center; position: relative; padding: 0.6rem 0; }
+    .tree-person .tree-name { font-family: 'Lora', serif; font-size: 0.92rem; font-weight: 600; color: var(--navy); }
+    .tree-person .tree-year { font-size: 0.75rem; color: var(--gold); font-weight: 600; margin-left: 0.4rem; }
+    .tree-person .tree-detail { font-size: 0.72rem; color: var(--muted); font-style: italic; margin-top: 0.1rem; }
+    .tree-person.highlight .tree-name { color: var(--gold); font-size: 1rem; }
+    .tree-connector { width: 1px; height: 18px; background: var(--border); margin: 0 auto; }
+    .tree-connector.branch { width: 1px; height: 12px; background: var(--border); margin: 0 auto; }
+    .tree-relation { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); text-align: center; padding: 0.15rem 0; }
+
     /* ── CONTACT ── */
     #contact { background: var(--navy); text-align: center; }
     #contact .section-title { color: #fff; }
@@ -301,17 +319,15 @@
       <h1>Jason Gusdorf, <em>MD</em></h1>
       <p>Internal medicine physician at Beth Israel Deaconess Medical Center and Fenway Health, researcher in cardiovascular outcomes and AI diagnostics, and folk musician.</p>
       <div class="hero-pills">
-        <span class="hero-pill">Boston, MA</span>
-        <span class="hero-pill">Harvard / BIDMC</span>
-        <span class="hero-pill">Georgetown Medicine '23</span>
-        <span class="hero-pill">Magna Cum Laude</span>
-        <span class="hero-pill">Georgetown SFS '16</span>
-        <span class="hero-pill">English · Spanish · Hebrew</span>
+        <span class="hero-pill"><img class="pill-logo" src="georgetown-logo.png" alt="Georgetown"> Georgetown SFS '16</span>
+        <span class="hero-pill"><img class="pill-logo" src="georgetown-logo.png" alt="Georgetown"> Georgetown Medicine '23</span>
+        <span class="hero-pill"><img class="pill-logo" src="pardes-logo.png" alt="Pardes"> Pardes Institute, Jerusalem</span>
+        <span class="hero-pill"><img class="pill-logo" src="harvard-logo.png" alt="Harvard"> BIDMC / Harvard '26</span>
       </div>
       <div class="hero-cta">
         <a href="#medicine" class="btn btn-primary">Clinical Work</a>
         <a href="#research" class="btn btn-outline">Publications</a>
-        <a href="#music" class="btn btn-outline">Music</a>
+        <a href="#music-photo" class="btn btn-outline">Music</a>
       </div>
 
     </div>
@@ -326,7 +342,7 @@
         <div class="section-label">About</div>
         <h2 class="section-title">Healing, Scholarship & Artistry</h2>
         <div class="divider"></div>
-        <p>I grew up in <span class="highlight-word">St. Louis, Missouri</span>, shaped by years at OSRUI summer camp and a love of water polo at John Burroughs School. At <span class="highlight-word">Georgetown University's School of Foreign Service</span> I studied Science, Technology & International Affairs, graduating Magna Cum Laude with Honors in my major. I discovered that music, community, and medicine are deeply intertwined—leading Kabbalat Shabbat services and growing our Jewish community from 20 to 65–80 attendees each week.</p>
+        <p>I grew up in <span class="highlight-word">St. Louis, Missouri</span>, shaped by years at OSRUI summer camp and a love of water polo at John Burroughs School. At <span class="highlight-word">Georgetown University's School of Foreign Service</span> I studied Science, Technology & International Affairs, graduating Magna Cum Laude with Honors in my major. I discovered that music, community, and medicine are deeply intertwined. I led Kabbalat Shabbat services and growing our Jewish community from 20 to 65–80 attendees each week.</p>
         <p>After college I spent transformative time at the <span class="highlight-word">Pardes Institute of Jewish Studies</span> in Jerusalem on a funded academic fellowship before entering Georgetown University School of Medicine. I earned my MD in 2023 and matched into internal medicine at <span class="highlight-word">Beth Israel Deaconess Medical Center</span>, a Harvard teaching hospital.</p>
         <p>I currently see patients as a primary-care physician at <span class="highlight-word">Fenway Health</span> in Boston while pursuing research in cardiovascular outcomes, health equity, and AI-assisted diagnostics. I am also a co-founder of <span class="highlight-word">CATALYST</span>, an AI startup developing LLM-based ECG interpretation tools. Outside the hospital, I write and perform folk music and remain active in Jewish communal life.</p>
       </div>
@@ -339,11 +355,11 @@
         </div>
         <div class="fact-card">
           <h4>Residency Training</h4>
-          <p>Internal Medicine, BIDMC / Harvard — 2023–2026<br>Clinical Fellow in Medicine</p>
+          <p>Internal Medicine, BIDMC / Harvard, 2023–2026<br>Clinical Fellow in Medicine</p>
         </div>
         <div class="fact-card">
           <h4>Clinical Appointments</h4>
-          <p>Fenway Health — Primary Care Physician, Boston, MA<br>VA Hospital — West Roxbury, MA</p>
+          <p>Fenway Health, Primary Care Physician, Boston, MA<br>VA Hospital, West Roxbury, MA</p>
         </div>
         <div class="fact-card">
           <h4>Honors & Fellowships</h4>
@@ -359,7 +375,7 @@
 </section>
 
 <!-- MUSIC PHOTO -->
-<div class="music-photo-banner">
+<div id="music-photo" class="music-photo-banner">
   <img src="guitar.jpg" alt="Jason Gusdorf playing guitar" />
 </div>
 
@@ -453,8 +469,8 @@
     <div class="music-press">
       <div class="press-card">
         <div class="press-date">June 4, 2025</div>
-        <h4>Podcast Guest — "LLM, MD: AI Health Bots Are Coming"</h4>
-        <p>Invited guest on <em>Babbage</em>, The Economist — discussing generative AI in clinical diagnostics and the future of physician-AI collaboration.</p>
+        <h4>Podcast Guest: "LLM, MD: AI Health Bots Are Coming"</h4>
+        <p>Invited guest on <em>Babbage</em>, The Economist, discussing generative AI in clinical diagnostics and the future of physician-AI collaboration.</p>
       </div>
       <div class="press-card">
         <div class="press-date">November 22, 2022</div>
@@ -464,8 +480,8 @@
     </div>
 
     <div class="music-quote">
-      <blockquote>"Judaism is a fundamental part of my identity. Playing guitar at the bedside for cancer patients during college showed me that healing and music are not so different—they both require presence, vulnerability, and the courage to sit with another person in their most human moments."</blockquote>
-      <cite>— Jason Gusdorf, Pardes Institute Blog</cite>
+      <blockquote>"Judaism is a fundamental part of my identity. Playing guitar at the bedside for cancer patients during college showed me that healing and music are not so different. They both require presence, vulnerability, and the courage to sit with another person in their most human moments."</blockquote>
+      <cite>Jason Gusdorf, Pardes Institute Blog</cite>
     </div>
   </div>
 </section>
@@ -474,7 +490,7 @@
 <section id="medicine">
   <div class="container">
     <div class="section-label">Clinical Work</div>
-    <h2 class="section-title">Compassionate Primary Care</h2>
+    <h2 class="section-title">Internal Medicine</h2>
     <div class="divider"></div>
     <p class="section-sub">As a primary-care physician and internal-medicine resident, I provide comprehensive adult care informed by cultural sensitivity and a commitment to health equity.</p>
     <div class="medicine-grid">
@@ -495,7 +511,7 @@
       </div>
       <div class="medicine-card">
         <div class="medicine-icon">🎖️</div>
-        <h3>VA Hospital — West Roxbury</h3>
+        <h3>VA Hospital, West Roxbury</h3>
         <p>Resident physician in internal medicine at the Veterans Affairs Hospital, providing care for veterans with complex medical conditions.</p>
       </div>
       <div class="medicine-card">
@@ -504,9 +520,9 @@
         <p>My practice integrates spiritual and cultural context into patient care. I hold a certification in Structure-Based Medical Acupuncture and have published guidance on religion and fasting in clinical settings.</p>
       </div>
       <div class="medicine-card">
-        <div class="medicine-icon">🤝</div>
+        <div class="medicine-icon">🎸</div>
         <h3>Music in Medicine</h3>
-        <p>During college I served as a musician-in-residence for cancer patients, playing guitar at the bedside—an experience that shaped my understanding of holistic healing.</p>
+        <p>During college I served as a musician-in-residence for cancer patients, playing guitar at the bedside, an experience that shaped my understanding of holistic healing.</p>
       </div>
     </div>
   </div>
@@ -558,7 +574,7 @@
         <div class="pub-year">2025</div>
         <div class="pub-content">
           <h3>Exploring RAG-driven multimodal LLMs for explainable ECG interpretation</h3>
-          <div class="pub-journal">NeurIPS 2025 — BrainBodyFM Workshop · Poster Presentation, San Diego, CA</div>
+          <div class="pub-journal">NeurIPS 2025, BrainBodyFM Workshop · Poster Presentation, San Diego, CA</div>
           <p class="pub-desc">Benchmarked GPT-4, Claude 3.5 Sonnet, Llama 3.2, and GPT-3.5 for arrhythmia classification using multimodal ECG data with Retrieval-Augmented Generation. GPT-4 achieved AUC = 0.940 with equitable performance across demographics. First multi-LLM ECG benchmarking with integrated structured RAG and multimodal input.</p>
           <a href="https://openreview.net/forum?id=bCG7sMA5Bt" target="_blank" class="pub-link">↗ OpenReview</a>
         </div>
@@ -567,8 +583,8 @@
       <div class="pub-card">
         <div class="pub-year">2025</div>
         <div class="pub-content">
-          <h3>NEJM Case Records — Dr. CaBot AI contributor</h3>
-          <div class="pub-journal">New England Journal of Medicine — Case 28-2025</div>
+          <h3>NEJM Case Records: Dr. CaBot AI contributor</h3>
+          <div class="pub-journal">New England Journal of Medicine, Case 28-2025</div>
           <p class="pub-desc">Contributor to the design and creation of the Dr. CaBot AI system used in the NEJM Clinical Pathological Conference case analysis. Collaborated with the Manrai &amp; Rodman Research Group to curate and analyze historical CPC cases and advance computational modeling of clinical diagnostic reasoning.</p>
           <a href="https://www.nejm.org/doi/abs/10.1056/NEJMcpc2412539" target="_blank" class="pub-link">↗ NEJM</a>
         </div>
@@ -590,7 +606,7 @@
           <span class="pub-role">First Author</span>
           <h3>Spontaneous Tumor Lysis Syndrome Secondary to Metastatic Pancreatic Adenocarcinoma</h3>
           <div class="pub-journal">ACG Case Reports Journal</div>
-          <p class="pub-desc">Case report of an 86-year-old woman who developed spontaneous TLS in the context of metastatic pancreatic adenocarcinoma—a rare complication outside hematologic malignancies. doi: 10.14309/crj.0000000000001305</p>
+          <p class="pub-desc">Case report of an 86-year-old woman who developed spontaneous TLS in the context of metastatic pancreatic adenocarcinoma, a rare complication outside hematologic malignancies. doi: 10.14309/crj.0000000000001305</p>
           <a href="https://pubmed.ncbi.nlm.nih.gov/38560013" target="_blank" class="pub-link">↗ PubMed</a>
         </div>
       </div>
@@ -610,7 +626,7 @@
         <div class="pub-content">
           <span class="pub-role">First Author</span>
           <h3>Risk of Hemorrhage after Receiving tPA and Cardiopulmonary Resuscitation</h3>
-          <div class="pub-journal">Unpublished — Georgetown University / MedStar Washington Hospital Center</div>
+          <div class="pub-journal">Unpublished, Georgetown University / MedStar Washington Hospital Center</div>
           <p class="pub-desc">Retrospective cohort study comparing rates of hemorrhage in patients who received tPA and CPR versus tPA without CPR. Findings showed no significant association between CPR and surgical procedures needed due to bleeding or pRBC transfusion volume.</p>
         </div>
       </div>
@@ -670,7 +686,7 @@
             <h4>HMS Clinical Rotation Mentor</h4>
             <span class="teaching-year">2023–26</span>
           </div>
-          <p>One-on-one mentoring of 2nd-year Harvard Medical School students entering clinical clerkships—clinical topics, emotional support, and professional development.</p>
+          <p>One-on-one mentoring of 2nd-year Harvard Medical School students entering clinical clerkships, covering clinical topics, emotional support, and professional development.</p>
         </div>
 
         <div class="teaching-item">
@@ -697,7 +713,7 @@
 
         <div class="teaching-item">
           <div class="teaching-item-top">
-            <h4>AI Chatbot for Mental Health — NEJM AI Journal Club</h4>
+            <h4>AI Chatbot for Mental Health: NEJM AI Journal Club</h4>
             <span class="teaching-year">2025</span>
           </div>
           <div class="venue">BIDMC, with Adam Rodman, MD</div>
@@ -721,7 +737,7 @@
 
         <div class="teaching-item">
           <div class="teaching-item-top">
-            <h4>PAD &amp; Acute MI Outcomes — AHA Oral Presentation</h4>
+            <h4>PAD &amp; Acute MI Outcomes: AHA Oral Presentation</h4>
             <span class="teaching-year">2024</span>
           </div>
           <div class="venue">American Heart Association, Chicago, IL</div>
@@ -729,7 +745,7 @@
 
         <div class="teaching-item">
           <div class="teaching-item-top">
-            <h4>Spontaneous Tumor Lysis — Pancreatic Adenocarcinoma</h4>
+            <h4>Spontaneous Tumor Lysis: Pancreatic Adenocarcinoma</h4>
             <span class="teaching-year">2024</span>
           </div>
           <div class="venue">Beth Israel Deaconess Medical Center</div>
@@ -737,7 +753,7 @@
 
         <div class="teaching-item">
           <div class="teaching-item-top">
-            <h4>Artificial Sweeteners — NEJM Basic Science Update</h4>
+            <h4>Artificial Sweeteners: NEJM Basic Science Update</h4>
             <span class="teaching-year">2023</span>
           </div>
           <div class="venue">Beth Israel Deaconess Medical Center</div>
@@ -761,7 +777,7 @@
     <div class="section-label">International Affairs</div>
     <h2 class="section-title">Foreign Policy & Global Security</h2>
     <div class="divider"></div>
-    <p class="section-sub">Before medicine, my academic foundation was in international relations. At Georgetown's School of Foreign Service I studied Science, Technology &amp; International Affairs, graduating Magna Cum Laude with Honors. My undergraduate work centered on nuclear strategy, European security, and the intersection of science and ideology — shaped by a family history rooted in the Holocaust and a semester living in Berlin retracing those roots. I served as a research assistant to Professor Matthew Kroenig, interned at a leading European policy think tank during the Crimea crisis, and wrote an honors thesis on racial empiricism in the Third Reich.</p>
+    <p class="section-sub">Before medicine, my academic foundation was in international relations. At Georgetown's School of Foreign Service I studied Science, Technology &amp; International Affairs, graduating Magna Cum Laude with Honors. My undergraduate work centered on nuclear strategy, European security, and the intersection of science and ideology, shaped by a family history rooted in the Holocaust and a semester living in Berlin retracing those roots. I served as a research assistant to Professor Matthew Kroenig, interned at a leading European policy think tank during the Crimea crisis, and wrote an honors thesis on racial empiricism in the Third Reich.</p>
     <div class="medicine-grid">
       <div class="medicine-card">
         <div class="medicine-icon">🌍</div>
@@ -800,9 +816,9 @@
     <div class="divider"></div>
     <div class="judaism-grid">
       <div class="judaism-text">
-        <p>Growing up in a Reform Jewish household in St. Louis and attending OSRUI summer camp for seven years, Judaism has always been central to my life—not merely as religion but as an integrated framework for ethics, community, and purpose.</p>
-        <p>At Georgetown I served as the Jewish community's music leader for four years, leading Kabbalat Shabbat services that grew from roughly 20 participants to 65–80 each week. I launched a Torah-study program and helped secure new Torah scrolls and prayer books for the community.</p>
-        <p>Before medical school, I received a funded fellowship to study at the Pardes Institute of Jewish Studies in Jerusalem, returning later for an extended fellowship. That intensive immersion in Jewish text deepened my understanding of the spiritual dimensions of healing—themes that directly inform my clinical practice and academic writing, including a published essay on how Judaism shaped my love of medicine.</p>
+        <p>Growing up in a Reform Jewish household in St. Louis and attending OSRUI summer camp for seven years, Judaism has always been central to my life, not merely as religion but as an integrated framework for ethics, community, and purpose.</p>
+        <p>At Georgetown I served as the Jewish community's music leader for four years, leading Kabbalat Shabbat services that grew from roughly 20 participants to 65–80 each week. I launched a Torah-study program for the community.</p>
+        <p>Before medical school, I received a funded fellowship to study at the Pardes Institute of Jewish Studies in Jerusalem, returning later for an extended fellowship. That intensive immersion in Jewish text deepened my understanding of the spiritual dimensions of healing. These themes directly inform my clinical practice and academic writing, including a published essay on how Judaism shaped my love of medicine.</p>
         <p>My family's history is inseparable from my Jewish identity. My grandfather, Walter Gusdorf, escaped the Holocaust from Worms, Germany, and I am a descendant of the Maharal of Prague. This heritage is foundational to who I am and directly motivated my honors thesis on racial science in the Third Reich.</p>
         <p>In 2014 I lived in Berlin, studying German at the Goethe Institut and retracing my family's steps through Germany. That experience deepened my connection to the weight of European Jewish history and the responsibility of remembrance.</p>
       </div>
@@ -810,43 +826,108 @@
         <div class="milestone">
           <div class="milestone-dot"></div>
           <div class="milestone-content">
-            <h4>St. Louis — OSRUI</h4>
+            <h4>OSRUI, Oconomowoc, Wisconsin</h4>
             <p>Seven years at the Union for Reform Judaism's summer camp, foundational to Jewish identity.</p>
           </div>
         </div>
         <div class="milestone">
           <div class="milestone-dot"></div>
           <div class="milestone-content">
-            <h4>Georgetown — Music Leader</h4>
+            <h4>Georgetown, Music Leader</h4>
             <p>Led Kabbalat Shabbat for four years; grew attendance from 20 to 65–80; launched Torah study.</p>
           </div>
         </div>
         <div class="milestone">
           <div class="milestone-dot"></div>
           <div class="milestone-content">
-            <h4>Berlin — Goethe Institut (2014)</h4>
+            <h4>Berlin, Goethe Institut (2014)</h4>
             <p>Studied German at the Goethe Institut in Berlin, retracing family history in Germany.</p>
           </div>
         </div>
         <div class="milestone">
           <div class="milestone-dot"></div>
           <div class="milestone-content">
-            <h4>Family Heritage — Worms & Prague</h4>
+            <h4>Family Heritage: Worms & Prague</h4>
             <p>Grandfather Walter Gusdorf escaped the Holocaust from Worms; descendant of the Maharal of Prague.</p>
+            <button class="family-tree-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+              View Family Tree <span class="arrow">&#9660;</span>
+            </button>
+            <div class="family-tree-wrap">
+              <div class="family-tree">
+                <div class="tree-person"><span class="tree-name">Walter Gusdorf</span><span class="tree-year">1928</span></div>
+                <div class="tree-connector"></div>
+                <div class="tree-person"><span class="tree-name">Sigmund Gusdorf</span><span class="tree-year">1886</span></div>
+                <div class="tree-connector"></div>
+                <div class="tree-person"><span class="tree-name">August Gusdorf</span><span class="tree-year">1851</span></div>
+                <div class="tree-connector"></div>
+                <div class="tree-person"><span class="tree-name">Markus Gusdorf</span><span class="tree-year">1812</span></div>
+                <div class="tree-connector"></div>
+                <div class="tree-person"><span class="tree-name">Regine Oppenheimer Gusdorf</span><span class="tree-year">1790</span></div>
+                <div class="tree-connector"></div>
+                <div class="tree-person"><span class="tree-name">Simon Juda Loeb Oppenheimer</span><span class="tree-year">1759</span></div>
+                <div class="tree-connector"></div>
+                <div class="tree-person"><span class="tree-name">Jehuda Leib (Loeb Hayum) Oppenheimer</span><span class="tree-year">1720</span></div>
+                <div class="tree-connector"></div>
+                <div class="tree-person">
+                  <span class="tree-name">Simon (Schimschon) Oppenheim</span><span class="tree-year">1680</span>
+                  <div class="tree-detail">Rabbi</div>
+                </div>
+                <div class="tree-connector branch"></div>
+                <div class="tree-relation">son of</div>
+                <div class="tree-connector branch"></div>
+                <div class="tree-person">
+                  <span class="tree-name">Chawa Chava Eva Bacharach</span><span class="tree-year">1660</span>
+                  <div class="tree-detail">Mrs. Jehuda Oppenheimer, 1650</div>
+                </div>
+                <div class="tree-connector branch"></div>
+                <div class="tree-relation">daughter of</div>
+                <div class="tree-connector branch"></div>
+                <div class="tree-person">
+                  <span class="tree-name">Yair Chayim Bacharach</span><span class="tree-year">1638</span>
+                  <div class="tree-detail">German Rabbi &amp; Talmudic scholar</div>
+                </div>
+                <div class="tree-connector branch"></div>
+                <div class="tree-relation">son of</div>
+                <div class="tree-connector branch"></div>
+                <div class="tree-person">
+                  <span class="tree-name">Moses Samson Bacharach</span><span class="tree-year">1607</span>
+                  <div class="tree-detail">Famous Rabbi</div>
+                </div>
+                <div class="tree-connector"></div>
+                <div class="tree-person">
+                  <span class="tree-name">Havvah Chava (Eva) Cohen</span><span class="tree-year">1580</span>
+                  <div class="tree-detail">Wife of Rabbi Abraham Samuel Bacharach, 1576</div>
+                </div>
+                <div class="tree-connector"></div>
+                <div class="tree-person">
+                  <span class="tree-name">Voegele (Vaigel) Bezalel</span><span class="tree-year">c. 1550</span>
+                  <div class="tree-detail">Wife of Isaak (Jizchak) ben Simson Cohen</div>
+                </div>
+                <div class="tree-connector"></div>
+                <div class="tree-person highlight">
+                  <span class="tree-name">Judah Loew Liwa, Loeb ben Bazalel</span><span class="tree-year">1525</span>
+                  <div class="tree-detail">Famous Rabbi and scholar, the Maharal of Prague</div>
+                </div>
+                <div class="tree-connector"></div>
+                <div class="tree-person"><span class="tree-name">Bezalel ben (Chaim) Hayyim</span><span class="tree-year">1480</span></div>
+                <div class="tree-connector"></div>
+                <div class="tree-person"><span class="tree-name">Hayyim Chajim</span><span class="tree-year">1450</span></div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="milestone">
           <div class="milestone-dot"></div>
           <div class="milestone-content">
-            <h4>Pardes Institute, Jerusalem — Funded Fellow</h4>
+            <h4>Pardes Institute, Jerusalem (Funded Fellow)</h4>
             <p>Academic fellowship (2018) and extended return fellowship; intensive Jewish text study between degrees.</p>
           </div>
         </div>
         <div class="milestone">
           <div class="milestone-dot"></div>
           <div class="milestone-content">
-            <h4>"After the Seventh" Album</h4>
-            <p>Second album directly inspired by Pardes studies—music as spiritual reflection.</p>
+            <h4>Music: Two Albums</h4>
+            <p>Both albums, <em>Of All the Souls</em> and <em>After the Seventh</em>, were inspired by time at Pardes, reflecting music as spiritual expression.</p>
           </div>
         </div>
         <div class="milestone">
