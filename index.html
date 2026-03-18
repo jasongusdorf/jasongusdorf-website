@@ -89,8 +89,11 @@
     .fact-card p { font-size: 0.88rem; color: var(--text); line-height: 1.5; }
     .honor-badge { display: inline-block; background: rgba(201,146,42,0.12); color: var(--gold); font-size: 0.75rem; font-weight: 600; padding: 0.15rem 0.55rem; border-radius: 0.25rem; margin-top: 0.35rem; margin-right: 0.3rem; }
 
+    /* ── INTERNATIONAL AFFAIRS ── */
+    #intl-affairs { background: var(--warm); }
+
     /* ── MEDICINE ── */
-    #medicine { background: var(--warm); }
+    #medicine { background: var(--cream); }
     .medicine-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
     .medicine-card { background: #fff; border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.8rem; transition: box-shadow 0.2s; }
     .medicine-card:hover { box-shadow: 0 4px 24px rgba(26,39,68,0.08); }
@@ -101,7 +104,7 @@
     .lang-tag { background: rgba(26,39,68,0.07); color: var(--navy); font-size: 0.78rem; font-weight: 500; padding: 0.2rem 0.65rem; border-radius: 0.3rem; }
 
     /* ── RESEARCH ── */
-    #research { background: var(--cream); }
+    #research { background: var(--warm); }
     .catalyst-banner {
       background: linear-gradient(135deg, var(--navy) 0%, var(--mid) 100%);
       border: 1px solid rgba(201,146,42,0.3);
@@ -135,7 +138,7 @@
     .peer-review-list li::before { content: ''; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
 
     /* ── TEACHING ── */
-    #teaching { background: var(--warm); }
+    #teaching { background: var(--cream); }
     .teaching-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
     .teaching-col h3 { font-family: 'Lora', serif; font-size: 1rem; color: var(--navy); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
     .teaching-item { padding: 0.9rem 0; border-bottom: 1px solid var(--border); }
@@ -236,10 +239,10 @@
     .music-quote cite { display: block; margin-top: 0.6rem; font-size: 0.78rem; color: var(--amber); font-style: normal; }
 
     /* ── FAITH ── */
-    #faith { background: var(--cream); }
-    .faith-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
-    .faith-text p { font-size: 0.95rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.2rem; }
-    .faith-milestones { display: flex; flex-direction: column; gap: 1rem; }
+    #judaism { background: var(--cream); }
+    .judaism-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .judaism-text p { font-size: 0.95rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.2rem; }
+    .judaism-milestones { display: flex; flex-direction: column; gap: 1rem; }
     .milestone { display: flex; gap: 1rem; align-items: flex-start; }
     .milestone-dot { width: 10px; height: 10px; background: var(--gold); border-radius: 50%; flex-shrink: 0; margin-top: 0.45rem; }
     .milestone-content h4 { font-size: 0.88rem; font-weight: 600; color: var(--navy); margin-bottom: 0.2rem; }
@@ -262,7 +265,7 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 700px) {
       nav ul { gap: 1rem; }
-      .about-grid, .faith-grid, .teaching-grid, .research-split, .music-press { grid-template-columns: 1fr; gap: 2rem; }
+      .about-grid, .judaism-grid, .teaching-grid, .research-split, .music-press { grid-template-columns: 1fr; gap: 2rem; }
       .pub-card { grid-template-columns: 1fr; gap: 0.4rem; }
       .catalyst-banner { flex-direction: column; }
     }
@@ -277,11 +280,12 @@
   <a href="#hero" class="brand">Jason Gusdorf, MD</a>
   <ul>
     <li><a href="#about">About</a></li>
+    <li><a href="#intl-affairs">Int'l Affairs</a></li>
     <li><a href="#medicine">Medicine</a></li>
     <li><a href="#research">Research</a></li>
     <li><a href="#teaching">Teaching</a></li>
     <li><a href="#music">Music</a></li>
-    <li><a href="#faith">Faith</a></li>
+    <li><a href="#judaism">Judaism</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
@@ -767,18 +771,18 @@
 </section>
 
 <!-- FAITH -->
-<section id="faith">
+<section id="judaism">
   <div class="container">
-    <div class="section-label">Faith & Community</div>
-    <h2 class="section-title">Judaism as a Way of Life</h2>
+    <div class="section-label">Judaism & Community</div>
+    <h2 class="section-title">Judaism</h2>
     <div class="divider"></div>
-    <div class="faith-grid">
-      <div class="faith-text">
+    <div class="judaism-grid">
+      <div class="judaism-text">
         <p>Growing up in a Reform Jewish household in St. Louis and attending OSRUI summer camp for seven years, Judaism has always been central to my life—not merely as religion but as an integrated framework for ethics, community, and purpose.</p>
         <p>At Georgetown I served as the Jewish community's music leader for four years, leading Kabbalat Shabbat services that grew from roughly 20 participants to 65–80 each week. I launched a Torah-study program and helped secure new Torah scrolls and prayer books for the community.</p>
         <p>Before medical school, I received a funded fellowship to study at the Pardes Institute of Jewish Studies in Jerusalem, returning later for an extended fellowship. That intensive immersion in Jewish text deepened my understanding of the spiritual dimensions of healing—themes that directly inform my clinical practice and academic writing, including a published essay on how Judaism shaped my love of medicine.</p>
       </div>
-      <div class="faith-milestones">
+      <div class="judaism-milestones">
         <div class="milestone">
           <div class="milestone-dot"></div>
           <div class="milestone-content">
@@ -810,7 +814,7 @@
         <div class="milestone">
           <div class="milestone-dot"></div>
           <div class="milestone-content">
-            <h4>Writing on Faith &amp; Medicine</h4>
+            <h4>Writing on Judaism &amp; Medicine</h4>
             <p>Published "How Judaism Influenced My Love of Medicine" (Pardes, 2019); "Viktor Frankl's Statue of Responsibility" (Capital Psychiatry, 2022); clinical guidance on the Yom Kippur fast (Georgetown Medical Review, 2023).</p>
           </div>
         </div>
