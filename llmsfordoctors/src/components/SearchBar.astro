@@ -1,0 +1,28 @@
+---
+// Pagefind search UI integration
+// The pagefind files are generated at build time in /pagefind/
+---
+
+<div id="search" class="w-full"></div>
+
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+<script>
+  import('/pagefind/pagefind-ui.js').then(({ PagefindUI }) => {
+    new PagefindUI({
+      element: '#search',
+      showSubResults: true,
+      showImages: false,
+    });
+  }).catch(() => {
+    // Pagefind not available in dev mode — render a disabled placeholder via safe DOM API
+    const el = document.getElementById('search');
+    if (el) {
+      const input = document.createElement('input');
+      input.type = 'search';
+      input.placeholder = 'Search (available after build)...';
+      input.className = 'w-full px-4 py-2 rounded-lg border border-clinical-300 bg-white text-clinical-800 focus:outline-none focus:ring-2 focus:ring-blue-500';
+      input.disabled = true;
+      el.appendChild(input);
+    }
+  });
+</script>
