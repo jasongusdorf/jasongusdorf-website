@@ -280,11 +280,11 @@
   <a href="#hero" class="brand">Jason Gusdorf, MD</a>
   <ul>
     <li><a href="#about">About</a></li>
-    <li><a href="#intl-affairs">Int'l Affairs</a></li>
+    <li><a href="#music">Music</a></li>
     <li><a href="#medicine">Medicine</a></li>
     <li><a href="#research">Research</a></li>
     <li><a href="#teaching">Teaching</a></li>
-    <li><a href="#music">Music</a></li>
+    <li><a href="#intl-affairs">Int'l Affairs</a></li>
     <li><a href="#judaism">Judaism</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -358,39 +358,114 @@
   </div>
 </section>
 
-<!-- INTERNATIONAL AFFAIRS -->
-<section id="intl-affairs">
-  <div class="container">
-    <div class="section-label">International Affairs</div>
-    <h2 class="section-title">Foreign Policy & Global Security</h2>
-    <div class="divider"></div>
-    <p class="section-sub">At Georgetown's School of Foreign Service I studied Science, Technology & International Affairs, with undergraduate work centered on nuclear strategy, European security, and the intersection of science and ideology.</p>
-    <div class="medicine-grid">
-      <div class="medicine-card">
-        <div class="medicine-icon">🌍</div>
-        <h3>Center for European Policy Analysis</h3>
-        <p>Full-time internship at CEPA in Dupont Circle, Washington, DC (2014). Helped organize an international conference with European heads of state and military officials to discuss Russia's invasion of Crimea. Researched Eastern European policy.</p>
+<!-- MUSIC PHOTO -->
+<div class="music-photo-banner">
+  <img src="guitar.jpg" alt="Jason Gusdorf playing guitar" />
+</div>
+
+<div class="photo-player-wrap">
+  <audio id="oats-audio" src="of-all-the-souls.m4a" preload="none"></audio>
+  <div class="audio-player">
+    <button class="play-btn" id="play-btn" onclick="togglePlay()">
+      <svg class="icon-play" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+      <svg class="icon-pause" viewBox="0 0 24 24"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
+    </button>
+    <div class="audio-info">
+      <div class="audio-title">Of All the Souls</div>
+      <div class="audio-album">Of All the Souls · 2020</div>
+      <div class="audio-progress-wrap">
+        <div class="progress-bar" id="progress-bar" onclick="seek(event)">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <span class="audio-time" id="audio-time">0:00</span>
       </div>
-      <div class="medicine-card">
-        <div class="medicine-icon">🔬</div>
-        <h3>Research with Matthew Kroenig</h3>
-        <p>Research assistant in international relations at Georgetown, acknowledged in three publications on nuclear strategy, NATO policy, and democratic institutions &amp; conflict.</p>
-        <div class="languages">
-          <a href="https://www.tandfonline.com/doi/abs/10.1080/00396338.2015.1008295" target="_blank" class="pub-link">↗ Survival</a>
-          <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2806696" target="_blank" class="pub-link">↗ SSRN</a>
-          <a href="https://uva.theopenscholar.com/files/todd-sechser/files/the_case_for_8.pdf" target="_blank" class="pub-link">↗ PDF</a>
+    </div>
+  </div>
+  <script>
+    const audio = document.getElementById('oats-audio');
+    const btn = document.getElementById('play-btn');
+    const fill = document.getElementById('progress-fill');
+    const timeEl = document.getElementById('audio-time');
+    function togglePlay() {
+      if (audio.paused) { audio.play(); btn.classList.add('playing'); }
+      else { audio.pause(); btn.classList.remove('playing'); }
+    }
+    function fmt(s) {
+      const m = Math.floor(s / 60), sec = Math.floor(s % 60);
+      return m + ':' + String(sec).padStart(2, '0');
+    }
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration) {
+        fill.style.width = (audio.currentTime / audio.duration * 100) + '%';
+        timeEl.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+      }
+    });
+    audio.addEventListener('ended', () => btn.classList.remove('playing'));
+    function seek(e) {
+      const bar = document.getElementById('progress-bar');
+      const rect = bar.getBoundingClientRect();
+      audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+    }
+  </script>
+</div>
+
+<!-- MUSIC -->
+<section id="music">
+  <div class="container">
+    <div class="section-label">Music</div>
+    <h2 class="section-title">Folk Music & Songwriting</h2>
+    <div class="divider"></div>
+    <p class="section-sub">A singer-songwriter at heart, I write and perform folk music inspired by spirituality, medicine, and the human experience.</p>
+
+    <div class="albums-grid">
+      <div class="album-card">
+        <div class="album-year">2020</div>
+        <h3>Of All the Souls</h3>
+        <p>A 14-track debut album featuring vocals and guitar. Themes of nature, spirituality, and introspection run throughout.</p>
+        <div class="album-tracks">
+          <span class="track-tag">In the Garden</span>
+          <span class="track-tag">The Sea When It's Glass</span>
+          <span class="track-tag">New Moon</span>
+          <span class="track-tag">+11 more</span>
         </div>
       </div>
-      <div class="medicine-card">
-        <div class="medicine-icon">📖</div>
-        <h3>Honors Thesis</h3>
-        <p><em>Identity and Ideology: Racial Empiricism in the Third Reich.</em> Mentored by Dr. Kathryn Olesko, Ph.D. Awarded Honors in STIA, Georgetown SFS, Spring 2016. Dedicated to Walter Gusdorf.</p>
+      <div class="album-card">
+        <div class="album-year">2021</div>
+        <h3>After the Seventh</h3>
+        <p>Inspired by a semester of intensive Jewish text study at the Pardes Institute of Jewish Studies in Jerusalem. Written in the hills of the Old City.</p>
+        <div class="album-tracks">
+          <span class="track-tag">Pardes-inspired</span>
+        </div>
       </div>
-      <div class="medicine-card">
-        <div class="medicine-icon">📰</div>
-        <h3>Georgetown Voice</h3>
-        <p>Wrote on international affairs topics for Georgetown's campus newspaper.</p>
+    </div>
+
+    <div class="music-links">
+      <a href="https://open.spotify.com/artist/6gHVe3VzQJrvkPHnCHRUUw" target="_blank" class="music-platform-link">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+        Listen on Spotify
+      </a>
+      <a href="https://music.apple.com/us/artist/jason-gusdorf/1525005189" target="_blank" class="music-platform-link">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.994 6.124a9.23 9.23 0 00-.24-2.19c-.317-1.31-1.048-2.31-2.18-3.043a6.303 6.303 0 00-1.862-.81c-.676-.17-1.365-.2-2.05-.23-.232-.01-.467-.01-.7-.013H6.717c-.379.004-.76.005-1.138.015-.692.02-1.383.05-2.06.23a6.144 6.144 0 00-1.864.81C.535 1.632-.196 2.634-.01 3.942c.032.23.07.46.115.687.28 1.4.96 2.52 2.02 3.39.22.18.46.34.7.49.7.43 1.47.67 2.27.79.5.08 1.01.1 1.52.1h10.78c.51 0 1.02-.02 1.52-.1.8-.12 1.57-.36 2.27-.79.24-.15.48-.31.7-.49 1.06-.87 1.74-1.99 2.02-3.39.045-.227.083-.457.115-.687zm-6.977 9.367c-.07.28-.19.54-.36.77-.34.47-.82.77-1.38.87-.26.05-.53.05-.79.04-.37-.01-.74-.07-1.08-.2-.49-.18-.91-.48-1.25-.87a4.46 4.46 0 01-.88-1.77c-.13-.52-.15-1.06-.06-1.59.1-.57.32-1.09.67-1.54.36-.46.83-.79 1.38-.96.39-.12.79-.15 1.19-.1.5.06.96.24 1.36.54v-4.27l-5.5 1.25v7.27c-.01.42-.09.83-.24 1.22-.29.74-.82 1.3-1.55 1.62-.37.17-.77.26-1.18.27-.25.01-.5-.01-.74-.07-.49-.12-.92-.38-1.25-.76-.34-.39-.53-.86-.56-1.36-.03-.5.1-.98.37-1.4.27-.43.66-.74 1.12-.91.37-.13.76-.17 1.15-.12.28.04.55.12.8.24v-1.1c-.26-.07-.53-.11-.8-.13-.57-.04-1.13.05-1.66.27-.79.33-1.41.9-1.78 1.65-.22.45-.33.94-.33 1.44 0 .31.04.62.12.92.22.83.71 1.53 1.4 2.01.51.35 1.09.56 1.7.61.29.02.58.01.87-.03.65-.1 1.24-.38 1.72-.82.5-.45.83-1.02.97-1.65.07-.3.1-.6.1-.91v-7.52l7.83-1.78v5.27c-.01.41-.09.81-.23 1.19-.27.72-.78 1.27-1.47 1.59-.35.16-.72.25-1.1.27-.24.01-.48 0-.71-.05-.47-.1-.89-.34-1.22-.69-.34-.36-.54-.81-.57-1.29-.03-.49.1-.96.38-1.36.28-.41.68-.7 1.14-.85.37-.12.76-.14 1.14-.07.26.05.51.14.74.27v-1.1c-.24-.07-.49-.11-.75-.13z"/></svg>
+        Listen on Apple Music
+      </a>
+    </div>
+
+    <div class="music-press">
+      <div class="press-card">
+        <div class="press-date">June 4, 2025</div>
+        <h4>Podcast Guest — "LLM, MD: AI Health Bots Are Coming"</h4>
+        <p>Invited guest on <em>Babbage</em>, The Economist — discussing generative AI in clinical diagnostics and the future of physician-AI collaboration.</p>
       </div>
+      <div class="press-card">
+        <div class="press-date">November 22, 2022</div>
+        <h4>Live at Blue Strawberry, St. Louis</h4>
+        <p>Folk concert featuring original compositions written in Jerusalem alongside covers of Johnny Cash and Bob Dylan. Covered by <em>St. Louis Public Radio</em> as part of its Community Events series.</p>
+      </div>
+    </div>
+
+    <div class="music-quote">
+      <blockquote>"Judaism is a fundamental part of my identity. Playing guitar at the bedside for cancer patients during college showed me that healing and music are not so different—they both require presence, vulnerability, and the courage to sit with another person in their most human moments."</blockquote>
+      <cite>— Jason Gusdorf, Pardes Institute Blog</cite>
     </div>
   </div>
 </section>
@@ -429,11 +504,6 @@
         <p>My practice integrates spiritual and cultural context into patient care. I hold a certification in Structure-Based Medical Acupuncture and have published guidance on religion and fasting in clinical settings.</p>
       </div>
       <div class="medicine-card">
-        <div class="medicine-icon">📋</div>
-        <h3>Quality Improvement</h3>
-        <p>Led a Stoneman QI initiative at BIDMC to improve after-discharge outpatient follow-up, process-mapping discharge appointment requests in the EPIC EMR system.</p>
-      </div>
-      <div class="medicine-card">
         <div class="medicine-icon">🤝</div>
         <h3>Music in Medicine</h3>
         <p>During college I served as a musician-in-residence for cancer patients, playing guitar at the bedside—an experience that shaped my understanding of holistic healing.</p>
@@ -449,16 +519,6 @@
     <h2 class="section-title">Publications & Scholarship</h2>
     <div class="divider"></div>
     <p class="section-sub">My research spans cardiovascular outcomes, health disparities, AI diagnostics, and anticoagulation therapy, with publications in JAHA, AJC, NEJM, and NeurIPS.</p>
-
-    <!-- CATALYST highlight -->
-    <div class="catalyst-banner">
-      <div class="catalyst-icon">⚡</div>
-      <div>
-        <h3>CATALYST — AI Startup</h3>
-        <p>Co-founder of CATALYST, a venture emerging from a BIDMC / MIT Media Lab collaboration to build RAG-equipped LLM tools for ECG interpretation. GPT-4 achieved AUC = 0.940 in arrhythmia classification in our benchmarking study—the first known multi-LLM ECG benchmarking with multimodal input. Currently pursuing $150,000 in grant funding.</p>
-        <span class="catalyst-tag">Funding Pending · MIT Media Lab · BIDMC</span>
-      </div>
-    </div>
 
     <div class="pub-list">
 
@@ -695,114 +755,39 @@
   </div>
 </section>
 
-<!-- MUSIC PHOTO -->
-<div class="music-photo-banner">
-  <img src="guitar.jpg" alt="Jason Gusdorf playing guitar" />
-</div>
-
-<div class="photo-player-wrap">
-  <audio id="oats-audio" src="of-all-the-souls.m4a" preload="none"></audio>
-  <div class="audio-player">
-    <button class="play-btn" id="play-btn" onclick="togglePlay()">
-      <svg class="icon-play" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-      <svg class="icon-pause" viewBox="0 0 24 24"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
-    </button>
-    <div class="audio-info">
-      <div class="audio-title">Of All the Souls</div>
-      <div class="audio-album">Of All the Souls · 2020</div>
-      <div class="audio-progress-wrap">
-        <div class="progress-bar" id="progress-bar" onclick="seek(event)">
-          <div class="progress-fill" id="progress-fill"></div>
-        </div>
-        <span class="audio-time" id="audio-time">0:00</span>
-      </div>
-    </div>
-  </div>
-  <script>
-    const audio = document.getElementById('oats-audio');
-    const btn = document.getElementById('play-btn');
-    const fill = document.getElementById('progress-fill');
-    const timeEl = document.getElementById('audio-time');
-    function togglePlay() {
-      if (audio.paused) { audio.play(); btn.classList.add('playing'); }
-      else { audio.pause(); btn.classList.remove('playing'); }
-    }
-    function fmt(s) {
-      const m = Math.floor(s / 60), sec = Math.floor(s % 60);
-      return m + ':' + String(sec).padStart(2, '0');
-    }
-    audio.addEventListener('timeupdate', () => {
-      if (audio.duration) {
-        fill.style.width = (audio.currentTime / audio.duration * 100) + '%';
-        timeEl.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
-      }
-    });
-    audio.addEventListener('ended', () => btn.classList.remove('playing'));
-    function seek(e) {
-      const bar = document.getElementById('progress-bar');
-      const rect = bar.getBoundingClientRect();
-      audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
-    }
-  </script>
-</div>
-
-<!-- MUSIC -->
-<section id="music">
+<!-- INTERNATIONAL AFFAIRS -->
+<section id="intl-affairs">
   <div class="container">
-    <div class="section-label">Music</div>
-    <h2 class="section-title">Folk Music & Songwriting</h2>
+    <div class="section-label">International Affairs</div>
+    <h2 class="section-title">Foreign Policy & Global Security</h2>
     <div class="divider"></div>
-    <p class="section-sub">A singer-songwriter at heart, I write and perform folk music inspired by spirituality, medicine, and the human experience.</p>
-
-    <div class="albums-grid">
-      <div class="album-card">
-        <div class="album-year">2020</div>
-        <h3>Of All the Souls</h3>
-        <p>A 14-track debut album featuring vocals and guitar. Themes of nature, spirituality, and introspection run throughout.</p>
-        <div class="album-tracks">
-          <span class="track-tag">In the Garden</span>
-          <span class="track-tag">The Sea When It's Glass</span>
-          <span class="track-tag">New Moon</span>
-          <span class="track-tag">+11 more</span>
+    <p class="section-sub">Before medicine, my academic foundation was in international relations. At Georgetown's School of Foreign Service I studied Science, Technology &amp; International Affairs, graduating Magna Cum Laude with Honors. My undergraduate work centered on nuclear strategy, European security, and the intersection of science and ideology — shaped by a family history rooted in the Holocaust and a semester living in Berlin retracing those roots. I served as a research assistant to Professor Matthew Kroenig, interned at a leading European policy think tank during the Crimea crisis, and wrote an honors thesis on racial empiricism in the Third Reich.</p>
+    <div class="medicine-grid">
+      <div class="medicine-card">
+        <div class="medicine-icon">🌍</div>
+        <h3>Center for European Policy Analysis</h3>
+        <p>Full-time internship at CEPA in Dupont Circle, Washington, DC (2014). Helped organize an international conference with European heads of state and military officials to discuss Russia's invasion of Crimea. Researched Eastern European policy.</p>
+      </div>
+      <div class="medicine-card">
+        <div class="medicine-icon">🔬</div>
+        <h3>Research with Matthew Kroenig</h3>
+        <p>Research assistant in international relations at Georgetown, acknowledged in three publications on nuclear strategy, NATO policy, and democratic institutions &amp; conflict.</p>
+        <div class="languages">
+          <a href="https://www.tandfonline.com/doi/abs/10.1080/00396338.2015.1008295" target="_blank" class="pub-link">↗ Survival</a>
+          <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2806696" target="_blank" class="pub-link">↗ SSRN</a>
+          <a href="https://uva.theopenscholar.com/files/todd-sechser/files/the_case_for_8.pdf" target="_blank" class="pub-link">↗ PDF</a>
         </div>
       </div>
-      <div class="album-card">
-        <div class="album-year">2021</div>
-        <h3>After the Seventh</h3>
-        <p>Inspired by a semester of intensive Jewish text study at the Pardes Institute of Jewish Studies in Jerusalem. Written in the hills of the Old City.</p>
-        <div class="album-tracks">
-          <span class="track-tag">Pardes-inspired</span>
-        </div>
+      <div class="medicine-card">
+        <div class="medicine-icon">📖</div>
+        <h3>Honors Thesis</h3>
+        <p><em>Identity and Ideology: Racial Empiricism in the Third Reich.</em> Mentored by Dr. Kathryn Olesko, Ph.D. Awarded Honors in STIA, Georgetown SFS, Spring 2016. Dedicated to Walter Gusdorf.</p>
       </div>
-    </div>
-
-    <div class="music-links">
-      <a href="https://open.spotify.com/artist/6gHVe3VzQJrvkPHnCHRUUw" target="_blank" class="music-platform-link">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
-        Listen on Spotify
-      </a>
-      <a href="https://music.apple.com/us/artist/jason-gusdorf/1525005189" target="_blank" class="music-platform-link">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.994 6.124a9.23 9.23 0 00-.24-2.19c-.317-1.31-1.048-2.31-2.18-3.043a6.303 6.303 0 00-1.862-.81c-.676-.17-1.365-.2-2.05-.23-.232-.01-.467-.01-.7-.013H6.717c-.379.004-.76.005-1.138.015-.692.02-1.383.05-2.06.23a6.144 6.144 0 00-1.864.81C.535 1.632-.196 2.634-.01 3.942c.032.23.07.46.115.687.28 1.4.96 2.52 2.02 3.39.22.18.46.34.7.49.7.43 1.47.67 2.27.79.5.08 1.01.1 1.52.1h10.78c.51 0 1.02-.02 1.52-.1.8-.12 1.57-.36 2.27-.79.24-.15.48-.31.7-.49 1.06-.87 1.74-1.99 2.02-3.39.045-.227.083-.457.115-.687zm-6.977 9.367c-.07.28-.19.54-.36.77-.34.47-.82.77-1.38.87-.26.05-.53.05-.79.04-.37-.01-.74-.07-1.08-.2-.49-.18-.91-.48-1.25-.87a4.46 4.46 0 01-.88-1.77c-.13-.52-.15-1.06-.06-1.59.1-.57.32-1.09.67-1.54.36-.46.83-.79 1.38-.96.39-.12.79-.15 1.19-.1.5.06.96.24 1.36.54v-4.27l-5.5 1.25v7.27c-.01.42-.09.83-.24 1.22-.29.74-.82 1.3-1.55 1.62-.37.17-.77.26-1.18.27-.25.01-.5-.01-.74-.07-.49-.12-.92-.38-1.25-.76-.34-.39-.53-.86-.56-1.36-.03-.5.1-.98.37-1.4.27-.43.66-.74 1.12-.91.37-.13.76-.17 1.15-.12.28.04.55.12.8.24v-1.1c-.26-.07-.53-.11-.8-.13-.57-.04-1.13.05-1.66.27-.79.33-1.41.9-1.78 1.65-.22.45-.33.94-.33 1.44 0 .31.04.62.12.92.22.83.71 1.53 1.4 2.01.51.35 1.09.56 1.7.61.29.02.58.01.87-.03.65-.1 1.24-.38 1.72-.82.5-.45.83-1.02.97-1.65.07-.3.1-.6.1-.91v-7.52l7.83-1.78v5.27c-.01.41-.09.81-.23 1.19-.27.72-.78 1.27-1.47 1.59-.35.16-.72.25-1.1.27-.24.01-.48 0-.71-.05-.47-.1-.89-.34-1.22-.69-.34-.36-.54-.81-.57-1.29-.03-.49.1-.96.38-1.36.28-.41.68-.7 1.14-.85.37-.12.76-.14 1.14-.07.26.05.51.14.74.27v-1.1c-.24-.07-.49-.11-.75-.13z"/></svg>
-        Listen on Apple Music
-      </a>
-    </div>
-
-    <div class="music-press">
-      <div class="press-card">
-        <div class="press-date">June 4, 2025</div>
-        <h4>Podcast Guest — "LLM, MD: AI Health Bots Are Coming"</h4>
-        <p>Invited guest on <em>Babbage</em>, The Economist — discussing generative AI in clinical diagnostics and the future of physician-AI collaboration.</p>
+      <div class="medicine-card">
+        <div class="medicine-icon">📰</div>
+        <h3>Georgetown Voice</h3>
+        <p>Wrote on international affairs topics for Georgetown's campus newspaper.</p>
       </div>
-      <div class="press-card">
-        <div class="press-date">November 22, 2022</div>
-        <h4>Live at Blue Strawberry, St. Louis</h4>
-        <p>Folk concert featuring original compositions written in Jerusalem alongside covers of Johnny Cash and Bob Dylan. Covered by <em>St. Louis Public Radio</em> as part of its Community Events series.</p>
-      </div>
-    </div>
-
-    <div class="music-quote">
-      <blockquote>"Judaism is a fundamental part of my identity. Playing guitar at the bedside for cancer patients during college showed me that healing and music are not so different—they both require presence, vulnerability, and the courage to sit with another person in their most human moments."</blockquote>
-      <cite>— Jason Gusdorf, Pardes Institute Blog</cite>
     </div>
   </div>
 </section>
