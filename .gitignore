@@ -1,0 +1,8 @@
+# Worktrees
+LLMsforDoctors/
+
+# Brainstorming artifacts
+.superpowers/
+
+# OS
+.DS_Store
