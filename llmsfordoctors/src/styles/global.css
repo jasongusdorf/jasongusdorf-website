@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
 @plugin "@tailwindcss/typography";
 
 @theme {
@@ -54,5 +55,5 @@
   nav, footer, .no-print, .dark-mode-toggle { display: none !important; }
   body { font-size: 12pt; line-height: 1.5; color: #000; background: #fff; }
   a { color: #000; text-decoration: underline; }
-  a[href]::after { content: ' (' attr(href) ')'; font-size: 0.8em; }
+  a[href^="http"]::after { content: ' (' attr(href) ')'; font-size: 0.8em; }
 }
