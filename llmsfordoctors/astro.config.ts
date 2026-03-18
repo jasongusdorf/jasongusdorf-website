@@ -1,0 +1,24 @@
+import { defineConfig } from 'astro/config';
+import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
+import tailwindcss from '@tailwindcss/vite';
+import pagefind from 'astro-pagefind';
+
+export default defineConfig({
+  site: 'https://llmsfordoctors.com',
+  output: 'static',
+  integrations: [
+    mdx(),
+    sitemap(),
+    pagefind(),
+  ],
+  vite: {
+    plugins: [tailwindcss()],
+  },
+  markdown: {
+    shikiConfig: {
+      theme: 'github-light',
+      wrap: true,
+    },
+  },
+});
