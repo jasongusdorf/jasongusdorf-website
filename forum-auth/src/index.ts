@@ -1,6 +1,7 @@
 import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
 import { logger } from 'hono/logger';
+import type { AppVariables } from './types.js';
 import { mkdirSync, existsSync } from 'fs';
 import { dirname } from 'path';
 import { createDb } from './db.js';
@@ -23,7 +24,7 @@ import { logoutRoutes } from './routes/logout.js';
 
 const db = createDb(config.databasePath);
 
-const app = new Hono();
+const app = new Hono<{ Variables: AppVariables }>();
 
 // Global middleware
 app.use('*', logger());

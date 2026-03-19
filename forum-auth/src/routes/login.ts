@@ -6,9 +6,10 @@ import { generateToken } from '../services/session.js';
 import { loginView } from '../views/login.js';
 import { config } from '../config.js';
 import type { MiddlewareHandler } from 'hono';
+import type { AppVariables } from '../types.js';
 
 export function loginRoutes(db: DbInterface, rateLimiter: MiddlewareHandler) {
-  const app = new Hono();
+  const app = new Hono<{ Variables: AppVariables }>();
 
   app.get('/', (c) => {
     const csrfToken = c.get('csrfToken') as string;

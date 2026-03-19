@@ -4,12 +4,13 @@ import { generateToken } from '../services/session.js';
 import { sendPasswordResetEmail } from '../services/email.js';
 import { forgotPasswordView } from '../views/forgot-password.js';
 import type { MiddlewareHandler } from 'hono';
+import type { AppVariables } from '../types.js';
 
 const ALWAYS_SHOWN_MESSAGE =
   "If an account with that email exists, we've sent a password reset link. Please check your inbox.";
 
 export function forgotPasswordRoutes(db: DbInterface, rateLimiter: MiddlewareHandler) {
-  const app = new Hono();
+  const app = new Hono<{ Variables: AppVariables }>();
 
   app.get('/', (c) => {
     const csrfToken = c.get('csrfToken') as string;

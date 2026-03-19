@@ -3,9 +3,10 @@ import bcrypt from 'bcryptjs';
 import type { DbInterface } from '../db.js';
 import { resetPasswordView } from '../views/reset-password.js';
 import { verifyEmailView } from '../views/verify-email.js';
+import type { AppVariables } from '../types.js';
 
 export function resetPasswordRoutes(db: DbInterface) {
-  const app = new Hono();
+  const app = new Hono<{ Variables: AppVariables }>();
 
   app.get('/', (c) => {
     const csrfToken = c.get('csrfToken') as string;
