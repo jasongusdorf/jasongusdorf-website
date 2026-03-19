@@ -25,6 +25,19 @@ if (entry.data.workflow) {
   }
 }
 
+// Also find workflows that list this template in their templates array
+const allWorkflows = await getCollection('workflows');
+for (const wf of allWorkflows) {
+  const alreadyAdded = relatedItems.some((r) => r.href === `/workflows/${wf.id}`);
+  if (!alreadyAdded && wf.data.templates?.includes(entry.id)) {
+    relatedItems.push({
+      title: wf.data.title,
+      href: `/workflows/${wf.id}`,
+      type: 'workflow',
+    });
+  }
+}
+
 const categoryLabels: Record<string, string> = {
   'note-writing': 'Note Writing',
   'clinical-reasoning': 'Clinical Reasoning',
