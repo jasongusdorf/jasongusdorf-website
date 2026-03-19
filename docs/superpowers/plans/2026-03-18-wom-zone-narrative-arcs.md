@@ -701,7 +701,7 @@ When all tasks are complete:
 After Phase 1, authoring new zone arcs is a content task, not a code task:
 1. Add a `ZoneArc` entry to `zoneArcs.ts`
 2. Write quests with `zoneArcId`, `actNumber`, and narrative text
-3. Link the zone in `worldHierarchy.ts`
+3. Link the zone in `worldMap.ts`
 4. Seed the database
 
 The system handles progression, act transitions, narrative display, and breadcrumbing automatically.
