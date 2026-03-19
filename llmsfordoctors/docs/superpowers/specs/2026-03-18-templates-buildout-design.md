@@ -165,17 +165,23 @@ Templates involving patient data include:
 
 ## Tags Convention
 
+Every template MUST include exactly one difficulty tag: `beginner`, `intermediate`, or `advanced`, matching the Difficulty column in the inventory tables above.
+
+**Tag ordering:** difficulty tag first, then category tag, then domain/task tags. This matters because the index page only displays the first 3 tags per card.
+
+Example: `tags: [beginner, note-writing, discharge, inpatient, documentation]`
+
 Tags are lowercase, hyphenated, and drawn from:
+- **Difficulty tags (required, exactly one):** `beginner`, `intermediate`, `advanced`
 - **Category tags:** `note-writing`, `clinical-reasoning`, `patient-education`, `literature-review`, `admin-billing`, `board-prep`
 - **Clinical domain tags:** `discharge`, `inpatient`, `outpatient`, `emergency`, `surgery`, `pediatrics`, etc.
 - **Task tags:** `documentation`, `diagnosis`, `education`, `billing`, `coding`, `study`
-- **Prompt tags:** `beginner`, `intermediate`, `advanced` (difficulty conveyed in tags for filtering, even though not in schema)
 
 ## Cross-Linking Strategy
 
 - Every template sets `workflow` to a slug matching the implied parent workflow
 - These workflows don't exist yet — each becomes a backlog item
-- The templates detail page already renders related workflows via `getTemplatesForWorkflow()` in `collections.ts`
+- The template detail page (`[...slug].astro`) queries workflows inline via `getCollection('workflows')` and matches on `wf.id === entry.data.workflow` — it handles missing workflows gracefully by skipping the related item
 - When workflows are created later, the cross-links will activate automatically
 
 ## Files Created
@@ -213,4 +219,6 @@ Tags are lowercase, hyphenated, and drawn from:
 
 ## Files Modified
 
-None. The existing schema, layouts, pages, and components support this content without changes.
+- `src/content/templates/discharge-summary-basic.mdx` — update tags to conform to new convention: add `beginner` as first tag, reorder to `[beginner, note-writing, discharge, inpatient, documentation]`
+
+No schema, layout, page, or component changes needed.
