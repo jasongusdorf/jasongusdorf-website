@@ -310,8 +310,9 @@ export async function getTemplatesForWorkflow(workflowSlug: string) {
 - `src/content/workflows/outpatient-visit-education.mdx`
 - `src/content/workflows/procedure-education.mdx`
 
-**Modified files (2):**
+**Modified files (3):**
 - `src/pages/templates/index.astro` — "Any LLM" display conditional for `targetTool === "any"`
+- `src/pages/templates/[...slug].astro` — Reverse workflow lookup so shared templates show all parent workflows in sidebar
 - `src/utils/collections.ts` — Update `getTemplatesForWorkflow()` to also check the workflow's `templates` array
 
 ## Out of Scope
