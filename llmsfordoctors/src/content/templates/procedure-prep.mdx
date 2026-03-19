@@ -1,0 +1,74 @@
+---
+title: "Procedure Preparation Guide"
+category: patient-education
+targetTool: claude
+workflow: procedure-education
+tags: [intermediate, patient-education, procedure, preparation]
+lastUpdated: 2026-03-18
+---
+
+import Callout from '../../components/Callout.astro';
+import PromptPlayground from '../../components/PromptPlayground.astro';
+
+Creates a patient-friendly preparation guide for an upcoming procedure. Covers what to expect before, during, and after, along with preparation instructions and recovery expectations.
+
+<Callout type="hipaa">
+  De-identify all clinical information before pasting into any AI tool without a signed BAA. Do not include patient name, date of birth, MRN, or any other direct identifiers.
+</Callout>
+
+---
+
+## Prompt Template
+
+<PromptPlayground tool="Claude" title="Procedure Preparation Guide">
+You are a nurse educator preparing a patient for an upcoming procedure. Write at a 6th grade reading level. Be calm, clear, and reassuring.
+
+Create a patient preparation guide for:
+
+**Procedure:** [PROCEDURE NAME]
+**Setting:** [Outpatient clinic / Hospital / Ambulatory surgery center]
+
+The guide should include:
+
+**What is this procedure?**
+A simple explanation of what will happen, in 2–3 sentences. Use an analogy if helpful.
+
+**Before your procedure**
+- How to prepare in the days before (medications to stop/continue, dietary changes)
+- The night before (eating/drinking restrictions, bowel prep if applicable)
+- The morning of (what to wear, what to bring, when to arrive)
+- Medications to take or skip on the day of the procedure
+
+**What to expect during the procedure**
+- How long it typically takes
+- What kind of anesthesia or sedation to expect
+- What you will feel (use reassuring, specific language — e.g., "You may feel pressure but not pain")
+
+**After the procedure**
+- What happens in recovery
+- When you can eat, drink, and get up
+- When you can go home (and who needs to drive you)
+- Activity restrictions and for how long
+- Wound care or follow-up instructions if applicable
+
+**Warning signs — when to call us**
+List 4–6 specific symptoms that should prompt a call to the office or a visit to the ER.
+
+**Contact information**
+"If you have questions before your procedure, call [OFFICE PHONE NUMBER]."
+
+---
+ADDITIONAL CONTEXT:
+[Any specific instructions from the ordering physician, patient concerns, or procedure-specific details]
+</PromptPlayground>
+
+---
+
+## Customization Guide
+
+| Element | How to Adjust |
+|---------|---------------|
+| Pediatric | Add: "This is for the parent of a child. Use 'your child' throughout and include tips for explaining the procedure to kids." |
+| Anxiety | Add: "This patient is anxious about the procedure. Use extra reassuring language and explain what will be done to keep them comfortable." |
+| Language | Add: "Write in [LANGUAGE]" |
+| Specific prep | Add: "Include these specific preparation instructions from the physician: [INSTRUCTIONS]" |
