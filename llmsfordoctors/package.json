@@ -22,9 +22,12 @@
     "astro-pagefind": "^1.8.5",
     "lucide-astro": "^0.556.0",
     "preact": "^10.29.0",
+    "satori": "^0.25.0",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
-    "@types/node": "^25.5.0"
+    "@types/node": "^25.5.0",
+    "@types/sharp": "^0.31.1"
   }
 }
