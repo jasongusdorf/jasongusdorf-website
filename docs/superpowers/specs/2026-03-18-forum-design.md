@@ -42,7 +42,7 @@ community.llmsfordoctors.com (Discourse, VPS or managed)
 - **Framework:** Hono (lightweight, fast, TypeScript-first)
 - **Database:** SQLite via better-sqlite3 (single-file, zero-config, deployed alongside app)
 - **Password hashing:** bcrypt
-- **Sessions:** JWT stored in httpOnly cookie
+- **Sessions:** Opaque tokens stored in httpOnly cookie
 - **Deployment:** Fly.io free tier
 - **Domain:** auth.llmsfordoctors.com
 
@@ -253,13 +253,6 @@ Three A/CNAME records under llmsfordoctors.com:
 - `@` → Netlify
 - `auth` → Fly.io
 - `community` → VPS or Discourse managed hosting
-
-## What We Build (Custom Code)
-
-- Auth service: ~6 files (server, routes, db, npi-client, sso, views)
-- Auth page templates: registration + login HTML
-- Discourse theme: CSS overrides
-- Main site updates: nav + footer + homepage CTA
 
 ## What We Configure (No Custom Code)
 
