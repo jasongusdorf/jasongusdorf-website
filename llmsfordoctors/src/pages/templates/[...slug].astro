@@ -10,12 +10,12 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 
-// Build related items — link to parent workflow if set
+// Build related items — link to parent workflow and any workflows that reference this template
 const relatedItems: { title: string; href: string; type: 'workflow' | 'guide' | 'tool' | 'template' | 'trial' }[] = [];
+const allWorkflows = await getCollection('workflows');
 
 if (entry.data.workflow) {
-  const workflows = await getCollection('workflows');
-  const parentWorkflow = workflows.find((wf) => wf.id === entry.data.workflow);
+  const parentWorkflow = allWorkflows.find((wf) => wf.id === entry.data.workflow);
   if (parentWorkflow) {
     relatedItems.push({
       title: parentWorkflow.data.title,
@@ -25,8 +25,6 @@ if (entry.data.workflow) {
   }
 }
 
-// Also find workflows that list this template in their templates array
-const allWorkflows = await getCollection('workflows');
 for (const wf of allWorkflows) {
   const alreadyAdded = relatedItems.some((r) => r.href === `/workflows/${wf.id}`);
   if (!alreadyAdded && wf.data.templates?.includes(entry.id)) {
