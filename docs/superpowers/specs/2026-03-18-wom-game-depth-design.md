@@ -154,7 +154,7 @@ Level 40-60 zones should punish autopilot:
 - **Home zone** with daily quests
 - **Reputation track:** Neutral → Friendly → Honored → Revered → Exalted
 - **Tiered rewards:** cosmetics (Friendly), gear (Honored), recipes/abilities (Revered), title (Exalted)
-- **Competing philosophies** (e.g., evidence-based vs. traditional medicine) so players can't max all factions — creating meaningful choice
+- **Competing philosophies** (e.g., evidence-based vs. traditional medicine). Players can eventually max all factions but not simultaneously — time-gated, not mutually exclusive. Creates prioritization choices, not permanent lockouts
 
 ### World Events
 
@@ -252,7 +252,7 @@ NPCs that aren't quest givers or enemies:
 - **Repair costs.** Gear degrades. Higher-tier = more expensive repairs. Steady copper drain
 - **Trainer costs.** Key abilities at levels 20, 40, 60 cost meaningful copper. Creates saving goals
 - **Consumables.** Potions, food buffs, antidotes, resistance elixirs. Meaningful for hard content
-- **Professions connection.** Gather materials in zones → craft consumables/gear → sell or use. Gathering nodes in dangerous areas = risk/reward
+- **Professions connection.** Medical specialty professions (the existing specialization tracking system) serve as the professions system. Gathering medical knowledge in zones → craft consumables/gear based on specialty mastery → sell or use. Specialty-gated crafting in dangerous areas = risk/reward
 
 ### Ability Acquisition as Adventure
 
