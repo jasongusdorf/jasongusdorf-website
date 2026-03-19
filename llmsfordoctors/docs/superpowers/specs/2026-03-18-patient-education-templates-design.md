@@ -13,6 +13,8 @@ Add a suite of 7 patient education prompt templates and 3 workflows to llmsfordo
 - **Tool-agnostic:** All templates use `targetTool: "any"` instead of targeting a specific LLM. The site UI displays "Any LLM" for these templates.
 - **6th grade reading level:** All prompts instruct the LLM to write at a 6th grade reading level per AMA recommendations. Short sentences, no unexplained jargon, bullet points for action items.
 - **Existing architecture:** No schema changes, no new components, no new pages. Everything fits within the current content collections and page routes.
+- **Workflow assignment:** Templates that belong to exactly one workflow set `workflow` in frontmatter. Templates shared across multiple workflows omit `workflow` (it's optional). Cross-referencing is handled by the `templates` array in workflow frontmatter.
+- **Tool field on workflows:** The `tools` field is required on workflows. All patient-education workflows use `tools: [claude]` (the only tool in the system) even though the content is tool-agnostic in tone. This is a schema constraint, not a content recommendation.
 
 ## Templates (7 MDX files)
 
@@ -21,11 +23,22 @@ All placed in `src/content/templates/` with `category: patient-education` and `t
 Each template follows the existing pattern from `discharge-summary-basic.mdx`:
 - Intro paragraph explaining what the template produces
 - HIPAA callout (de-identification reminder)
-- `PromptPlayground` component with the full prompt (copy-to-clipboard)
+- `PromptPlayground` component with the full prompt (copy-to-clipboard), using `tool="Any LLM"`
 - Customization guide table
 - Notes section
 
 ### 1. condition-explainer.mdx — Condition Explainer
+
+```yaml
+---
+title: "Condition Explainer"
+category: patient-education
+targetTool: any
+workflow: outpatient-visit-education
+tags: [patient-education, diagnosis, condition, explainer]
+lastUpdated: 2026-03-18
+---
+```
 
 **Purpose:** Takes a diagnosis and clinical context, outputs a plain-language explanation for the patient.
 
@@ -36,9 +49,18 @@ Each template follows the existing pattern from `discharge-summary-basic.mdx`:
 - What the treatment plan involves
 - When to seek emergency care
 
-**Tags:** `[patient-education, diagnosis, condition, explainer]`
-
 ### 2. discharge-instructions-patient.mdx — Patient Discharge Instructions
+
+```yaml
+---
+title: "Patient Discharge Instructions"
+category: patient-education
+targetTool: any
+workflow: inpatient-discharge-education
+tags: [patient-education, discharge, instructions, inpatient]
+lastUpdated: 2026-03-18
+---
+```
 
 **Purpose:** Takes discharge notes, outputs a patient-friendly take-home instruction sheet.
 
@@ -49,9 +71,19 @@ Each template follows the existing pattern from `discharge-summary-basic.mdx`:
 - Follow-up appointments with dates/times
 - Warning signs that mean "go to the ER"
 
-**Tags:** `[patient-education, discharge, instructions, inpatient]`
-
 ### 3. new-medication-guide.mdx — New Medication Guide
+
+```yaml
+---
+title: "New Medication Guide"
+category: patient-education
+targetTool: any
+tags: [patient-education, medication, prescription, pharmacy]
+lastUpdated: 2026-03-18
+---
+```
+
+**Note:** No `workflow` field — this template is shared by both inpatient-discharge-education and outpatient-visit-education workflows. Cross-referenced via those workflows' `templates` arrays.
 
 **Purpose:** Takes medication name, dose, and indication, outputs a patient-friendly medication explanation.
 
@@ -63,9 +95,18 @@ Each template follows the existing pattern from `discharge-summary-basic.mdx`:
 - Interactions to avoid (foods, other medications, alcohol)
 - What to do if a dose is missed
 
-**Tags:** `[patient-education, medication, prescription, pharmacy]`
-
 ### 4. procedure-prep.mdx — Procedure Preparation Guide
+
+```yaml
+---
+title: "Procedure Preparation Guide"
+category: patient-education
+targetTool: any
+workflow: procedure-education
+tags: [patient-education, procedure, preparation, pre-op]
+lastUpdated: 2026-03-18
+---
+```
 
 **Purpose:** Takes procedure name and details, outputs a "what to expect" guide for the patient.
 
@@ -77,9 +118,19 @@ Each template follows the existing pattern from `discharge-summary-basic.mdx`:
 - What to expect immediately after
 - Who to call with questions before the procedure
 
-**Tags:** `[patient-education, procedure, preparation, pre-op]`
-
 ### 5. post-procedure-care.mdx — Post-Procedure Care Instructions
+
+```yaml
+---
+title: "Post-Procedure Care Instructions"
+category: patient-education
+targetTool: any
+tags: [patient-education, procedure, post-op, recovery, wound-care]
+lastUpdated: 2026-03-18
+---
+```
+
+**Note:** No `workflow` field — this template is shared by both inpatient-discharge-education and procedure-education workflows. Cross-referenced via those workflows' `templates` arrays.
 
 **Purpose:** Takes procedure performed and clinical context, outputs recovery instructions.
 
@@ -92,9 +143,18 @@ Each template follows the existing pattern from `discharge-summary-basic.mdx`:
 - Signs of emergency that require going to the ER
 - Follow-up appointment details
 
-**Tags:** `[patient-education, procedure, post-op, recovery, wound-care]`
-
 ### 6. lifestyle-modification-plan.mdx — Lifestyle Modification Plan
+
+```yaml
+---
+title: "Lifestyle Modification Plan"
+category: patient-education
+targetTool: any
+workflow: outpatient-visit-education
+tags: [patient-education, lifestyle, diet, exercise, behavioral-health]
+lastUpdated: 2026-03-18
+---
+```
 
 **Purpose:** Takes condition, current habits, and goals, outputs an actionable lifestyle plan.
 
@@ -107,9 +167,19 @@ Each template follows the existing pattern from `discharge-summary-basic.mdx`:
 - How to track progress
 - When to follow up with the doctor about progress
 
-**Tags:** `[patient-education, lifestyle, diet, exercise, behavioral-health]`
-
 ### 7. follow-up-visit-prep.mdx — Follow-Up Visit Preparation
+
+```yaml
+---
+title: "Follow-Up Visit Preparation"
+category: patient-education
+targetTool: any
+tags: [patient-education, follow-up, visit-prep, self-monitoring]
+lastUpdated: 2026-03-18
+---
+```
+
+**Note:** No `workflow` field — this template is shared by both inpatient-discharge-education and outpatient-visit-education workflows. Cross-referenced via those workflows' `templates` arrays.
 
 **Purpose:** Takes condition and treatment history, outputs a guide for what the patient should do before their next visit.
 
@@ -120,11 +190,9 @@ Each template follows the existing pattern from `discharge-summary-basic.mdx`:
 - What to bring to the appointment (medication list, test results, insurance)
 - What the doctor will likely check or ask about
 
-**Tags:** `[patient-education, follow-up, visit-prep, self-monitoring]`
-
 ## Workflows (3 MDX files)
 
-All placed in `src/content/workflows/` with `category: patient-education`. Each references the relevant templates and the `claude` tool (only tool currently in the system). Content is tool-agnostic in tone.
+All placed in `src/content/workflows/` with `category: patient-education`. The `tools` field is required by the schema, so all workflows use `tools: [claude]` (the only tool in the system). Content is tool-agnostic in tone.
 
 Each workflow follows the existing pattern from `discharge-summary.mdx`:
 - Introduction explaining the clinical scenario
@@ -135,10 +203,18 @@ Each workflow follows the existing pattern from `discharge-summary.mdx`:
 
 ### 1. inpatient-discharge-education.mdx — Creating Inpatient Discharge Education Materials
 
-**Templates:** discharge-instructions-patient, new-medication-guide, post-procedure-care, follow-up-visit-prep
-**Specialty:** general-medicine
-**Time to read:** 6 min
-**Tags:** `[patient-education, discharge, inpatient, education-materials]`
+```yaml
+---
+title: "Creating Inpatient Discharge Education Materials"
+category: patient-education
+tools: [claude]
+templates: [discharge-instructions-patient, new-medication-guide, post-procedure-care, follow-up-visit-prep]
+tags: [patient-education, discharge, inpatient, education-materials]
+timeToRead: 6
+lastUpdated: 2026-03-18
+specialty: [general-medicine]
+---
+```
 
 **Workflow steps:**
 1. De-identify the discharge summary / clinical notes
@@ -151,10 +227,18 @@ Each workflow follows the existing pattern from `discharge-summary.mdx`:
 
 ### 2. outpatient-visit-education.mdx — Creating Outpatient Visit Education Materials
 
-**Templates:** condition-explainer, new-medication-guide, lifestyle-modification-plan, follow-up-visit-prep
-**Specialty:** general-medicine
-**Time to read:** 5 min
-**Tags:** `[patient-education, outpatient, clinic, education-materials]`
+```yaml
+---
+title: "Creating Outpatient Visit Education Materials"
+category: patient-education
+tools: [claude]
+templates: [condition-explainer, new-medication-guide, lifestyle-modification-plan, follow-up-visit-prep]
+tags: [patient-education, outpatient, clinic, education-materials]
+timeToRead: 5
+lastUpdated: 2026-03-18
+specialty: [general-medicine]
+---
+```
 
 **Workflow steps:**
 1. After the visit, identify what the patient needs to understand (new diagnosis, new medication, lifestyle changes)
@@ -167,10 +251,18 @@ Each workflow follows the existing pattern from `discharge-summary.mdx`:
 
 ### 3. procedure-education.mdx — Creating Procedure Education Materials
 
-**Templates:** procedure-prep, post-procedure-care
-**Specialty:** general-medicine
-**Time to read:** 4 min
-**Tags:** `[patient-education, procedure, surgery, education-materials]`
+```yaml
+---
+title: "Creating Procedure Education Materials"
+category: patient-education
+tools: [claude]
+templates: [procedure-prep, post-procedure-care]
+tags: [patient-education, procedure, surgery, education-materials]
+timeToRead: 4
+lastUpdated: 2026-03-18
+specialty: [general-medicine]
+---
+```
 
 **Workflow steps:**
 1. Before the procedure: use the **Procedure Preparation Guide** template with procedure details
@@ -179,18 +271,30 @@ Each workflow follows the existing pattern from `discharge-summary.mdx`:
 4. Verify any medication instructions (pain management, antibiotics) match the actual orders
 5. Adjust detail level based on procedure complexity
 
-## UI Changes
+## Code Changes
 
-Three minor conditionals to handle `targetTool: "any"`:
+### src/pages/templates/index.astro
 
-### 1. TemplateCard.astro
-When `targetTool === "any"`, display "Any LLM" badge instead of looking up a tool by slug.
+The templates index page renders `For {tmpl.data.targetTool}` directly. When `targetTool === "any"`, display "Any LLM" instead. A simple inline conditional: `tmpl.data.targetTool === "any" ? "Any LLM" : tmpl.data.targetTool`.
 
-### 2. ContentLayout.astro
-Same conditional — display "Any LLM" in the template metadata section when `targetTool === "any"`.
+**Note:** `TemplateCard.astro` exists but is not currently imported or used by any page — no changes needed there. `ContentLayout.astro` does not display `targetTool` — no changes needed. `PromptPlayground.astro` accepts `tool` as a display string — templates simply pass `tool="Any LLM"` with no component changes needed.
 
-### 3. PromptPlayground.astro
-Patient education templates pass `tool="Any LLM"` to the PromptPlayground component instead of a specific tool name.
+### src/utils/collections.ts — `getTemplatesForWorkflow()`
+
+Update to also check the workflow's `templates` array, so templates shared across multiple workflows appear in all their workflow sidebars. Current implementation only checks the template's `workflow` field. Updated implementation:
+
+```typescript
+export async function getTemplatesForWorkflow(workflowSlug: string) {
+  const allTemplates = await getCollection('templates');
+  const allWorkflows = await getCollection('workflows');
+  const workflow = allWorkflows.find((w) => w.id === workflowSlug);
+  const workflowTemplateIds = workflow?.data.templates ?? [];
+  return allTemplates.filter(
+    (entry) =>
+      entry.data.workflow === workflowSlug ||
+      workflowTemplateIds.includes(entry.id),
+  );
+}
 
 ## File Summary
 
@@ -206,10 +310,9 @@ Patient education templates pass `tool="Any LLM"` to the PromptPlayground compon
 - `src/content/workflows/outpatient-visit-education.mdx`
 - `src/content/workflows/procedure-education.mdx`
 
-**Modified files (2-3):**
-- `src/components/TemplateCard.astro` — "Any LLM" conditional
-- `src/components/PromptPlayground.astro` — no change needed (just pass different `tool` prop)
-- Potentially `src/layouts/ContentLayout.astro` — "Any LLM" conditional if it displays targetTool
+**Modified files (2):**
+- `src/pages/templates/index.astro` — "Any LLM" display conditional for `targetTool === "any"`
+- `src/utils/collections.ts` — Update `getTemplatesForWorkflow()` to also check the workflow's `templates` array
 
 ## Out of Scope
 
