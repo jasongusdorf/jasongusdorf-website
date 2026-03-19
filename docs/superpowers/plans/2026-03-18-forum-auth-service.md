@@ -190,7 +190,7 @@ forum-auth/
 **Files:**
 - Create all files in `forum-auth/src/routes/`
 
-- [ ] **Step 1:** Implement `register.ts` — GET renders form, POST validates inputs, verifies hCaptcha, calls verifyNpi, checks uniqueness, hashes password (bcrypt cost 12), creates user, generates email token (24h expiry), sends verification email, shows check-your-email page
+- [ ] **Step 1:** Implement `register.ts` — GET renders form, POST validates inputs, verifies hCaptcha, calls verifyNpi, checks uniqueness, hashes password (bcrypt cost 12), creates user (status=pending), generates email verification token (24h expiry), sends verification email, shows "check your email to verify your account" page. NOTE: The spec says POST /register "sets session cookie, redirects to Discourse via SSO" but this is incorrect — users cannot SSO until email is verified (spec Security section). The plan intentionally shows the check-your-email page instead. User flow: register → verify email → login → Discourse.
 
 - [ ] **Step 2:** Implement `login.ts` — GET renders form, POST finds user by email, compares password with bcrypt, checks status is active, creates session (30-day expiry), sets session cookie, redirects based on return param (sso or Discourse URL)
 
@@ -215,7 +215,7 @@ forum-auth/
 **Files:**
 - Create: `forum-auth/src/index.ts`
 
-- [ ] **Step 1:** Wire everything together — create Hono app, apply global middleware (logger, CSRF), mount all routes with rate limiting where needed, add `/health` endpoint, start server with `@hono/node-server`
+- [ ] **Step 1:** Wire everything together — create Hono app, apply global middleware (Hono's built-in `logger()` configured for structured JSON output to stdout, CSRF), mount all routes with rate limiting where needed, add `/health` endpoint, start server with `@hono/node-server`. Ensure structured JSON logging captures: failed login attempts, failed NPI verifications, SSO errors, and rate-limit violations (Fly.io captures stdout automatically).
 
 - [ ] **Step 2:** Test server starts locally and `/health` returns OK
 
@@ -233,7 +233,9 @@ forum-auth/
 
 - [ ] **Step 2:** Write fly.toml — app name, primary region iad, internal port 3000, force HTTPS, auto-stop/start machines, persistent volume mount at /data for SQLite
 
-- [ ] **Step 3:** Commit: `"feat: add Dockerfile and Fly.io config with persistent volume"`
+- [ ] **Step 3:** Write `scripts/backup.sh` — a simple shell script that runs `sqlite3 /data/auth.db ".backup /data/backup.db"` and uploads to Tigris S3 via `aws s3 cp`. Document in fly.toml how to set up a daily scheduled machine (`fly machine run --schedule daily`) to execute this script.
+
+- [ ] **Step 4:** Commit: `"feat: add Dockerfile, Fly.io config, and backup script"`
 
 ---
 
@@ -256,11 +258,30 @@ forum-auth/
 
 ---
 
-## Task 12: Discourse Setup Guide
+## Task 12: Discourse Custom Theme
+
+**Files:**
+- Create: `forum-auth/discourse-theme/common/common.scss`
+- Create: `forum-auth/discourse-theme/common/header.html`
+- Create: `forum-auth/discourse-theme/about.json`
+
+- [ ] **Step 1:** Write `about.json` — Discourse theme metadata (name: "LLMs for Doctors Clinical", about: clinical theme)
+
+- [ ] **Step 2:** Write `common/common.scss` — CSS overrides: import Inter + Newsreader from Google Fonts, set heading font-family to Newsreader, body to Inter, header background to clinical-900 (#0f172a), primary color to slate-600, highlight to blue-600, cream body background
+
+- [ ] **Step 3:** Write `common/header.html` — Custom header HTML with "LLMs for Doctors" branding and navigation links back to main site (Workflows, Guides, Tools, Templates, Trials)
+
+- [ ] **Step 4:** Commit: `"feat: add Discourse custom theme with clinical design system"`
+
+---
+
+## Task 13: Discourse Setup Guide
 
 **Files:**
 - Create: `forum-auth/DISCOURSE_SETUP.md`
 
-- [ ] **Step 1:** Write comprehensive guide covering: VPS provisioning, Discourse Docker installation, DiscourseConnect SSO configuration (5 settings), category creation (7 categories), custom theme CSS (clinical colors, Newsreader/Inter fonts, header nav), trust level settings, SMTP config, DNS setup
+- [ ] **Step 1:** Write comprehensive guide covering: VPS provisioning, Discourse Docker installation, DiscourseConnect SSO configuration (5 settings), category creation (7 categories), theme installation (upload from discourse-theme/ directory), trust level settings, SMTP config, DNS setup for all three subdomains (@, auth, community)
+
+NOTE: DNS configuration and Discourse installation are manual/interactive operations — they cannot be automated by an agent. This guide is a reference for the human operator.
 
 - [ ] **Step 2:** Commit: `"docs: add Discourse installation and configuration guide"`
