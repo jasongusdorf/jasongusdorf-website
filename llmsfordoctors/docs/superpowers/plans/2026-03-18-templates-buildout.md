@@ -555,6 +555,14 @@ CLINICAL INFORMATION:
 | Systems-based | Add: "Organize by organ system instead of problem-based" |
 | Teaching format | Add: "For each problem, include the key teaching point or clinical pearl" |
 | Brevity | Add: "Limit each problem to 3 lines maximum" |
+
+---
+
+## Notes
+
+- This works best when you paste in raw clinical data (HPI, labs, vitals, imaging) rather than a pre-written note. The AI provides the synthesis.
+- For patients with 10+ active problems, consider grouping related problems (e.g., "Cardiorenal" instead of separate CHF and AKI problems).
+- Always verify that your assessment matches your actual clinical reasoning — the AI summary is a draft, not your thinking.
 ```
 
 - [ ] **Step 3: Create `lab-interpretation.mdx`**
@@ -784,6 +792,17 @@ History: [RELEVANT PAST HISTORY AND RISK FACTORS]
 SCORES TO CALCULATE:
 [List the specific scoring tools — e.g., HEART score, Wells criteria for PE, CHA₂DS₂-VASc, CURB-65, MELD, Child-Pugh, qSOFA, NEWS2, PERC, Ottawa ankle rules]
 </PromptPlayground>
+
+---
+
+## Customization Guide
+
+| Element | How to Adjust |
+|---------|---------------|
+| Score selection | Add: "Only calculate [SPECIFIC SCORE]" or "Recommend the most appropriate score for this presentation" |
+| Population | Add: "This is a [pediatric/geriatric/pregnant] patient — note any validation limitations" |
+| Serial scoring | Add: "Here are prior scores/data from [DATE]: [DATA]. Compare trend." |
+| Disposition | Add: "I need to make a disposition decision — emphasize score-based disposition recommendations" |
 
 ---
 
@@ -1266,7 +1285,6 @@ lastUpdated: 2026-03-18
 ---
 
 import PromptPlayground from '../../components/PromptPlayground.astro';
-import Callout from '../../components/Callout.astro';
 
 Summarizes a journal article into a structured, clinician-friendly format. Paste in the abstract (or full text) and get a concise summary covering study design, population, key findings, limitations, and clinical takeaway. Great for staying current with the literature efficiently.
 
@@ -1342,8 +1360,8 @@ tags: [advanced, literature-review, evidence, comparison, treatment]
 lastUpdated: 2026-03-18
 ---
 
-import PromptPlayground from '../../components/PromptPlayground.astro';
 import Callout from '../../components/Callout.astro';
+import PromptPlayground from '../../components/PromptPlayground.astro';
 
 Compares the evidence for multiple treatment options across studies. Provide the clinical question and relevant study data, and get a structured comparison table with a synthesis of the evidence.
 
@@ -1561,8 +1579,8 @@ tags: [beginner, literature-review, pico, research, search-strategy]
 lastUpdated: 2026-03-18
 ---
 
-import PromptPlayground from '../../components/PromptPlayground.astro';
 import Callout from '../../components/Callout.astro';
+import PromptPlayground from '../../components/PromptPlayground.astro';
 
 Turns a clinical question into a structured PICO format and generates a literature search strategy. Describe your clinical question in plain language and get a formatted PICO, MeSH terms, and a ready-to-use PubMed search string. Perfect for evidence-based medicine assignments, research projects, or answering clinical questions systematically.
 
@@ -2165,8 +2183,8 @@ tags: [beginner, board-prep, questions, study, usmle]
 lastUpdated: 2026-03-18
 ---
 
-import PromptPlayground from '../../components/PromptPlayground.astro';
 import Callout from '../../components/Callout.astro';
+import PromptPlayground from '../../components/PromptPlayground.astro';
 
 Generates board-style multiple choice questions on any medical topic. Specify the topic, difficulty level, and question style, and get practice questions with detailed explanations for each answer choice. Great for self-study or for attendings creating teaching questions.
 
@@ -2245,8 +2263,8 @@ tags: [beginner, board-prep, review, study, high-yield]
 lastUpdated: 2026-03-18
 ---
 
-import PromptPlayground from '../../components/PromptPlayground.astro';
 import Callout from '../../components/Callout.astro';
+import PromptPlayground from '../../components/PromptPlayground.astro';
 
 Creates a high-yield summary of any medical topic for board review. Specify the topic and target exam, and get a structured review covering the must-know facts, classic presentations, key associations, and common exam traps.
 
@@ -2587,7 +2605,7 @@ Expected: 5 of each category:
 
 - [ ] **Step 4: Verify all templates have difficulty tags**
 
-Run: `grep -L "beginner\|intermediate\|advanced" /Users/jasongusdorf/CodingProjects/Claude/LLMsforDoctors/llmsfordoctors/src/content/templates/*.mdx`
+Run: `grep -EL "beginner|intermediate|advanced" /Users/jasongusdorf/CodingProjects/Claude/LLMsforDoctors/llmsfordoctors/src/content/templates/*.mdx`
 Expected: No output (all files contain a difficulty tag).
 
 - [ ] **Step 5: Spot-check the dev server**
@@ -2601,6 +2619,6 @@ Manually verify in browser:
 - [ ] **Step 6: Final commit if any fixes were needed**
 
 ```bash
-git add -A
+git add -u src/content/templates/
 git commit -m "Fix any build issues found during final verification"
 ```
