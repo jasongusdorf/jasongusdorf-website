@@ -12,10 +12,17 @@ export async function getWorkflowsForTool(toolSlug: string) {
   return all.filter((entry) => entry.data.tools.includes(toolSlug));
 }
 
-/** Find templates for a given workflow slug */
+/** Find templates for a given workflow slug (checks both template.workflow field and workflow.templates array) */
 export async function getTemplatesForWorkflow(workflowSlug: string) {
-  const all = await getCollection('templates');
-  return all.filter((entry) => entry.data.workflow === workflowSlug);
+  const allTemplates = await getCollection('templates');
+  const allWorkflows = await getCollection('workflows');
+  const workflow = allWorkflows.find((w) => w.id === workflowSlug);
+  const workflowTemplateIds = workflow?.data.templates ?? [];
+  return allTemplates.filter(
+    (entry) =>
+      entry.data.workflow === workflowSlug ||
+      workflowTemplateIds.includes(entry.id),
+  );
 }
 
 /** Filter trials collection by slugs (using entry.id as the slug identifier) */
