@@ -48,20 +48,46 @@ community.llmsfordoctors.com (Discourse, VPS or managed)
 
 ### Database Schema
 
-Single `users` table:
-
 ```sql
 CREATE TABLE users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   email TEXT UNIQUE NOT NULL,
+  email_verified BOOLEAN DEFAULT FALSE,
   password_hash TEXT NOT NULL,
   name TEXT NOT NULL,
   npi_number TEXT UNIQUE NOT NULL,
   npi_verified BOOLEAN DEFAULT FALSE,
   role TEXT DEFAULT 'user' CHECK (role IN ('user', 'moderator', 'admin')),
+  status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'active', 'disabled')),
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE sessions (
+  id TEXT PRIMARY KEY,  -- random opaque token (32 bytes hex)
+  user_id INTEGER NOT NULL REFERENCES users(id),
+  expires_at DATETIME NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE email_tokens (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL REFERENCES users(id),
+  token TEXT UNIQUE NOT NULL,
+  type TEXT NOT NULL CHECK (type IN ('verify', 'reset')),
+  expires_at DATETIME NOT NULL,
+  used BOOLEAN DEFAULT FALSE,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 ```
+
+**Role → Discourse mapping:** The `role` field maps to Discourse SSO payload fields:
+- `user` → no special flags (Discourse trust level 0)
+- `moderator` → `moderator=true` in SSO payload (Discourse moderator)
+- `admin` → `admin=true` in SSO payload (Discourse admin)
+
+### Data Durability
+
+SQLite file stored on a **Fly.io persistent volume** (1GB, free tier). The volume survives machine restarts and redeployments. Automated daily backups via a cron job that copies the SQLite file to an S3-compatible store (e.g., Tigris on Fly.io, free tier) using Litestream or a simple `sqlite3 .backup` command.
 
 ### NPI Verification
 
@@ -73,10 +99,10 @@ GET https://npiregistry.cms.hhs.gov/api/?version=2.1&number={npi}
 
 Verification logic:
 1. Query NPPES API with the entered NPI number
-2. Confirm the NPI exists and belongs to an individual (not an organization)
-3. Confirm the name on the NPI record reasonably matches the entered name (fuzzy match — first + last name)
+2. Confirm the NPI exists and belongs to an individual (`enumeration_type === "NPI-1"`, not organization)
+3. Name matching: case-insensitive comparison of first and last name. Strip suffixes (Jr, III, MD, DO, etc.) and punctuation before comparing. If exact match fails, try Levenshtein distance ≤ 2 to handle "Mike"/"Michael" variants. If still no match, reject with a message suggesting the user enter their name exactly as it appears on their NPI record.
 4. If all checks pass, mark user as `npi_verified = true`
-5. If any check fails, show a specific error message (invalid NPI, name mismatch, organization NPI, etc.)
+5. If any check fails, show a specific error message (invalid NPI, name mismatch, organization NPI, NPI not found, etc.)
 
 ### Routes
 
@@ -90,7 +116,15 @@ Verification logic:
 
 **GET /sso** — DiscourseConnect callback. Receives `sso` and `sig` query params from Discourse, validates signature, looks up user from session, builds SSO return payload (nonce, email, external_id, name, username), signs it, redirects back to Discourse.
 
-**GET /logout** — Clears session cookie, redirects to main site.
+**GET /forgot-password** — Forgot password page. Form field: email.
+
+**POST /forgot-password** — If email exists, sends a password reset email with a signed token (stored in `email_tokens` table, expires in 1 hour). Always shows "If an account exists, we've sent a reset link" (no email enumeration).
+
+**GET /reset-password?token=xxx** — Reset password page. Validates token is valid and not expired.
+
+**POST /reset-password** — Validates token, updates password hash, invalidates token, clears all existing sessions for the user, redirects to login.
+
+**GET /logout** — Clears session cookie, deletes session from DB, redirects to main site.
 
 ### Auth Pages UI
 
@@ -105,19 +139,23 @@ Simple, clean HTML pages matching the clinical design system:
 1. User clicks "Log In" on Discourse
 2. Discourse redirects to `auth.llmsfordoctors.com/sso?sso={payload}&sig={signature}`
 3. Auth service validates the signature using the shared SSO secret
-4. If user has a valid session → builds return payload with user info
-5. If no session → redirects to `/login`, then back to `/sso` after authentication
-6. Auth service signs the return payload and redirects to `community.llmsfordoctors.com/session/sso_login?sso={payload}&sig={signature}`
-7. Discourse logs the user in
+4. Auth service extracts the nonce from the SSO payload and stores it in a short-lived httpOnly cookie (`sso_nonce`, 10-minute expiry)
+5. If user has a valid session → proceeds to step 7
+6. If no session → redirects to `/login?return=sso`. After successful login, `/login` reads the `return=sso` param and redirects back to `/sso` (nonce is preserved in the cookie)
+7. Auth service builds return payload with user info (nonce, email, external_id, name, username) + role mapping (moderator/admin flags if applicable)
+8. Auth service signs the return payload, clears the nonce cookie, and redirects to `community.llmsfordoctors.com/session/sso_login?sso={payload}&sig={signature}`
+9. Discourse logs the user in
 
 ### Security
 
 - Passwords hashed with bcrypt (cost factor 12)
-- JWT in httpOnly, Secure, SameSite=Lax cookie
+- **Sessions:** Opaque random tokens (not JWT) stored in the `sessions` table with expiration. Stored in httpOnly, Secure, SameSite=Lax cookie. Sessions expire after 30 days of inactivity. Can be revoked server-side instantly (e.g., if account disabled).
 - SSO secret shared between auth service and Discourse (env var, never committed)
 - HTTPS enforced on all three domains
-- Rate limiting on /register and /login (e.g., 5 attempts per minute per IP)
-- CSRF protection on form submissions
+- Rate limiting on /register and /login (5 attempts per minute per IP) + CAPTCHA on registration form (hCaptcha — privacy-friendly, free tier)
+- CSRF protection via double-submit cookie pattern: server sets a random CSRF token in a cookie, form includes it as a hidden field, server validates they match on POST
+- **Email verification:** After registration, account is created in `pending` state. Verification email sent with a signed token link. Account activated only after email confirmed. User cannot SSO into Discourse until email is verified.
+- **Logging:** Application-level logging for failed logins, failed NPI verifications, SSO errors, and rate-limit violations. Structured JSON logs to stdout (Fly.io captures these automatically).
 
 ## Discourse Configuration
 
@@ -231,11 +269,17 @@ Three A/CNAME records under llmsfordoctors.com:
 - DNS records
 - Fly.io deployment
 
+## What We Build (Updated File List)
+
+- Auth service: ~10 files (server, routes, db, npi-client, sso, email, views, middleware, config)
+- Auth page templates: registration, login, forgot-password, reset-password, email verification HTML
+- Discourse theme: CSS overrides + header nav component
+- Main site updates: nav + footer + homepage CTA
+
 ## Out of Scope
 
 - Email notifications (Discourse handles natively)
 - Profile customization beyond name/NPI
 - Mobile app
 - Auth admin dashboard (manage via SQLite CLI + Discourse admin panel)
-- Password reset flow (defer to v2 — for now, manual reset via admin)
 - OAuth providers (Google, Apple — defer to v2)
