@@ -27,7 +27,8 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
-  const { amount, currency = 'usd' } = body;
+  const { amount } = body;
+  const currency = 'usd';
 
   if (typeof amount !== 'number' || amount < 100 || amount > 1000000) {
     return new Response(
@@ -57,7 +58,14 @@ export const POST: APIRoute = async ({ request }) => {
     });
 
     const invoice = subscription.latest_invoice as Stripe.Invoice;
-    const confirmationSecret = (invoice as any).confirmation_secret;
+    const confirmationSecret = (invoice as any)?.confirmation_secret;
+
+    if (!confirmationSecret?.client_secret) {
+      return new Response(
+        JSON.stringify({ error: 'Could not retrieve payment confirmation. Please try again.' }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } },
+      );
+    }
 
     return new Response(
       JSON.stringify({

@@ -27,7 +27,8 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
-  const { amount, currency = 'usd' } = body;
+  const { amount } = body;
+  const currency = 'usd';
 
   if (typeof amount !== 'number' || amount < 100 || amount > 1000000) {
     return new Response(
