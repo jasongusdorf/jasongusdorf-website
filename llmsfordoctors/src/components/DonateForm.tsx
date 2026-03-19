@@ -15,6 +15,7 @@ function PaymentForm({ amount, isRecurring }: { amount: number; isRecurring: boo
   const [error, setError] = useState<string | null>(null);
   const [processing, setProcessing] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [ready, setReady] = useState(false);
 
   const label = isRecurring
     ? `Donate $${(amount / 100).toFixed(0)}/month`
@@ -59,10 +60,13 @@ function PaymentForm({ amount, isRecurring }: { amount: number; isRecurring: boo
 
   return (
     <form onSubmit={handleSubmit} class="space-y-4">
-      <PaymentElement />
+      <PaymentElement onReady={() => setReady(true)} />
+      {!ready && (
+        <p class="text-clinical-500 text-sm">Loading payment form...</p>
+      )}
       <button
         type="submit"
-        disabled={!stripe || !elements || processing}
+        disabled={!stripe || !elements || !ready || processing}
         class="w-full px-5 py-2.5 rounded-md bg-blue-600 hover:bg-blue-700 disabled:bg-clinical-400 disabled:cursor-not-allowed text-white font-semibold text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
       >
         {processing ? 'Processing...' : label}
