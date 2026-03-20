@@ -4,11 +4,13 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import pagefind from 'astro-pagefind';
 import preact from '@astrojs/preact';
+import cloudflare from '@astrojs/cloudflare';
 import staleContentChecker from './src/integrations/stale-content';
 
 export default defineConfig({
   site: 'https://llmsfordoctors.com',
   output: 'static',
+  adapter: cloudflare(),
   integrations: [
     mdx(),
     sitemap(),
