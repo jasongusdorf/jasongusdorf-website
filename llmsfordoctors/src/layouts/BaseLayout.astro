@@ -11,8 +11,9 @@ interface Props {
 const { title, description = 'Practical guides, workflows, and tools for clinicians using AI in medicine.' } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-// Dynamic OG image: use per-page path when it exists, else fall back to default
-const ogImageUrl = new URL(`/og${Astro.url.pathname}.png`, Astro.site);
+// Dynamic OG image: strip trailing slash so index pages resolve correctly
+const pagePath = Astro.url.pathname.replace(/\/$/, '');
+const ogImageUrl = new URL(pagePath ? `/og${pagePath}.png` : '/og/home.png', Astro.site);
 ---
 
 <!DOCTYPE html>

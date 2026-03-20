@@ -1,6 +1,5 @@
-import { useState, useCallback, useRef } from 'preact/hooks';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { useState, useCallback, useRef, useEffect } from 'preact/hooks';
+import { loadStripe, type Stripe, type StripeElements } from '@stripe/stripe-js';
 
 interface Props {
   stripeKey: string;
@@ -9,9 +8,20 @@ interface Props {
 const PRESET_AMOUNTS = [500, 1000, 2500]; // cents
 const PRESET_LABELS = ['$5', '$10', '$25'];
 
-function PaymentForm({ amount, isRecurring }: { amount: number; isRecurring: boolean }) {
-  const stripe = useStripe();
-  const elements = useElements();
+function PaymentForm({
+  stripePromise,
+  clientSecret,
+  amount,
+  isRecurring,
+}: {
+  stripePromise: Promise<Stripe | null>;
+  clientSecret: string;
+  amount: number;
+  isRecurring: boolean;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const stripeRef = useRef<Stripe | null>(null);
+  const elementsRef = useRef<StripeElements | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [processing, setProcessing] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -21,8 +31,28 @@ function PaymentForm({ amount, isRecurring }: { amount: number; isRecurring: boo
     ? `Donate $${(amount / 100).toFixed(0)}/month`
     : `Donate $${(amount / 100).toFixed(0)}`;
 
+  useEffect(() => {
+    let mounted = true;
+    stripePromise.then((s) => {
+      if (!s || !mounted || !containerRef.current) return;
+      stripeRef.current = s;
+      const elements = s.elements({ clientSecret });
+      elementsRef.current = elements;
+      const paymentElement = elements.create('payment');
+      paymentElement.mount(containerRef.current);
+      paymentElement.on('ready', () => {
+        if (mounted) setReady(true);
+      });
+    });
+    return () => {
+      mounted = false;
+    };
+  }, [clientSecret, stripePromise]);
+
   const handleSubmit = async (e: Event) => {
     e.preventDefault();
+    const stripe = stripeRef.current;
+    const elements = elementsRef.current;
     if (!stripe || !elements) return;
 
     setProcessing(true);
@@ -60,13 +90,13 @@ function PaymentForm({ amount, isRecurring }: { amount: number; isRecurring: boo
 
   return (
     <form onSubmit={handleSubmit} class="space-y-4">
-      <PaymentElement onReady={() => setReady(true)} />
+      <div ref={containerRef} />
       {!ready && (
         <p class="text-clinical-500 text-sm">Loading payment form...</p>
       )}
       <button
         type="submit"
-        disabled={!stripe || !elements || !ready || processing}
+        disabled={!ready || processing}
         class="w-full px-5 py-2.5 rounded-md bg-blue-600 hover:bg-blue-700 disabled:bg-clinical-400 disabled:cursor-not-allowed text-white font-semibold text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
       >
         {processing ? 'Processing...' : label}
@@ -265,9 +295,12 @@ export default function DonateForm({ stripeKey }: Props) {
 
       {/* Stripe Payment Element */}
       {clientSecret && amountInCents && (
-        <Elements stripe={stripePromise} options={{ clientSecret }}>
-          <PaymentForm amount={amountInCents} isRecurring={isRecurring} />
-        </Elements>
+        <PaymentForm
+          stripePromise={stripePromise}
+          clientSecret={clientSecret}
+          amount={amountInCents}
+          isRecurring={isRecurring}
+        />
       )}
     </div>
   );

@@ -4,7 +4,12 @@ import Hero from '../components/Hero.astro';
 import WorkflowGrid from '../components/WorkflowGrid.astro';
 import Sidebar from '../components/Sidebar.astro';
 import NewsSection from '../components/NewsSection.astro';
-import newsData from '../data/news.json';
+let newsData: any[] = [];
+try {
+  newsData = (await import('../data/news.json')).default;
+} catch {
+  // news.json may not exist on fresh clones; degrade gracefully
+}
 ---
 
 <BaseLayout

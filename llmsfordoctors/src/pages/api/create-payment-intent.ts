@@ -8,7 +8,7 @@ export const POST: APIRoute = async ({ request }) => {
   // CSRF: validate Origin (allow localhost in dev)
   const origin = request.headers.get('Origin');
   const allowed = ['https://llmsfordoctors.com', 'https://www.llmsfordoctors.com', 'http://localhost:4321'];
-  if (origin && !allowed.includes(origin)) {
+  if (!origin || !allowed.includes(origin)) {
     return new Response(JSON.stringify({ error: 'Forbidden' }), {
       status: 403,
       headers: { 'Content-Type': 'application/json' },

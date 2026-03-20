@@ -12,6 +12,16 @@ export const getStaticPaths: GetStaticPaths = async () => {
   ]);
 
   const paths = [
+    // Index and standalone pages
+    { params: { slug: 'home' }, props: { title: 'LLMs for Doctors', subtitle: 'AI Workflows for Clinicians' } },
+    { params: { slug: 'workflows' }, props: { title: 'Workflows', subtitle: 'Clinical AI workflows by category' } },
+    { params: { slug: 'guides' }, props: { title: 'Guides', subtitle: 'Evidence-based AI guides for clinicians' } },
+    { params: { slug: 'tools' }, props: { title: 'Tools', subtitle: 'AI tool reviews for clinical practice' } },
+    { params: { slug: 'templates' }, props: { title: 'Templates', subtitle: 'Ready-to-use prompt templates' } },
+    { params: { slug: 'trials' }, props: { title: 'Trials', subtitle: 'Clinical AI research and trials' } },
+    { params: { slug: 'about' }, props: { title: 'About', subtitle: 'About LLMs for Doctors' } },
+    { params: { slug: 'donate' }, props: { title: 'Donate', subtitle: 'Support LLMs for Doctors' } },
+    // Content collection pages
     ...workflows.map((e) => ({
       params: { slug: `workflows/${e.id}` },
       props: { title: e.data.title, subtitle: undefined },

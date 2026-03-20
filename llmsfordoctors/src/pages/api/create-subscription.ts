@@ -8,7 +8,7 @@ export const POST: APIRoute = async ({ request }) => {
   // CSRF: validate Origin (allow localhost in dev)
   const origin = request.headers.get('Origin');
   const allowed = ['https://llmsfordoctors.com', 'https://www.llmsfordoctors.com', 'http://localhost:4321'];
-  if (origin && !allowed.includes(origin)) {
+  if (!origin || !allowed.includes(origin)) {
     return new Response(JSON.stringify({ error: 'Forbidden' }), {
       status: 403,
       headers: { 'Content-Type': 'application/json' },
@@ -54,13 +54,15 @@ export const POST: APIRoute = async ({ request }) => {
       payment_settings: {
         save_default_payment_method: 'on_subscription',
       },
-      expand: ['latest_invoice.confirmation_secret'],
+      expand: ['latest_invoice.payment_intent'],
     });
 
-    const invoice = subscription.latest_invoice as Stripe.Invoice;
-    const confirmationSecret = (invoice as any)?.confirmation_secret;
+    const invoice = subscription.latest_invoice as Stripe.Invoice & {
+      payment_intent: Stripe.PaymentIntent;
+    };
+    const clientSecret = invoice?.payment_intent?.client_secret;
 
-    if (!confirmationSecret?.client_secret) {
+    if (!clientSecret) {
       return new Response(
         JSON.stringify({ error: 'Could not retrieve payment confirmation. Please try again.' }),
         { status: 500, headers: { 'Content-Type': 'application/json' } },
@@ -69,7 +71,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     return new Response(
       JSON.stringify({
-        clientSecret: confirmationSecret.client_secret,
+        clientSecret,
         subscriptionId: subscription.id,
       }),
       { status: 200, headers: { 'Content-Type': 'application/json' } },
