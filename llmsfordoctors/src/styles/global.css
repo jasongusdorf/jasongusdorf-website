@@ -4,7 +4,7 @@
 
 @theme {
   --font-heading: 'Newsreader', 'Georgia', serif;
-  --font-display: 'Cormorant Garamond', 'Newsreader', 'Georgia', serif;
+  --font-display: 'Quadraat', 'Cormorant Garamond', 'Newsreader', 'Georgia', serif;
   --font-body: 'Inter', system-ui, sans-serif;
 
   /* Clinical palette */
@@ -42,6 +42,13 @@
     font-family: 'Newsreader';
     src: url('/fonts/Newsreader-Variable.woff2') format('woff2');
     font-weight: 300 700;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Quadraat';
+    src: url('/fonts/Quadraat-Regular.woff2') format('woff2');
+    font-weight: 400 600;
+    font-style: normal;
     font-display: swap;
   }
   @font-face {
