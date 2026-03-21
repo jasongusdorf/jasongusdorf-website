@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import WorkflowGrid from '../components/WorkflowGrid.astro';
 import Sidebar from '../components/Sidebar.astro';
 import NewsSection from '../components/NewsSection.astro';
 let newsData: any[] = [];
@@ -19,18 +18,21 @@ try {
   <Hero />
 
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="flex flex-col lg:flex-row gap-10">
-      <!-- Main content -->
-      <main class="flex-1 min-w-0">
-        <WorkflowGrid />
-      </main>
-
-      <!-- Sidebar — 300px on desktop, stacks below on mobile -->
-      <div class="w-full lg:w-[300px] shrink-0">
-        <div class="lg:sticky lg:top-20">
-          <Sidebar />
-        </div>
-      </div>
+    <div class="flex flex-wrap justify-center gap-3">
+      {[
+        { href: '/trials',    label: 'Trials' },
+        { href: '/workflows', label: 'Workflows' },
+        { href: '/guides',    label: 'Guides' },
+        { href: '/tools',     label: 'Tools' },
+        { href: '/templates', label: 'Templates' },
+      ].map(({ href, label }) => (
+        <a
+          href={href}
+          class="px-5 py-2.5 rounded-full text-sm font-medium bg-amber-50 dark:bg-amber-900/30 text-amber-900 dark:text-amber-100 border border-amber-200 dark:border-amber-700 hover:bg-amber-100 dark:hover:bg-amber-800/40 hover:border-amber-300 dark:hover:border-amber-600 transition-colors"
+        >
+          {label}
+        </a>
+      ))}
     </div>
   </div>
 
