@@ -1,9 +1,10 @@
 ---
 import SearchBar from './SearchBar.astro';
+import AuroraBackground from './ui/aurora-background.astro';
 ---
 
-<section class="bg-clinical-900 dark:bg-clinical-900 py-20 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-3xl mx-auto text-center">
+<AuroraBackground class="!h-auto !bg-clinical-900 dark:!bg-clinical-900 py-20 px-4 sm:px-6 lg:px-8">
+  <div class="relative z-10 max-w-3xl mx-auto text-center animate-fade-in-up">
     <p class="text-sm font-semibold uppercase tracking-widest text-blue-400 mb-4">
       LLMs for Doctors
     </p>
@@ -79,4 +80,4 @@ import SearchBar from './SearchBar.astro';
       </div>
     </a>
   </div>
-</section>
+</AuroraBackground>
