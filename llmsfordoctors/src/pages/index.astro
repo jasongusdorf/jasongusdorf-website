@@ -3,12 +3,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import Sidebar from '../components/Sidebar.astro';
 import NewsSection from '../components/NewsSection.astro';
+import { getCollection } from 'astro:content';
 let newsData: any[] = [];
 try {
   newsData = (await import('../data/news.json')).default;
 } catch {
   // news.json may not exist on fresh clones; degrade gracefully
 }
+const allGuides = await getCollection('guides');
+const featuredGuides = allGuides
+  .filter((g) => g.data.featured)
+  .sort((a, b) => b.data.lastUpdated.getTime() - a.data.lastUpdated.getTime());
 ---
 
 <BaseLayout
@@ -31,6 +36,29 @@ try {
           class="px-5 py-2.5 rounded-full text-sm font-medium bg-amber-50 dark:bg-amber-900/30 text-amber-900 dark:text-amber-100 border border-amber-200 dark:border-amber-700 hover:bg-amber-100 dark:hover:bg-amber-800/40 hover:border-amber-300 dark:hover:border-amber-600 transition-colors"
         >
           {label}
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <!-- Featured Guides -->
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+    <h2 class="font-heading text-2xl font-semibold text-clinical-900 dark:text-clinical-50 mb-6">Featured Guides</h2>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {featuredGuides.map((guide) => (
+        <a
+          href={`/guides/${guide.id}`}
+          class="group block rounded-lg border border-clinical-200 dark:border-clinical-700 bg-white dark:bg-clinical-800 p-6 hover:border-clinical-400 dark:hover:border-clinical-500 hover:shadow-md transition-all"
+        >
+          <h3 class="font-heading text-lg font-semibold text-clinical-900 dark:text-clinical-50 group-hover:text-clinical-600 dark:group-hover:text-clinical-300 transition-colors mb-2">
+            {guide.data.title}
+          </h3>
+          <p class="text-sm text-clinical-600 dark:text-clinical-400 line-clamp-2 mb-3">
+            {guide.data.description}
+          </p>
+          <span class="text-xs text-clinical-500 dark:text-clinical-500">
+            Updated {guide.data.lastUpdated.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+          </span>
         </a>
       ))}
     </div>
