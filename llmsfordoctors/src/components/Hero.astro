@@ -13,11 +13,39 @@ import SearchBar from './SearchBar.astro';
     </h1>
 
     <p class="text-lg text-clinical-300 mb-10 max-w-xl mx-auto">
-      Evidence-based workflows, tool reviews, and ready-to-use prompts — built by clinicians, for clinicians. Privacy-aware and specialty-specific.
+      Evidence-based workflows, tool reviews, and ready-to-use prompts, built by clinicians, for clinicians. Privacy-aware and specialty-specific.
     </p>
 
     <div class="max-w-xl mx-auto">
       <SearchBar />
     </div>
+
+    <!-- Golden featured guide -->
+    <a
+      href="/guides/llms-in-clinical-care-101"
+      class="group mt-10 mx-auto max-w-2xl block rounded-xl border-2 border-amber-400/60 bg-gradient-to-br from-amber-500/15 via-amber-400/10 to-yellow-500/15 backdrop-blur p-6 hover:border-amber-400 hover:from-amber-500/25 hover:via-amber-400/20 hover:to-yellow-500/25 transition-all shadow-lg shadow-amber-500/10 hover:shadow-amber-500/20"
+    >
+      <div class="flex items-start gap-4">
+        <div class="flex-shrink-0 mt-1 w-10 h-10 rounded-full bg-amber-400/20 flex items-center justify-center">
+          <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M10 2l2.39 4.84L17.5 7.6l-3.75 3.66.89 5.17L10 13.93l-4.64 2.5.89-5.17L2.5 7.6l5.11-.76L10 2z" />
+          </svg>
+        </div>
+        <div class="flex-1 text-left">
+          <p class="text-xs font-semibold uppercase tracking-widest text-amber-400 mb-1">Start Here</p>
+          <h3 class="font-heading text-lg font-bold text-white group-hover:text-amber-200 transition-colors">
+            LLMs in Clinical Care 101
+          </h3>
+          <p class="text-sm text-clinical-300 mt-1 leading-relaxed">
+            The step-by-step workflow for using AI in clinical practice safely. De-identify, prompt, review. If you read one guide, make it this one.
+          </p>
+        </div>
+        <div class="flex-shrink-0 mt-3 text-amber-400/60 group-hover:text-amber-400 group-hover:translate-x-1 transition-all">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
+      </div>
+    </a>
   </div>
 </section>
