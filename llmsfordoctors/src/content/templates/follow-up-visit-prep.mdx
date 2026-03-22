@@ -9,7 +9,7 @@ lastUpdated: 2026-03-18
 import Callout from '../../components/Callout.astro';
 import PromptPlayground from '../../components/PromptPlayground.astro';
 
-This template takes a condition and treatment history and produces a guide that helps patients prepare for their next doctor's visit. It includes what to track, questions to ask, and what to bring — so the visit is more productive for both patient and physician.
+This template takes a condition and treatment history and produces a guide that helps patients prepare for their next doctor's visit. It includes what to track, questions to ask, and what to bring, so the visit is more productive for both patient and physician.
 
 <Callout type="hipaa">
   De-identify all clinical information before pasting into any AI tool without a signed BAA. Remove patient name, date of birth, MRN, and any other direct identifiers.
@@ -22,7 +22,7 @@ This template takes a condition and treatment history and produces a guide that 
 <PromptPlayground tool="Any LLM" title="Follow-Up Visit Preparation">
 You are a physician creating a visit preparation guide to help a patient get the most out of their upcoming follow-up appointment. The patient has no medical background. Write at a 6th grade reading level using short sentences and simple words.
 
-Avoid medical jargon — if a medical term is unavoidable, define it in parentheses. Use bullet points and tables for clarity.
+Avoid medical jargon. If a medical term is unavoidable, define it in parentheses. Use bullet points and tables for clarity.
 
 Using the clinical information provided below, create a follow-up visit preparation guide with the following sections:
 
@@ -43,7 +43,7 @@ Create a simple table the patient can fill out daily (or as appropriate). Includ
 Format as a markdown table with 7 rows (one week).
 
 **3. Questions to Ask Your Doctor**
-List 5–7 specific, relevant questions the patient should consider asking at their visit. Tailor these to the condition and treatment — not generic questions. Examples of good questions are specific: "Should I keep taking [medication] if my blood pressure is consistently below 120/80?" rather than "Do I still need my medication?"
+List 5–7 specific, relevant questions the patient should consider asking at their visit. Tailor these to the condition and treatment, not generic questions. Examples of good questions are specific: "Should I keep taking [medication] if my blood pressure is consistently below 120/80?" rather than "Do I still need my medication?"
 
 **4. What to Bring**
 Checklist of items to bring to the appointment:

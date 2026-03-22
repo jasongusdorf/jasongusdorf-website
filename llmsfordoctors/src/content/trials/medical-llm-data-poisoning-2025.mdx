@@ -12,16 +12,16 @@ import Callout from '../../components/Callout.astro';
 
 ## Study Design
 
-This is the paper that should keep medical AI vendors up at night. Alber et al. conducted a security threat simulation designed to assess the vulnerability of medical LLMs to data-poisoning attacks. The researchers introduced token-level perturbations into medical text within "The Pile" — a large, commonly used open-source training corpus. These perturbations embedded subtly false medical information (e.g., altered drug dosages, incorrect contraindications, fabricated drug interactions) into passages that would otherwise appear authoritative.
+This is the paper that should keep medical AI vendors up at night. Alber et al. conducted a security threat simulation designed to assess the vulnerability of medical LLMs to data-poisoning attacks. The researchers introduced token-level perturbations into medical text within "The Pile," a large, commonly used open-source training corpus. These perturbations embedded subtly false medical information (e.g., altered drug dosages, incorrect contraindications, fabricated drug interactions) into passages that would otherwise appear authoritative.
 
-Models were then trained or fine-tuned on the poisoned corpus and evaluated against standard medical benchmarks as well as targeted probes designed to elicit the planted misinformation. The perturbations were designed to be undetectable by automated quality filters — the surrounding text remained grammatically correct and contextually appropriate, with only the critical medical facts altered. This mirrors real-world attack vectors where a motivated adversary could inject misinformation into publicly available medical corpora. The study accumulated 213 citations, reflecting serious concern across the AI safety community.
+Models were then trained or fine-tuned on the poisoned corpus and evaluated against standard medical benchmarks as well as targeted probes designed to elicit the planted misinformation. The perturbations were designed to be undetectable by automated quality filters; the surrounding text remained grammatically correct and contextually appropriate, with only the critical medical facts altered. This mirrors real-world attack vectors where a motivated adversary could inject misinformation into publicly available medical corpora. The study accumulated 213 citations, reflecting serious concern across the AI safety community.
 
 ---
 
 ## Key Findings
 
 - **False medical information planted in training data was successfully ingested and later reproduced** by models in response to clinical queries
-- Standard medical benchmarks (MedQA, MMLU, etc.) **did not reliably detect the poisoning** — models scored comparably on benchmarks whether or not they had been poisoned
+- Standard medical benchmarks (MedQA, MMLU, etc.) **did not reliably detect the poisoning**; models scored comparably on benchmarks whether or not they had been poisoned
 - The attack required modifying only a **small fraction of the training corpus** to produce detectable downstream effects
 - Poisoned outputs were often confident and well-formatted, making them difficult for human reviewers to distinguish from legitimate responses
 - The study emphasizes a fundamental gap: **benchmark performance is not a proxy for safety**
@@ -39,12 +39,12 @@ This is a security paper, but its clinical implications are immediate and practi
 
 1. **Vendor benchmark claims are insufficient for safety assurance.** If a vendor's primary evidence is "we scored X% on MedQA," this study shows why that is not enough. Benchmark performance and adversarial robustness are orthogonal properties.
 
-2. **Supply chain security for training data is a medical safety issue.** Hospitals evaluating AI tools need to ask where the training data came from and what contamination controls exist — questions that most procurement processes don't currently include.
+2. **Supply chain security for training data is a medical safety issue.** Hospitals evaluating AI tools need to ask where the training data came from and what contamination controls exist, questions that most procurement processes don't currently include.
 
 3. **Subtle poisoning is harder to catch than obvious errors.** A model that confidently states a slightly wrong drug dose is more dangerous than one that generates obvious nonsense, because clinicians are more likely to accept plausible-sounding errors without verification.
 
 <Callout type="pitfall">
-  The simulation may not perfectly mirror real-world data supply chains, and the specific mitigation strategies tested may not generalize across all model architectures. However, the core finding — that poisoning is feasible and benchmark-invisible — should be treated as a baseline assumption for any medical AI security assessment.
+  The simulation may not perfectly mirror real-world data supply chains, and the specific mitigation strategies tested may not generalize across all model architectures. However, the core finding (that poisoning is feasible and benchmark-invisible) should be treated as a baseline assumption for any medical AI security assessment.
 </Callout>
 
 4. **This reframes the conversation about open-source vs. proprietary models.** Neither approach is inherently safer. Open-source models have auditable training pipelines but more attack surface; proprietary models have controlled pipelines but less transparency.
@@ -57,4 +57,4 @@ This is a security paper, but its clinical implications are immediate and practi
 
 This is the security baseline for medical LLM procurement. Every health system evaluating AI tools should read this paper. The key insight is disarmingly simple: a model can ace every benchmark while carrying planted misinformation that surfaces in exactly the wrong clinical moment.
 
-The practical implication is that evaluation processes need to go beyond accuracy metrics and include adversarial testing, training data provenance audits, and ongoing monitoring for anomalous outputs. If your vendor cannot answer questions about their data supply chain — where the training data came from, what decontamination steps were applied, how they test for adversarial robustness — that is a red flag, not a gap to ignore. This paper should be on the reading list for every CISO and CMIO evaluating medical AI tools.
+The practical implication is that evaluation processes need to go beyond accuracy metrics and include adversarial testing, training data provenance audits, and ongoing monitoring for anomalous outputs. If your vendor cannot answer questions about their data supply chain (where the training data came from, what decontamination steps were applied, how they test for adversarial robustness), that is a red flag, not a gap to ignore. This paper should be on the reading list for every CISO and CMIO evaluating medical AI tools.

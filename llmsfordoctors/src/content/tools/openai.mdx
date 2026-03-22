@@ -16,7 +16,7 @@ import Callout from '../../components/Callout.astro';
 
 OpenAI offers a family of models that spans from the fast, general-purpose GPT-4o to the deliberate, chain-of-thought-driven o-series (o1, o3). For clinical users, the distinction matters enormously: GPT-4o is a capable workhorse for routine tasks, while the o-series models represent a genuine leap forward for structured diagnostic reasoning.
 
-The o3 model in particular applies extended chain-of-thought computation before producing an answer. In practice, this means it will walk through a differential systematically, weigh competing diagnoses against each other, and surface considerations that faster models skip — behavior that closely mirrors how a careful clinician thinks.
+The o3 model in particular applies extended chain-of-thought computation before producing an answer. In practice, this means it will walk through a differential systematically, weigh competing diagnoses against each other, and surface considerations that faster models skip, behavior that closely mirrors how a careful clinician thinks.
 
 OpenAI makes a Business Associate Agreement available at the enterprise tier, enabling HIPAA-compliant use of patient data for healthcare organizations.
 
@@ -24,11 +24,11 @@ OpenAI makes a Business Associate Agreement available at the enterprise tier, en
 
 ## Clinical Strengths
 
-- **Differential diagnosis generation** — o1 and o3's chain-of-thought reasoning produces structured, ordered differentials with explicit reasoning steps
-- **Complex clinical reasoning** — excels at multi-step problems: drug-drug interactions, atypical presentations, rare disease workups
-- **Note writing with GPT-4o** — fast enough for real-time documentation assistance; produces well-formatted SOAP notes and discharge summaries
-- **Instruction following** — GPT-4o reliably produces output in specified formats (tables, structured templates, numbered lists)
-- **Broad general knowledge** — strong performance across specialties, including areas with sparse training data
+- **Differential diagnosis generation**: o1 and o3's chain-of-thought reasoning produces structured, ordered differentials with explicit reasoning steps
+- **Complex clinical reasoning**: excels at multi-step problems: drug-drug interactions, atypical presentations, rare disease workups
+- **Note writing with GPT-4o**: fast enough for real-time documentation assistance; produces well-formatted SOAP notes and discharge summaries
+- **Instruction following**: GPT-4o reliably produces output in specified formats (tables, structured templates, numbered lists)
+- **Broad general knowledge**: strong performance across specialties, including areas with sparse training data
 
 ---
 
@@ -66,11 +66,11 @@ OpenAI makes a Business Associate Agreement available at the enterprise tier, en
 
 ## Weaknesses
 
-- **Confusing model lineup** — GPT-4o, o1, o1-mini, o1-pro, o3, o3-mini: the naming is opaque and the differences are not intuitive for non-technical users
-- **o-series is slow** — o3 in particular takes significantly longer to respond than GPT-4o; not suitable for real-time note dictation
-- **Consumer tiers are not HIPAA-compliant** — the most accessible tiers (Free, Plus, Pro) cannot be used with patient data; enterprise setup adds friction
-- **Hallucination risk** — like all LLMs, the o-series can produce confident but incorrect clinical details; extended reasoning reduces but does not eliminate errors
-- **No persistent memory by default** — each session starts fresh; you must re-establish patient context manually
+- **Confusing model lineup**: GPT-4o, o1, o1-mini, o1-pro, o3, o3-mini: the naming is opaque and the differences are not intuitive for non-technical users
+- **o-series is slow**: o3 in particular takes significantly longer to respond than GPT-4o; not suitable for real-time note dictation
+- **Consumer tiers are not HIPAA-compliant**: the most accessible tiers (Free, Plus, Pro) cannot be used with patient data; enterprise setup adds friction
+- **Hallucination risk**: like all LLMs, the o-series can produce confident but incorrect clinical details; extended reasoning reduces but does not eliminate errors
+- **No persistent memory by default**: each session starts fresh; you must re-establish patient context manually
 
 ---
 

@@ -1,6 +1,6 @@
 /**
  * OG image generation using sharp's native SVG rasterisation (librsvg).
- * No satori / external font files required — librsvg provides its own
+ * No satori / external font files required - librsvg provides its own
  * text rendering with generic font-family fallbacks.
  */
 
@@ -84,7 +84,7 @@ function buildSvg(title: string, subtitle?: string): string {
   ${subtitleElements}
 
   <!-- Bottom attribution -->
-  <text x="72" y="${H - 52}" font-family="sans-serif" font-size="20" fill="#475569">llmsfordoctors.com — by Jason Gusdorf, MD</text>
+  <text x="72" y="${H - 52}" font-family="sans-serif" font-size="20" fill="#475569">llmsfordoctors.com - by Jason Gusdorf, MD</text>
   <rect x="72" y="${H - 38}" width="600" height="2" rx="1" fill="#1e3a5f"/>
 </svg>`;
 }

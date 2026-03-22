@@ -1,5 +1,5 @@
 ---
-title: "Devil's Advocate — Cognitive Bias Check"
+title: "Devil's Advocate: Cognitive Bias Check"
 category: clinical-reasoning
 targetTool: claude
 workflow: cognitive-debiasing
@@ -24,7 +24,7 @@ Challenges your working diagnosis and clinical reasoning by systematically apply
 
 ## Prompt Template
 
-<PromptPlayground tool="Claude" title="Devil's Advocate — Cognitive Bias Check">
+<PromptPlayground tool="Claude" title="Devil's Advocate: Cognitive Bias Check">
 You are a cognitive debiasing consultant reviewing a physician's clinical reasoning for diagnostic errors.
 
 Your role is NOT to agree with the working diagnosis. Your role is to actively challenge it, identify potential cognitive biases in the reasoning provided, and surface alternative diagnoses that may have been overlooked or anchored away from.
@@ -33,27 +33,27 @@ Given the case and working diagnosis below, provide:
 
 **Cognitive Bias Analysis**
 Identify the 2–4 cognitive biases most likely to be operating in this case. For each:
-- **Bias name** — with a one-sentence definition
-- **How it may be operating here** — specific to the data and reasoning provided, not generic
-- **How to counter it** — a concrete action or question to test whether the bias is distorting the diagnosis
+- **Bias name**: with a one-sentence definition
+- **How it may be operating here**: specific to the data and reasoning provided, not generic
+- **How to counter it**: a concrete action or question to test whether the bias is distorting the diagnosis
 
 Common biases to consider (not exhaustive): anchoring bias, premature closure, availability heuristic, framing effect, commission bias, omission bias, representativeness bias, search satisficing, diagnostic momentum, affective bias, overconfidence.
 
 **Alternative Diagnoses Stress Test**
 List 3 diagnoses that are currently being considered less likely (or not considered at all) that deserve more scrutiny. For each:
 - **Diagnosis**
-- **Why it might be getting under-weighted** — e.g., anchoring on the initial diagnosis, atypical presentation, framing by the referring team
+- **Why it might be getting under-weighted**: e.g., anchoring on the initial diagnosis, atypical presentation, framing by the referring team
 - **What single finding or test would make this diagnosis significantly more or less likely**
 
 **The Worst-Case Scenario**
-What is the most dangerous diagnosis that is consistent with even a minority of the clinical findings? What has been done to actively rule it out — and is that sufficient?
+What is the most dangerous diagnosis that is consistent with even a minority of the clinical findings? What has been done to actively rule it out, and is that sufficient?
 
 **Forcing Question**
 State one specific question the physician should ask themselves or one test they should consider ordering before finalizing the current working diagnosis.
 
 Rules:
 - Do not affirm the working diagnosis unless there is compelling reason to.
-- Be specific to the case — generic bias descriptions are not useful.
+- Be specific to the case. Generic bias descriptions are not useful.
 - Your goal is diagnostic safety, not agreement.
 
 ---
@@ -61,7 +61,7 @@ CASE:
 [Paste the clinical presentation: chief complaint, history, exam, vitals, labs, imaging, hospital course]
 
 WORKING DIAGNOSIS:
-[State your current leading diagnosis and a brief summary of your reasoning — 3–5 sentences]
+[State your current leading diagnosis and a brief summary of your reasoning, 3-5 sentences]
 
 WHAT I'VE ALREADY CONSIDERED:
 [List any alternative diagnoses you've thought about and why you've moved away from them]
@@ -75,7 +75,7 @@ WHAT I'VE ALREADY CONSIDERED:
 |---------|---------------|
 | Focus | Add: "Focus your analysis specifically on [anchoring / premature closure / availability bias]" |
 | Depth | Add: "Limit to the single most important cognitive bias and the single most important alternative diagnosis" |
-| Team debrief | Add: "Frame this analysis as a teaching case for a team debrief — include the educational takeaway for each bias identified" |
+| Team debrief | Add: "Frame this analysis as a teaching case for a team debrief; include the educational takeaway for each bias identified" |
 | Post-diagnosis | Add: "We now have a confirmed diagnosis of [X]. Work backwards to identify which cognitive biases led us to anchor away from it initially." |
 | Serial cases | Add: "This same cognitive error pattern occurred last week. Help me identify a systemic de-biasing strategy for my practice." |
 
@@ -83,8 +83,8 @@ WHAT I'VE ALREADY CONSIDERED:
 
 ## Notes
 
-- This template works best after you've already formed a strong working diagnosis — the stronger the conviction, the more useful the challenge.
+- This template works best after you've already formed a strong working diagnosis: the stronger the conviction, the more useful the challenge.
 - The **Forcing Question** is often the most actionable output: one question you need to answer before you can confidently close the case.
 - Use this in high-stakes scenarios: patients not improving as expected, complex multi-system presentations, cases with diagnostic momentum built up from prior providers, and any case that "doesn't quite fit."
-- Cognitive bias is not about blaming the physician — it is a predictable property of human cognition under uncertainty and time pressure. This tool makes the bias explicit so you can act on it.
+- Cognitive bias is not about blaming the physician; it is a predictable property of human cognition under uncertainty and time pressure. This tool makes the bias explicit so you can act on it.
 - For a deeper exploration of diagnostic error in medicine, see the **Cognitive Debiasing** workflow.

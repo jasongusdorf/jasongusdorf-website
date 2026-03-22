@@ -14,7 +14,7 @@ import Callout from '../../components/Callout.astro';
 
 ## Overview
 
-Claude is Anthropic's flagship large language model, and as of early 2026 it remains the strongest choice for most clinical use cases. It excels at long-form text generation, following complex multi-part instructions, and producing nuanced, hedged clinical language — all of which matter at the bedside.
+Claude is Anthropic's flagship large language model, and as of early 2026 it remains the strongest choice for most clinical use cases. It excels at long-form text generation, following complex multi-part instructions, and producing nuanced, hedged clinical language, all of which matter at the bedside.
 
 Anthropic has made a BAA available for healthcare organizations, making Claude one of the few major commercial LLMs that can be used with real patient data in a HIPAA-compliant setting.
 
@@ -24,11 +24,11 @@ Anthropic has made a BAA available for healthcare organizations, making Claude o
 
 Claude consistently outperforms competing models in these clinical tasks:
 
-- **Discharge summaries and clinical notes** — handles long context and produces well-organized prose
-- **Patient communication** — adapts reading level accurately; produces empathetic, clear language
-- **Clinical reasoning and differential generation** — structured, thoughtful, appropriately hedged
-- **Literature summarization** — handles complex abstracts and synthesizes findings well
-- **Instruction following** — reliably produces output in specified formats (tables, SOAP, bullet points)
+- **Discharge summaries and clinical notes**: handles long context and produces well-organized prose
+- **Patient communication**: adapts reading level accurately; produces empathetic, clear language
+- **Clinical reasoning and differential generation**: structured, thoughtful, appropriately hedged
+- **Literature summarization**: handles complex abstracts and synthesizes findings well
+- **Instruction following**: reliably produces output in specified formats (tables, SOAP, bullet points)
 
 The model's large context window (200K tokens in Claude 3.5+) makes it particularly useful for summarizing lengthy records, operative reports, or multi-page specialist notes.
 
@@ -38,10 +38,10 @@ The model's large context window (200K tokens in Claude 3.5+) makes it particula
 
 No model is perfect. Be aware of these limitations:
 
-- **Hallucination risk** — while lower than some competitors, Claude will occasionally fabricate drug dosages, references, or clinical details. Always verify.
-- **Not connected to live data** — Claude cannot access UpToDate, PubMed, or real-time drug databases. Its knowledge has a training cutoff.
-- **No memory across sessions** — each conversation starts fresh. You must re-establish context each time.
-- **Consumer tier not HIPAA-compliant** — the free claude.ai and standard API tiers do not include a BAA. You must use the enterprise/API tier with a BAA for PHI.
+- **Hallucination risk**: while lower than some competitors, Claude will occasionally fabricate drug dosages, references, or clinical details. Always verify.
+- **Not connected to live data**: Claude cannot access UpToDate, PubMed, or real-time drug databases. Its knowledge has a training cutoff.
+- **No memory across sessions**: each conversation starts fresh. You must re-establish context each time.
+- **Consumer tier not HIPAA-compliant**: the free claude.ai and standard API tiers do not include a BAA. You must use the enterprise/API tier with a BAA for PHI.
 
 ---
 
@@ -49,10 +49,10 @@ No model is perfect. Be aware of these limitations:
 
 Claude is our top recommendation for two specific clinical reasoning tasks:
 
-- **Case synthesis** — when you have a complex patient with multiple problems, extensive workup results, and diagnostic uncertainty, Claude produces the most coherent, well-organized assessments. Its large context window means you can paste the full picture without summarizing away details.
-- **Cognitive debiasing** — when asked to challenge your working diagnosis, Claude pushes back more substantively than competing models. Its natural hedging tendency — sometimes a weakness — becomes a genuine strength when the task is finding holes in reasoning.
+- **Case synthesis**: when you have a complex patient with multiple problems, extensive workup results, and diagnostic uncertainty, Claude produces the most coherent, well-organized assessments. Its large context window means you can paste the full picture without summarizing away details.
+- **Cognitive debiasing**: when asked to challenge your working diagnosis, Claude pushes back more substantively than competing models. Its natural hedging tendency (sometimes a weakness) becomes a genuine strength when the task is finding holes in reasoning.
 
-For **differential diagnosis generation**, we recommend OpenAI's o3 model instead — its chain-of-thought reasoning produces more structured, auditable differentials. See our [head-to-head comparison guide](/guides/llm-clinical-reasoning-comparison) for detailed output comparisons.
+For **differential diagnosis generation**, we recommend OpenAI's o3 model instead; its chain-of-thought reasoning produces more structured, auditable differentials. See our [head-to-head comparison guide](/guides/llm-clinical-reasoning-comparison) for detailed output comparisons.
 
 **Related workflows:** [Clinical Reasoning with AI](/workflows/clinical-reasoning) | [Cognitive Debiasing with AI](/workflows/cognitive-debiasing)
 

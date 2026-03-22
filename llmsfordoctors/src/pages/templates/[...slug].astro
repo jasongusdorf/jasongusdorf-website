@@ -10,7 +10,7 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 
-// Build related items — link to parent workflow and any workflows that reference this template
+// Build related items: link to parent workflow and any workflows that reference this template
 const relatedItems: { title: string; href: string; type: 'workflow' | 'guide' | 'tool' | 'template' | 'trial' }[] = [];
 const allWorkflows = await getCollection('workflows');
 

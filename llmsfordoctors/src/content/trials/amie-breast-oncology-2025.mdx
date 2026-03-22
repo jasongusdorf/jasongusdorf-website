@@ -12,7 +12,7 @@ import Callout from '../../components/Callout.astro';
 
 ## Study Design
 
-Palepu et al. evaluated AMIE (Articulate Medical Intelligence Explorer), a conversational diagnostic AI system built on Gemini 2.5 Pro, against clinicians at three experience levels on 60 synthetic breast cancer vignettes. Cases spanned treatment-naive, treatment-refractory, and rare histology presentations from a community-based breast oncology clinic. AMIE was enhanced with web search retrieval and a multistage self-critique pipeline — no fine-tuning to oncology was performed. Responses were evaluated by five breast cancer specialists using a 19-question rubric covering case summarization, diagnostic accuracy, management reasoning, safety, and treatment recommendations.
+Palepu et al. evaluated AMIE (Articulate Medical Intelligence Explorer), a conversational diagnostic AI system built on Gemini 2.5 Pro, against clinicians at three experience levels on 60 synthetic breast cancer vignettes. Cases spanned treatment-naive, treatment-refractory, and rare histology presentations from a community-based breast oncology clinic. AMIE was enhanced with web search retrieval and a multistage self-critique pipeline; no fine-tuning to oncology was performed. Responses were evaluated by five breast cancer specialists using a 19-question rubric covering case summarization, diagnostic accuracy, management reasoning, safety, and treatment recommendations.
 
 ---
 
@@ -32,11 +32,11 @@ Palepu et al. evaluated AMIE (Articulate Medical Intelligence Explorer), a conve
 
 ## Clinical Implications
 
-1. **The expertise gap is the key finding.** LLMs are not ready to replace subspecialty attendings, but they could meaningfully augment trainees and generalists — especially in settings without access to oncology expertise.
+1. **The expertise gap is the key finding.** LLMs are not ready to replace subspecialty attendings, but they could meaningfully augment trainees and generalists, especially in settings without access to oncology expertise.
 
 2. **No fine-tuning was used.** AMIE achieved this performance as a generalist model with web search, not a specially trained oncology system. Fine-tuning on oncology data could close the gap further, but it also risks overfitting to training distributions.
 
-3. **Synthetic vignettes are not real patients.** The cases were carefully crafted to represent real presentations, but they lack the messiness of actual clinical encounters — incomplete data, patient preferences, insurance constraints, and comorbidity interactions.
+3. **Synthetic vignettes are not real patients.** The cases were carefully crafted to represent real presentations, but they lack the messiness of actual clinical encounters: incomplete data, patient preferences, insurance constraints, and comorbidity interactions.
 
 <Callout type="pitfall">
   The evaluation included only two trainees, two fellows, and two attendings. With such small clinician samples, individual skill variation could significantly affect the comparisons. Larger clinician cohorts are needed to confirm the performance hierarchy.
@@ -48,6 +48,6 @@ Palepu et al. evaluated AMIE (Articulate Medical Intelligence Explorer), a conve
 
 ## My Takeaway
 
-This study maps a useful boundary: LLMs can generate breast oncology management plans that exceed trainee-level quality but don't match experienced attendings. The practical application is clear — LLMs as decision support in settings without subspecialty access, or as training aids for fellows. The self-critique pipeline is the most interesting technical detail — it suggests that inference-time reasoning improvements can substitute for expensive fine-tuning. For practicing oncologists, this is a tool to draft management plans for review, not to make autonomous treatment decisions.
+This study maps a useful boundary: LLMs can generate breast oncology management plans that exceed trainee-level quality but don't match experienced attendings. The practical application is clear: LLMs as decision support in settings without subspecialty access, or as training aids for fellows. The self-critique pipeline is the most interesting technical detail; it suggests that inference-time reasoning improvements can substitute for expensive fine-tuning. For practicing oncologists, this is a tool to draft management plans for review, not to make autonomous treatment decisions.
 
 [Read the full article at NEJM AI](https://doi.org/10.1056/AIcs2500025)

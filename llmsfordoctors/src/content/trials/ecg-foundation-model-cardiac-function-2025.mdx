@@ -12,7 +12,7 @@ import Callout from '../../components/Callout.astro';
 
 ## Study Design
 
-Moody et al. developed a modified vision transformer pretrained using self-supervised learning (SSL) on 800,035 unlabeled ECG waveforms from MIMIC-IV-ECG. The model was then fine-tuned on smaller labeled databases — including high-quality labels from PET imaging (N=3,126) and clinical reports (N=13,704) — for 12 clinical, demographic, and ECG prediction tasks. Performance was evaluated across five additional cohorts including the publicly available PTB-XL and UK Biobank databases, with cross-modality validation against cardiac MRI and SPECT.
+Moody et al. developed a modified vision transformer pretrained using self-supervised learning (SSL) on 800,035 unlabeled ECG waveforms from MIMIC-IV-ECG. The model was then fine-tuned on smaller labeled databases, including high-quality labels from PET imaging (N=3,126) and clinical reports (N=13,704), for 12 clinical, demographic, and ECG prediction tasks. Performance was evaluated across five additional cohorts including the publicly available PTB-XL and UK Biobank databases, with cross-modality validation against cardiac MRI and SPECT.
 
 ---
 
@@ -21,7 +21,7 @@ Moody et al. developed a modified vision transformer pretrained using self-super
 - AUROC ranged from **0.763** (impaired myocardial flow reserve, MFR&lt;2) to **0.955** (impaired LVEF&lt;35%) across tasks
 - SSL pretraining **improved diagnostic accuracy in 11 of 12 prediction tasks** compared with conventional supervised training from scratch
 - Strong cross-database generalizability: AUROC ranged from **0.771 for impaired MFR to 0.949 for impaired LVEF** across five validation cohorts
-- The model can detect **myocardial ischemia and coronary microvascular dysfunction** from a standard 12-lead ECG — conditions that typically require expensive PET imaging
+- The model can detect **myocardial ischemia and coronary microvascular dysfunction** from a standard 12-lead ECG, conditions that typically require expensive PET imaging
 - Foundation model approach enables effective learning from **limited labeled data** for complex diagnostic tasks
 
 <Callout type="evidence">
@@ -46,6 +46,6 @@ Moody et al. developed a modified vision transformer pretrained using self-super
 
 ## My Takeaway
 
-Foundation models have transformed NLP and computer vision, and this paper makes the case that they should transform clinical time-series data too. The self-supervised pretraining on unlabeled ECGs — the most abundant medical signal in the world — creates a versatile base model that can be fine-tuned for diverse cardiac tasks with minimal labeled data. The clinical promise of detecting ischemia and microvascular dysfunction from a $20 ECG instead of a $3,000 PET scan is enormous. The performance isn't quite there yet for standalone diagnosis, but as a screening tool to determine who needs advanced imaging, this could change practice.
+Foundation models have transformed NLP and computer vision, and this paper makes the case that they should transform clinical time-series data too. The self-supervised pretraining on unlabeled ECGs (the most abundant medical signal in the world) creates a versatile base model that can be fine-tuned for diverse cardiac tasks with minimal labeled data. The clinical promise of detecting ischemia and microvascular dysfunction from a $20 ECG instead of a $3,000 PET scan is enormous. The performance isn't quite there yet for standalone diagnosis, but as a screening tool to determine who needs advanced imaging, this could change practice.
 
 [Read the full article at NEJM AI](https://doi.org/10.1056/AIoa2500164)

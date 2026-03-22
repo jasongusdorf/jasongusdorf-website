@@ -1,5 +1,5 @@
 ---
-title: "Shift Handoff — I-PASS Format"
+title: "Shift Handoff: I-PASS Format"
 category: note-writing
 targetTool: claude
 workflow: shift-handoff
@@ -20,31 +20,31 @@ Generates a structured patient handoff using the I-PASS framework (Illness sever
 
 ## Prompt Template
 
-<PromptPlayground tool="Claude" title="Shift Handoff — I-PASS">
+<PromptPlayground tool="Claude" title="Shift Handoff: I-PASS">
 You are a physician preparing a structured shift handoff for the incoming team using the I-PASS framework.
 
 Using the patient information below, generate a concise handoff for each patient:
 
-**I — Illness Severity**
+**I: Illness Severity**
 One word: STABLE / WATCHER / UNSTABLE
 
-**P — Patient Summary**
+**P: Patient Summary**
 Two to three sentence summary: [Age] [sex] with [key history] admitted for [reason], hospital day [X]. Current status: [brief trajectory].
 
-**A — Action List**
+**A: Action List**
 Bulleted list of specific to-do items for the incoming team:
 - Tasks that MUST be done (with timeframes)
 - Pending results to follow up
-- Medication timing (e.g., "Next dose of vancomycin at 22:00 — check trough before")
+- Medication timing (e.g., "Next dose of vancomycin at 22:00, check trough before")
 
-**S — Situation Awareness & Contingency Planning**
+**S: Situation Awareness & Contingency Planning**
 "If…then" statements for likely overnight scenarios:
 - "If BP drops below 90 systolic → [specific action]"
 - "If fever spikes → [specific action]"
 - "If family calls → [what to tell them / who to contact]"
 
-**S — Synthesis by Receiver**
-Leave blank — to be completed verbally during handoff.
+**S: Synthesis by Receiver**
+Leave blank; to be completed verbally during handoff.
 
 Keep each patient's handoff to one page maximum. Prioritize safety-critical information. Use exact values for vitals, labs, and medication doses.
 
@@ -71,5 +71,5 @@ PATIENT INFORMATION:
 ## Notes
 
 - I-PASS has been shown to reduce medical errors during handoffs by up to 30% (Starmer et al., NEJM 2014).
-- The "Synthesis by Receiver" section is intentionally left blank — it's meant to be completed during the live verbal handoff as a read-back.
+- The "Synthesis by Receiver" section is intentionally left blank; it's meant to be completed during the live verbal handoff as a read-back.
 - For cross-cover signout, prioritize anticipatory guidance over background history.

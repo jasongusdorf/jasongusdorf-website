@@ -19,7 +19,7 @@ export async function GET(context: APIContext) {
     ...trials.map((t) => ({
       title: t.data.title,
       pubDate: t.data.lastUpdated,
-      description: `${t.data.journal} (${t.data.year}) — ${t.data.keyFinding}`,
+      description: `${t.data.journal} (${t.data.year}) - ${t.data.keyFinding}`,
       link: `/trials/${t.id}/`,
     })),
   ].sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());

@@ -91,11 +91,11 @@
   --white: #fff;
   --black: #000;
   --transparent: transparent;
-  --blue-300: #93c5fd;
-  --blue-400: #60a5fa;
-  --blue-500: #3b82f6;
-  --indigo-300: #a5b4fc;
-  --violet-200: #ddd6fe;
+  --aurora-1: #e2e8f0;
+  --aurora-2: #f1f5f9;
+  --aurora-3: #cbd5e1;
+  --aurora-4: #f8fafc;
+  --aurora-5: #e2e8f0;
 }
 
 @keyframes aurora {

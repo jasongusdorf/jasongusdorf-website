@@ -32,11 +32,11 @@ Given the clinical presentation below, generate a structured differential diagno
 **Ranked Differential Diagnoses** (top 5–7, ordered by likelihood)
 
 For each diagnosis, provide:
-1. **Diagnosis** — name and brief category (e.g., infectious, inflammatory, vascular)
-2. **Likelihood** — High / Moderate / Low, with a brief rationale
-3. **Supporting features** — specific elements from the case that favor this diagnosis
-4. **Against** — findings that argue against it, or classic features that are absent
-5. **Clinching test** — the single best next test or finding that would confirm or exclude this diagnosis
+1. **Diagnosis**: name and brief category (e.g., infectious, inflammatory, vascular)
+2. **Likelihood**: High / Moderate / Low, with a brief rationale
+3. **Supporting features**: specific elements from the case that favor this diagnosis
+4. **Against**: findings that argue against it, or classic features that are absent
+5. **Clinching test**: the single best next test or finding that would confirm or exclude this diagnosis
 
 **Must-Not-Miss Diagnoses**
 List any high-acuity diagnoses that must be actively ruled out even if currently less likely. For each, specify the test or evaluation required.
@@ -53,7 +53,7 @@ Rules:
 CLINICAL PRESENTATION:
 Chief Complaint: [CHIEF COMPLAINT]
 Age / Sex: [AGE AND SEX]
-Duration of symptoms: [DURATION AND ONSET — acute vs. subacute vs. chronic]
+Duration of symptoms: [DURATION AND ONSET, e.g., acute vs. subacute vs. chronic]
 Key History: [RELEVANT HISTORY, ASSOCIATED SYMPTOMS, PERTINENT NEGATIVES]
 Past Medical History: [RELEVANT PMH, MEDICATIONS, ALLERGIES]
 Exam Findings: [VITAL SIGNS AND PERTINENT PHYSICAL EXAM FINDINGS]
@@ -76,8 +76,8 @@ Available Data: [ANY LABS, IMAGING, ECG, OR OTHER RESULTS]
 
 ## Notes
 
-- This template is optimized for **undifferentiated presentations** — chest pain, dyspnea, altered mental status, fever, and similar common chief complaints where the diagnosis is not yet clear.
+- This template is optimized for **undifferentiated presentations**: chest pain, dyspnea, altered mental status, fever, and similar common chief complaints where the diagnosis is not yet clear.
 - The **must-not-miss** section is often the most clinically valuable output. Use it as a rapid safety checklist.
-- GPT-4o performs well on DDx generation when the case is clearly presented. Include pertinent negatives explicitly — they significantly improve output quality.
+- GPT-4o performs well on DDx generation when the case is clearly presented. Include pertinent negatives explicitly, as they significantly improve output quality.
 - For specialty-specific differentials (e.g., neurology localization, rheumatologic workup), consider adding specialty-specific framing in the customization section.
 - For board prep differentials, see the **Differential Diagnosis Drill** template under Board Prep.

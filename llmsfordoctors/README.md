@@ -38,6 +38,10 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 
+## Style Guide
+
+- **No em dashes.** Do not use em dashes (`—` or `&mdash;`) anywhere in this project. Use proper punctuation instead: commas, colons, semicolons, parentheses, or separate sentences. For title separators, use a hyphen with spaces (` - `). For list item descriptions, use a colon.
+
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

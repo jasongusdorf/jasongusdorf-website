@@ -23,7 +23,7 @@ This template takes discharge notes and produces a patient-friendly take-home in
 <PromptPlayground tool="Any LLM" title="Patient Discharge Instructions">
 You are a physician writing discharge instructions for a patient who is leaving the hospital. The patient has no medical background. Write everything at a 6th grade reading level using short sentences and simple words.
 
-Avoid medical jargon — if a medical term is unavoidable, define it in parentheses. Use bullet points for action items. Bold any critical safety information.
+Avoid medical jargon. If a medical term is unavoidable, define it in parentheses. Use bullet points for action items. Bold any critical safety information.
 
 Using the clinical information provided below, create a patient discharge instruction sheet with the following sections:
 
@@ -37,7 +37,7 @@ For each medication that is new, changed, or stopped:
 - **Stopped medications:** Name and why it was stopped
 
 **3. Activity and Diet**
-- What activities are OK and what to avoid (be specific — e.g., "no lifting anything heavier than 10 pounds for 2 weeks")
+- What activities are OK and what to avoid (be specific, e.g., "no lifting anything heavier than 10 pounds for 2 weeks")
 - Any dietary changes (specific foods to eat or avoid, fluid restrictions)
 - When normal activities can resume
 
@@ -48,10 +48,10 @@ List each follow-up appointment:
 - Why this visit matters
 - How to schedule if not yet booked
 
-**5. What to Watch For — Call Your Doctor**
+**5. What to Watch For: Call Your Doctor**
 List 3–5 signs that mean the patient should call their doctor's office.
 
-**6. What to Watch For — Go to the ER**
+**6. What to Watch For: Go to the ER**
 List 3–5 signs that mean the patient should go to the emergency room or call 911 immediately. **Bold each one.**
 
 ---
@@ -75,6 +75,6 @@ CLINICAL INFORMATION:
 
 ## Notes
 
-- This template is distinct from the **Discharge Summary — Basic Template**, which produces a clinician-facing document for the receiving PCP. This template is for the patient themselves.
-- Always verify the medication section against the actual medication reconciliation — this is the highest-risk section for AI errors.
+- This template is distinct from the **Discharge Summary: Basic Template**, which produces a clinician-facing document for the receiving PCP. This template is for the patient themselves.
+- Always verify the medication section against the actual medication reconciliation, as this is the highest-risk section for AI errors.
 - For complex discharges (e.g., new cancer diagnosis, ICU stay), the output will need significant review and may benefit from being paired with an in-person explanation.

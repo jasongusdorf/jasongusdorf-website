@@ -15,11 +15,11 @@ import ToolCard from '../../components/ToolCard.astro';
 
 ## The Problem
 
-Diagnostic error contributes to an estimated **10-15% of clinical encounters** and remains a leading cause of malpractice claims and preventable harm. The root cause is rarely missing knowledge — it's cognitive. Anchoring, premature closure, availability bias, and base-rate neglect all narrow the differential before you've fully considered it.
+Diagnostic error contributes to an estimated **10-15% of clinical encounters** and remains a leading cause of malpractice claims and preventable harm. The root cause is rarely missing knowledge; it's cognitive. Anchoring, premature closure, availability bias, and base-rate neglect all narrow the differential before you've fully considered it.
 
 Unlike note-writing workflows where AI primarily saves time, clinical reasoning is where AI can **improve diagnostic accuracy**. LLMs don't anchor on the first abnormal lab. They don't get fatigued at 2 AM. They consider diagnoses you may have already unconsciously dismissed.
 
-This workflow walks you through a 4-step process for using AI as a diagnostic reasoning partner — from case presentation through workup planning and synthesis.
+This workflow walks you through a 4-step process for using AI as a diagnostic reasoning partner, from case presentation through workup planning and synthesis.
 
 <Callout type="hipaa">
   Never paste identifiable patient information (name, DOB, MRN, dates of service) into a consumer AI tool. De-identify all data or confirm your organization has a BAA in place with the vendor before entering any clinical details. See our [tool reviews](/tools) for BAA availability by vendor.
@@ -35,17 +35,17 @@ This workflow walks you through a 4-step process for using AI as a diagnostic re
 
 AI reasoning quality is directly proportional to input quality. Before prompting, structure your clinical data into a complete case presentation:
 
-- **Demographics** — age, sex, relevant social context
-- **Chief complaint and HPI** — timeline, character, associated symptoms, aggravating/alleviating factors
-- **Past medical and surgical history** — include medications and allergies
-- **Family and social history** — when relevant to the differential
-- **Physical exam** — vital signs, pertinent positive and negative findings
-- **Studies to date** — labs, imaging, ECG, pathology
+- **Demographics**: age, sex, relevant social context
+- **Chief complaint and HPI**: timeline, character, associated symptoms, aggravating/alleviating factors
+- **Past medical and surgical history**: include medications and allergies
+- **Family and social history**: when relevant to the differential
+- **Physical exam**: vital signs, pertinent positive and negative findings
+- **Studies to date**: labs, imaging, ECG, pathology
 
 **Recommended models:** Claude or GPT-4o both handle structured case input well. The key is your input, not the model choice at this stage.
 
 <Callout type="tip">
-  Pertinent negatives matter. Stating "no rash, no joint pain, no oral ulcers" in a fever workup meaningfully constrains the differential. Don't omit findings just because they were normal — include the ones that are diagnostically relevant.
+  Pertinent negatives matter. Stating "no rash, no joint pain, no oral ulcers" in a fever workup meaningfully constrains the differential. Don't omit findings just because they were normal; include the ones that are diagnostically relevant.
 </Callout>
 
 <Callout type="tip" title="For Trainees">
@@ -73,11 +73,11 @@ For a detailed head-to-head analysis of model performance across case complexity
 />
 
 <Callout type="tip">
-  Explicitly ask the model to include "uncommon but dangerous diagnoses that should not be missed." LLMs tend to weight common diagnoses heavily by default — this prompt modifier reliably surfaces critical rule-outs like aortic dissection, mesenteric ischemia, or pulmonary embolism that anchoring might cause you to overlook.
+  Explicitly ask the model to include "uncommon but dangerous diagnoses that should not be missed." LLMs tend to weight common diagnoses heavily by default, and this prompt modifier reliably surfaces critical rule-outs like aortic dissection, mesenteric ischemia, or pulmonary embolism that anchoring might cause you to overlook.
 </Callout>
 
 <Callout type="tip" title="For Trainees">
-  Write your own differential first. Then compare it against the AI output. The learning happens in the gap — the diagnoses the AI considered that you didn't, and understanding *why* you missed them, is where clinical reasoning improves.
+  Write your own differential first. Then compare it against the AI output. The learning happens in the gap: the diagnoses the AI considered that you didn't, and understanding *why* you missed them, is where clinical reasoning improves.
 </Callout>
 
 ---
@@ -102,7 +102,7 @@ Once you have a refined differential, use the [Workup Planner template](/templat
 
 As results return, use the [Case Synthesis template](/templates/case-synthesis) to integrate new data with your working differential. Feed the model the original case, your differential, and the new findings. Ask it to re-rank the differential, identify diagnoses that have been effectively ruled out, and highlight any new diagnoses raised by unexpected results.
 
-**Recommended model: Claude.** Claude is the strongest model for integrating large volumes of complex clinical data with appropriate epistemic hedging. It reliably distinguishes between "this is most likely" and "this cannot be excluded" — a critical distinction in clinical reasoning that other models sometimes flatten into false certainty.
+**Recommended model: Claude.** Claude is the strongest model for integrating large volumes of complex clinical data with appropriate epistemic hedging. It reliably distinguishes between "this is most likely" and "this cannot be excluded," a critical distinction in clinical reasoning that other models sometimes flatten into false certainty.
 
 <ToolCard
   name="Claude for Clinical Reasoning"
@@ -121,23 +121,23 @@ Consider using the [Cognitive Debiasing workflow](/workflows/cognitive-debiasing
 ## Related Content
 
 ### Templates
-- [DDx Generator](/templates/ddx-generator) — Structured differential diagnosis prompt
-- [Workup Planner](/templates/workup-planner) — Prioritized diagnostic workup by urgency
-- [Case Synthesis](/templates/case-synthesis) — Integrate new data and re-rank the differential
-- [Bias Check](/templates/bias-check) — Systematic cognitive debiasing checklist
+- [DDx Generator](/templates/ddx-generator) - Structured differential diagnosis prompt
+- [Workup Planner](/templates/workup-planner) - Prioritized diagnostic workup by urgency
+- [Case Synthesis](/templates/case-synthesis) - Integrate new data and re-rank the differential
+- [Bias Check](/templates/bias-check) - Systematic cognitive debiasing checklist
 
 ### Tool Reviews
-- [OpenAI (ChatGPT / o3)](/tools/openai) — Best for chain-of-thought differential generation
-- [Claude](/tools/claude) — Best for synthesis and complex reasoning
-- [Google Gemini](/tools/gemini) — Strong multimodal capabilities for imaging-heavy cases
-- [Perplexity](/tools/perplexity) — Useful for evidence retrieval with cited sources
+- [OpenAI (ChatGPT / o3)](/tools/openai) - Best for chain-of-thought differential generation
+- [Claude](/tools/claude) - Best for synthesis and complex reasoning
+- [Google Gemini](/tools/gemini) - Strong multimodal capabilities for imaging-heavy cases
+- [Perplexity](/tools/perplexity) - Useful for evidence retrieval with cited sources
 
 ### Evidence
-- [LLM Diagnostic Accuracy — NEJM 2024](/trials/llm-diagnostic-nejm-2024)
-- [LLM Clinical Reasoning — JAMA 2023](/trials/llm-clinical-reasoning-jama-2023)
+- [LLM Diagnostic Accuracy - NEJM 2024](/trials/llm-diagnostic-nejm-2024)
+- [LLM Clinical Reasoning - JAMA 2023](/trials/llm-clinical-reasoning-jama-2023)
 
 ### Related Workflows
 - [Cognitive Debiasing with AI](/workflows/cognitive-debiasing)
 
 ### Guides
-- [LLM Clinical Reasoning Comparison](/guides/llm-clinical-reasoning-comparison) — Head-to-head model analysis for diagnostic tasks
+- [LLM Clinical Reasoning Comparison](/guides/llm-clinical-reasoning-comparison) - Head-to-head model analysis for diagnostic tasks

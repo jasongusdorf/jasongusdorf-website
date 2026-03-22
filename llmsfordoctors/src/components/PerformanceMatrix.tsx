@@ -9,7 +9,7 @@ interface PerformanceMatrixProps {
 function ratingCell(rating: Rating | undefined) {
   if (!rating) {
     return {
-      label: '—',
+      label: '-',
       cellClass: 'bg-clinical-50 text-clinical-400',
       textClass: '',
     };

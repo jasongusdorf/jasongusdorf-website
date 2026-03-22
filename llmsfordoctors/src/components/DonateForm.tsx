@@ -118,7 +118,7 @@ export default function DonateForm({ stripeKey }: Props) {
   const [error, setError] = useState<string | null>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Stable reference — loadStripe caches internally, but avoid calling in render body
+  // Stable reference - loadStripe caches internally, but avoid calling in render body
   const [stripePromise] = useState(() => loadStripe(stripeKey));
 
   const amountInCents = isCustom

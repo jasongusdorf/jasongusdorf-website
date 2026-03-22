@@ -29,16 +29,16 @@ You are an experienced attending physician helping to plan a diagnostic workup f
 
 Given the clinical scenario and differential diagnoses below, generate a structured workup plan organized by priority tier:
 
-**Tier 1 — Immediate (order now, results needed within hours)**
+**Tier 1: Immediate (order now, results needed within hours)**
 List tests that must be obtained urgently to rule out dangerous diagnoses or guide immediate management. For each test:
 - Test name
 - What diagnosis or question it addresses
 - Threshold that would change management
 
-**Tier 2 — Early (order now, results within 24–48 hours)**
+**Tier 2: Early (order now, results within 24-48 hours)**
 List tests that are diagnostically important but not immediately time-critical. Include the same format as Tier 1.
 
-**Tier 3 — Deferred (pending Tier 1/2 results or outpatient)**
+**Tier 3: Deferred (pending Tier 1/2 results or outpatient)**
 List tests that can wait for initial results before ordering, or that are appropriate in an outpatient or follow-up setting.
 
 **Procedures / Consultations**
@@ -52,7 +52,7 @@ List 2–3 tests that might seem indicated but are low-yield or potentially harm
 
 Rules:
 - Prioritize tests by diagnostic yield and clinical urgency, not by comprehensiveness.
-- Do not fabricate test sensitivities, specificities, or cutoff values — state them only if well-established.
+- Do not fabricate test sensitivities, specificities, or cutoff values. State them only if well-established.
 - Do not infer clinical information not explicitly provided below.
 
 ---
@@ -61,7 +61,7 @@ Age / Sex: [AGE AND SEX]
 Presentation: [CHIEF COMPLAINT, DURATION, KEY FINDINGS]
 Vital Signs: [HEART RATE, BP, RR, O2 SAT, TEMPERATURE]
 Exam: [PERTINENT PHYSICAL EXAM]
-Already Obtained: [ANY RESULTS ALREADY AVAILABLE — labs, imaging, ECG]
+Already Obtained: [ANY RESULTS ALREADY AVAILABLE, e.g., labs, imaging, ECG]
 Setting: [EMERGENCY DEPARTMENT / INPATIENT / OUTPATIENT]
 
 DIFFERENTIAL DIAGNOSES TO WORK UP:
@@ -77,17 +77,17 @@ Must-not-miss: [ANY HIGH-ACUITY DIAGNOSES TO RULE OUT]
 
 | Element | How to Adjust |
 |---------|---------------|
-| Setting | Add: "This is an outpatient visit — limit workup to tests available in clinic or sendout" |
+| Setting | Add: "This is an outpatient visit; limit workup to tests available in clinic or sendout" |
 | Resource constraints | Add: "Prioritize the 3 highest-yield tests given limited resources" |
 | Prior workup | Add: "These tests were already obtained [LIST]. Focus the plan on what remains." |
-| Subspecialty | Add: "This is a [nephrology / hematology / rheumatology] workup — use specialty-appropriate sequencing" |
-| Patient factors | Add: "This patient has [CKD / contrast allergy / coagulopathy] — adjust accordingly" |
+| Subspecialty | Add: "This is a [nephrology / hematology / rheumatology] workup; use specialty-appropriate sequencing" |
+| Patient factors | Add: "This patient has [CKD / contrast allergy / coagulopathy]; adjust accordingly" |
 
 ---
 
 ## Notes
 
 - Works best when paired with the **DDx Generator** template: first generate your differential, then paste it here to build the workup plan.
-- The **Decision Branch Points** section is the highest-value output — it makes your clinical reasoning explicit and helps anticipate what you'll do before results return.
+- The **Decision Branch Points** section is the highest-value output: it makes your clinical reasoning explicit and helps anticipate what you'll do before results return.
 - The **What to Avoid** section helps with both test stewardship and patient safety (e.g., avoiding contrast in AKI, avoiding LP before CT in certain cases).
 - For complex multi-system presentations, run this template once per major diagnostic question rather than trying to cover everything in a single prompt.

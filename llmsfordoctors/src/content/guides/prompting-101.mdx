@@ -8,13 +8,13 @@ featured: true
 
 import Callout from '../../components/Callout.astro';
 
-Getting good output from an AI isn't magic — it's a skill. And like most clinical skills, it improves with deliberate practice. This guide covers the four core principles that separate a useful AI interaction from a frustrating one.
+Getting good output from an AI isn't magic; it's a skill. And like most clinical skills, it improves with deliberate practice. This guide covers the four core principles that separate a useful AI interaction from a frustrating one.
 
 ---
 
 ## 1. Set the Role
 
-The single most effective thing you can do is tell the AI who it is and what it's doing. LLMs are trained on enormous amounts of text and can adopt many personas — give it the right one.
+The single most effective thing you can do is tell the AI who it is and what it's doing. LLMs are trained on enormous amounts of text and can adopt many personas, so give it the right one.
 
 **Instead of:** "Summarize this note."
 
@@ -23,7 +23,7 @@ The single most effective thing you can do is tell the AI who it is and what it'
 The role shapes vocabulary, level of detail, and clinical judgment in the output. A "second-year medical student" will explain more; an "attending cardiologist" will be more terse and technical.
 
 <Callout type="tip">
-  Use specific roles. "Experienced hospitalist" produces better clinical output than just "doctor." Speciality context matters — "cardiologist" and "general internist" will frame the same clinical scenario differently.
+  Use specific roles. "Experienced hospitalist" produces better clinical output than just "doctor." Speciality context matters: "cardiologist" and "general internist" will frame the same clinical scenario differently.
 </Callout>
 
 ---
@@ -53,32 +53,32 @@ The more specific your context, the less editing you'll need to do.
 
 Tell the AI exactly how you want the output structured. Common formats that work well in clinical contexts:
 
-- **Bullet points** — great for rapid review, handoffs, clinical reasoning lists
-- **Numbered steps** — good for procedures, protocols, and patient instructions
-- **Table** — useful for medication comparisons, differential diagnoses
-- **Paragraph narrative** — best for letters, referrals, summaries for patients or families
-- **SOAP format** — familiar structure for progress notes
+- **Bullet points**: great for rapid review, handoffs, clinical reasoning lists
+- **Numbered steps**: good for procedures, protocols, and patient instructions
+- **Table**: useful for medication comparisons, differential diagnoses
+- **Paragraph narrative**: best for letters, referrals, summaries for patients or families
+- **SOAP format**: familiar structure for progress notes
 
 **Example format instruction:**
 > "Provide your response as a table with three columns: Diagnosis, Supporting Evidence, Against. Limit to 5 rows."
 
-If you don't specify format, you'll get whatever format the AI defaults to — which may or may not be what you need.
+If you don't specify format, you'll get whatever format the AI defaults to, which may or may not be what you need.
 
 ---
 
 ## 4. Iterate
 
-Your first prompt is rarely your best prompt. Treat AI interactions like a conversation — follow up, redirect, and refine.
+Your first prompt is rarely your best prompt. Treat AI interactions like a conversation: follow up, redirect, and refine.
 
 Useful follow-up patterns:
-- **"Make this more concise"** — if the output is too long
-- **"Explain your reasoning"** — if you want to audit the AI's clinical logic
-- **"Reformat as bullet points"** — if the structure isn't what you need
-- **"Add a section on [X]"** — if something's missing
-- **"The patient also has [X]. How does that change your recommendations?"** — to add context mid-conversation
+- **"Make this more concise"**: if the output is too long
+- **"Explain your reasoning"**: if you want to audit the AI's clinical logic
+- **"Reformat as bullet points"**: if the structure isn't what you need
+- **"Add a section on [X]"**: if something's missing
+- **"The patient also has [X]. How does that change your recommendations?"**: to add context mid-conversation
 
 <Callout type="tip">
-  You don't have to start over when an output is wrong. A correction like "That's too technical for a patient letter — simplify the language" will often fix it in one follow-up. Build on what's working rather than rewriting from scratch.
+  You don't have to start over when an output is wrong. A correction like "That's too technical for a patient letter; simplify the language" will often fix it in one follow-up. Build on what's working rather than rewriting from scratch.
 </Callout>
 
 ---
